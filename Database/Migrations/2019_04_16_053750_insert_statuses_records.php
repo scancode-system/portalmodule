@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Status;
+use Modules\Portal\Entities\Status;
 
 class InsertStatusesRecords extends Migration
 {
