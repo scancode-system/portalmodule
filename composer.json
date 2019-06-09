@@ -24,7 +24,7 @@
     },
     "type": "laravel-module",
     "require": {
-        "nwidart/laravel-modules":"^5.0"
+        "nwidart/laravel-modules":"^5.0 "
         "joshbrw/laravel-module-installer": "v0.1.4"
     }
 }
