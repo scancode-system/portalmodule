@@ -1,0 +1,29 @@
+{
+    "name": "scancode/portal-module",
+    "description": "",
+    "authors": [
+        {
+            "name": "Leonardo Borges Athayde Vasconcelos",
+            "email": "scancodesistemas@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Portal\\Providers\\PortalServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Portal\\": ""
+        }
+    },
+    "type": "laravel-module",
+    "require": {
+        "joshbrw/laravel-module-installer": "v0.1.4"
+    }
+}
