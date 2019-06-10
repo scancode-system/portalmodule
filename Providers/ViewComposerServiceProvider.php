@@ -12,7 +12,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\ClientValidationsComposer');
 
         //parameters
-        View::composer(['portal::import.index', 'portal::validation.index', 'portal::doc.*'], 'Modules\Portal\Http\ViewComposers\Parameters\ClientValidationComposer');
+        View::composer(['portal::import.index', 'portal::validation.index'], 'Modules\Portal\Http\ViewComposers\Parameters\ClientValidationComposer');
 
         //dashboard
         View::composer('portal::dashboard.subviews.item_client_validation', 'Modules\Portal\Http\ViewComposers\Dashboard\ItemClientValidationComposer');
