@@ -4,8 +4,6 @@ namespace Modules\Portal\Http\ViewComposers\Parameters;
 
 use Modules\Portal\Http\ViewComposers\SuperComposer\SuperComposer;
 use Illuminate\View\View;
-use Modules\Portal\Entities\UserValidation;
-
 
 class ClientValidationComposer extends SuperComposer {
 

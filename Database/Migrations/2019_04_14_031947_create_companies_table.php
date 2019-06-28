@@ -13,19 +13,14 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('company_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->string('cnpj', 14)->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('trade_name')->nullable();
-            $table->string('state_registration')->nullable();
-            $table->string('phone', 10)->nullable();
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('address')->nullable();
+            $table->string('number')->nullable();
             $table->string('neighborhood')->nullable();
             $table->string('city')->nullable();
             $table->string('st', 2)->nullable();
@@ -33,6 +28,22 @@ class CreateCompaniesTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('company_infos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->string('cnpj', 14)->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('trade_name')->nullable();
+            $table->string('state_registration')->nullable();
+            $table->string('ddd', 2)->nullable();
+            $table->string('phone', 8)->nullable();
+
+            $table->timestamps();
+        });        
     }
 
     /**
@@ -42,6 +53,7 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('company_addresses');
+        Schema::dropIfExists('company_infos');
     }
 }

@@ -15,7 +15,7 @@
                                 <i class="icon-people"></i>
                             </span>
                         </div>
-                        {{ Form::select('guard', ['client' => 'Cliente', 'admin' => 'Administrador'], null, ['class' => 'form-control']) }}
+                        {{ Form::select('guard', ['company' => 'Empresa', 'admin' => 'Administrador'], null, ['class' => 'form-control']) }}
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

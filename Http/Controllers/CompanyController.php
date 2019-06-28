@@ -5,9 +5,9 @@ namespace Modules\Portal\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Portal\Http\Requests\CompanyRequest;
 use Modules\Portal\Entities\Company;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class CompanyController extends Controller
+class CompanyController extends BaseController
 {
     
 	public function update(CompanyRequest $request, Company $company){

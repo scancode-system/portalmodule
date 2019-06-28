@@ -15,6 +15,8 @@ class CreateValidationsTable extends Migration
     {
         Schema::create('validations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('module_name')->unique();
+            $table->string('module_alias');
             $table->string('alias');
             $table->string('video');
             $table->string('file');

@@ -3,8 +3,8 @@
 namespace Modules\Portal\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Portal\Observers\ClientObserver;
-use Modules\Portal\Entities\Client;
+use Modules\Portal\Observers\CompanyObserver;
+use Modules\Portal\Entities\Company;
 
 class ObserviceServiceProvider extends ServiceProvider {
 
@@ -16,7 +16,7 @@ class ObserviceServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        Client::observe(ClientObserver::class);
+        Company::observe(CompanyObserver::class);
     }
 
     /**

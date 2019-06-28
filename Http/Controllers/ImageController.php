@@ -4,9 +4,9 @@ namespace Modules\Portal\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class ImageController extends Controller
+class ImageController extends BaseController
 {
     
 	public function produtos(Request $request){

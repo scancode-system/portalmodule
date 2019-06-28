@@ -2,7 +2,7 @@
 
 namespace Modules\Portal\Http\Controllers\Auth;
 
-use Modules\Portal\Entities\Client;
+use Modules\Portal\Entities\Company;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -41,7 +41,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->middleware('guest:admin');
-        $this->middleware('guest:client');
+        $this->middleware('guest:company');
     }
 
     /**
@@ -54,7 +54,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:clients'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -67,7 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Client::create($data);
+        return Company::create($data);
         //auth('client')->attempt(['email' => $data['email'], 'password' => $data['password']]);
     }
 
@@ -78,7 +78,7 @@ class RegisterController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('client');
+        return Auth::guard('company');
     }
 
 }

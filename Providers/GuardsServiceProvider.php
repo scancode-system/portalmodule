@@ -3,7 +3,7 @@
 namespace Modules\Portal\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Portal\Entities\Client;
+use Modules\Portal\Entities\Company;
 use Modules\Portal\Entities\Admin;
 
 class GuardsServiceProvider extends ServiceProvider {
@@ -25,9 +25,9 @@ class GuardsServiceProvider extends ServiceProvider {
      */
     public function register() {
         $guards = config('auth.guards');
-        $guards['client'] = [
+        $guards['company'] = [
             'driver' => 'session',
-            'provider' => 'clients',
+            'provider' => 'companies',
         ];
         $guards['admin'] = [
             'driver' => 'session',
@@ -39,9 +39,9 @@ class GuardsServiceProvider extends ServiceProvider {
 
 
         $providers = config('auth.providers');
-        $providers['clients'] =  [
+        $providers['companies'] =  [
             'driver' => 'eloquent',
-            'model' => Client::class,
+            'model' => Company::class,
         ];
         $providers['admins'] = [
             'driver' => 'eloquent',
@@ -52,9 +52,9 @@ class GuardsServiceProvider extends ServiceProvider {
 
 
         $passwords = config('auth.passwords');
-        $passwords['clients'] =  [
-            'provider' => 'clients',
-            'table' => 'clients_password_resets',
+        $passwords['companies'] =  [
+            'provider' => 'companies',
+            'table' => 'companies_password_resets',
             'expire' => 60,
         ];
         $passwords['admins'] = [

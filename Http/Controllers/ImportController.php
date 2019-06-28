@@ -3,18 +3,13 @@
 namespace Modules\Portal\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\Portal\Entities\ClientValidation;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Entities\CompanyValidation;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class ImportController extends Controller
+class ImportController extends BaseController
 {
 	
-	public function __construct()
-	{
-		$this->middleware('auth:client');
-	}
-
-	public function index(Request $request, ClientValidation $client_validation)
+	public function index(Request $request, CompanyValidation $client_validation)
 	{
 		return view('portal::import.index');
 	}

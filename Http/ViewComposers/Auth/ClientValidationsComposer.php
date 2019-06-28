@@ -10,7 +10,6 @@ class ClientValidationsComposer {
 
     public function compose(View $view) {
         $this->bootstrap();
-
         $view->with('client_validations', $this->client_validations);
     }
 
@@ -19,7 +18,7 @@ class ClientValidationsComposer {
     }
 
     private function client_validations(){
-        $this->client_validations = auth()->user()->client_validations()->with('validation')->get();
+        $this->client_validations = auth()->user()->company_validations()->with('validation')->get();
     }
 
 }

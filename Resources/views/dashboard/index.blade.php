@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h1 class="card-title font-weight-bold">BEM VINDO, {{ auth('client')->user()->name }}</h1>
+                        <h1 class="card-title font-weight-bold">BEM VINDO, {{ auth()->user()->name }}</h1>
                         <p class="lead">
                             Esse é o seu portal de cliente, aqui você encontra todos os passos
                             para realizar o seu evento, de forma tranquila e eficiente.

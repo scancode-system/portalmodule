@@ -7,7 +7,7 @@
         <img class="navbar-brand-minimized" src="{{ url('modules/portal/img/brand/sygnet.svg') }}" width="30" height="30" alt="Scancode Logo">
     </a>
     <ul class="nav navbar-nav ml-auto">
-        <li>{{ auth('client')->user()->name }}</li>
+        <li>{{ auth()->user()->name }}</li>
         <li class="nav-item d-md-down-none">
             {{ Form::open(['route' => 'logout']) }}
                 @csrf

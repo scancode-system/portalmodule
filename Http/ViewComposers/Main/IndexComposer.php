@@ -28,11 +28,11 @@ class IndexComposer extends SuperComposer {
 	}
 
 	private function company(){
-		$this->company = auth('client')->user()->company;
+		$this->company = auth()->user()->company;
 	}
 
 	private function client_setting(){
-		$this->client_setting = auth('client')->user()->client_setting;
+		$this->client_setting = auth()->user()->client_setting;
 	}
 
 }

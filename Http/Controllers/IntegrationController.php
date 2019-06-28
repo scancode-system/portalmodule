@@ -3,17 +3,11 @@
 namespace Modules\Portal\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class IntegrationController extends Controller
+class IntegrationController extends BaseController
 {
 
-
-	public function __construct()
-	{
-		$this->middleware('auth:client');
-	}
-    
 
 	public function index(){
 		return view('portal::integrations.index');

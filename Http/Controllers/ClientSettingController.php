@@ -5,9 +5,9 @@ namespace Modules\Portal\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Portal\Http\Requests\ClientSettingRequest;
 use Modules\Portal\Entities\ClientSetting;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class ClientSettingController extends Controller
+class ClientSettingController extends BaseController
 {
     
 

@@ -13,16 +13,16 @@ class CreateClientValidationTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_validation', function (Blueprint $table) {
+        Schema::create('company_validation', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('validation_id');
             $table->foreign('validation_id')->references('id')->on('validations')->onDelete('restrict')->onUpdate('cascade');
 
-            $table->unique(['client_id', 'validation_id']);
+            $table->unique(['company_id', 'validation_id']);
 
             $table->string('file')->nullable();
             $table->dateTime('update')->nullable();
@@ -41,6 +41,6 @@ class CreateClientValidationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_validation');
+        Schema::dropIfExists('company_validation');
     }
 }

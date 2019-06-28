@@ -5,7 +5,7 @@ namespace Modules\Portal\Services\Validation;
 use Modules\Portal\Exports\FailsExport;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Excel;
-use Modules\Portal\Entities\ClientValidation;
+use Modules\Portal\Entities\CompanyValidation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,9 +23,8 @@ class ValidationService {
 
 	public static function start($id)
 	{
-		$client_validation = ClientValidation::find($id);
+		$client_validation = CompanyValidation::find($id);
 		$path = session('validation.'.$id.'.path');
-
 
 		$import = self::import($client_validation);
 		$import->import($path, 'local', Excel::XLSX); 

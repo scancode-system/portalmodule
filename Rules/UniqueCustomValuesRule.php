@@ -32,6 +32,7 @@ class UniqueCustomValuesRule implements Rule
         $this->values = [];
     }
 
+    /* Revisar esta porcaria, pior que a porcaria esta certa */
     /**
      * Determine if the validation rule passes.
      *
@@ -41,19 +42,25 @@ class UniqueCustomValuesRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $count = 0;
-        $size = count($this->custom_values[$attribute]);
-
         if(count($this->parameters) == 0){
             $this->parameters = [$attribute];
         }
+
+        foreach ($this->parameters as $parameter) {
+            if(!isset($this->custom_values[$parameter])){
+                return false;
+            }
+        }
+
+        $count = 0;
+        $size = count($this->custom_values[$attribute]);
 
         for($index = 0;$index < $size; $index++) {
 
             $found = true;
 
             foreach ($this->parameters as $parameter) {
-                if($this->custom_values[$parameter][$index] != $this->data[$parameter]){
+                if($this->data[$parameter] != $this->custom_values[$parameter][$index]){
                     $found = false;
                 }
             }

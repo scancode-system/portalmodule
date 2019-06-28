@@ -3,20 +3,20 @@
 namespace Modules\Portal\Entities;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Modules\Portal\Entities\Client;
+use Modules\Portal\Entities\Company;
 use Modules\Portal\Entities\Validation;
 use Modules\Portal\Entities\Status;
 
-class ClientValidation extends Pivot
+class CompanyValidation extends Pivot
 {
 
 	protected $fillable = ['id', 'file', 'status_id', 'update'];
 
 	protected $dates = ['update'];
 
-	public function client()
+	public function company()
 	{
-		return $this->belongsTo(Client::class);
+		return $this->belongsTo(Company::class);
 	}
 
 	public function validation()

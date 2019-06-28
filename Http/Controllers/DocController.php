@@ -2,25 +2,21 @@
 
 namespace Modules\Portal\Http\Controllers;
 
-use Modules\Portal\Entities\ClientValidation;
+use Modules\Portal\Entities\CompanyValidation;
 use Modules\Portal\Entities\Validation;
 use Illuminate\Http\Request;
 use Nwidart\Modules\Facades\Module;
-use App\Http\Controllers\Controller;
+use Modules\Portal\Http\Controllers\BaseController;
 
-class DocController extends Controller
+class DocController extends BaseController
 {
 
-	public function __construct()
-	{
-		$this->middleware('auth:client');
-	}
 	
-	public function index(Request $request, ClientValidation $client_validation){
+	public function index(Request $request, CompanyValidation $client_validation){
 		return view($client_validation->validation->module_alias.'::documentation');
 	}
 
-	public function downloadSample(Request $request, ClientValidation $client_validation){
+	public function downloadSample(Request $request, CompanyValidation $client_validation){
 		return response()->download(Module::assetPath($client_validation->validation->module_alias).'/'.$client_validation->validation->file);
 	}
 
