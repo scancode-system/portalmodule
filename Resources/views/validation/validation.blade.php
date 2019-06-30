@@ -9,10 +9,10 @@
 <script>
 	$(document).ready(function(){
 		var interval = setInterval(function(){
-			$("#container_validation").load('{{ route('portal.validation.info', $client_validation) }}');
+			$("#container_validation").load('{{ route('portal.validation.info', $company_validation) }}');
 		}, 1000);
 
-		$.post('{{ route('portal.validation.start', $client_validation) }}').always(function(data) {
+		$.post('{{ route('portal.validation.start', $company_validation) }}').always(function(data) {
 			clearInterval(interval);
 			$("#container_validation").html(data);
 		});

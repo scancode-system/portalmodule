@@ -9,7 +9,7 @@ use Modules\Portal\Http\Controllers\BaseController;
 class ImportController extends BaseController
 {
 	
-	public function index(Request $request, CompanyValidation $client_validation)
+	public function index(Request $request, CompanyValidation $company_validation)
 	{
 		return view('portal::import.index');
 	}

@@ -12,11 +12,11 @@
 					assista o video de cada uma das validações, uma demonstração passo a passo de como é fácil e simples importar e validar seus dados.
 				</p>
 				<div class="row">
-					@foreach($client_validations as $client_validation)
+					@foreach($company_validations as $company_validation)
 					<div class="col">
-						<a href="{{ $client_validation->validation->video }}" target="_blank" class="btn my-5 w-100">
+						<a href="{{ $company_validation->validation->video }}" target="_blank" class="btn my-5 w-100">
 							<i class="mb-3 text-primary fa fa-file-video-o fa-4x"></i>
-							<div class="">Videos de {{ $client_validation->validation->alias }}</div>
+							<div class="">Videos de {{ $company_validation->validation->alias }}</div>
 						</a>
 					</div>
 					@endforeach

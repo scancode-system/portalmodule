@@ -17,7 +17,7 @@
 @endif
 <h3>DADOS DA EMPRESA</h3>
 <hr>
-{{ Form::Open(['route' => ['portal.company.update', $company_info->id, $company_address->id], 'method' => 'PUT']) }}
+{{ Form::Open(['route' => ['portal.company.info.address.update', $company_info->id, $company_address->id], 'method' => 'PUT']) }}
 <div class="row">
 	<div class="col">
 		<div class="form-group">

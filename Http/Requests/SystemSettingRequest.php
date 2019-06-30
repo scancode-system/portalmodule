@@ -4,7 +4,7 @@ namespace Modules\Portal\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientSettingRequest extends FormRequest
+class SystemSettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

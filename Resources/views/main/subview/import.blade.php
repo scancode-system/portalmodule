@@ -9,6 +9,6 @@
 		@include('portal::main.subview.import.table_head')
 	</thead>
 	<tbody>
-		@each('portal::main.subview.import.table_row', $client_validations, 'client_validation')
+		@each('portal::main.subview.import.table_row', $company_validations, 'company_validation')
 	</tbody>
 </table>

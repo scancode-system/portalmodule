@@ -23,11 +23,11 @@
 
 
 @push('styles')
-{{ Html::style('dropzone/dropzone.css') }}
+{{ Html::style('modules/portal/dropzone/dropzone.css') }}
 @endpush
 
 @push('scripts')
-{{ Html::script('dropzone/dropzone.js') }}
+{{ Html::script('modules/portal/dropzone/dropzone.js') }}
 
 
 <script>

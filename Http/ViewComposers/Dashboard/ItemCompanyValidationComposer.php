@@ -5,7 +5,7 @@ namespace Modules\Portal\Http\ViewComposers\Dashboard;
 use Illuminate\View\View;
 use \stdClass;
 
-class ItemClientValidationComposer {
+class ItemCompanyValidationComposer {
 
     private $data;
 
@@ -33,7 +33,7 @@ class ItemClientValidationComposer {
     private function data($view){
         $this->data = new stdClass;
 
-        switch ($view->client_validation->status_id) {
+        switch ($view->company_validation->status_id) {
             case 1:
             $this->data->badge_color = 'danger';
             $this->data->badge_text = 'pendente';

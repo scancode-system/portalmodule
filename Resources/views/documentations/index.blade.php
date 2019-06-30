@@ -12,11 +12,11 @@
 					baixe nossa documentação e configure suas planilhas da forma correta.
 				</p>
 				<div class="row">
-					@foreach($client_validations as $client_validation)
+					@foreach($company_validations as $company_validation)
 					<div class="col">
-						<a href="{{ route('portal.doc.download.pdf', $client_validation->validation) }}" class="btn my-5 w-100">
+						<a href="{{ route('portal.doc.download.pdf', $company_validation->validation) }}" class="btn my-5 w-100">
 							<i class="mb-3 text-danger fa fa-file-pdf-o fa-4x"></i>
-							<div class="">Documentação de {{ $client_validation->validation->alias }}</div>
+							<div class="">Documentação de {{ $company_validation->validation->alias }}</div>
 						</a>
 					</div>
 					@endforeach

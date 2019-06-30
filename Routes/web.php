@@ -19,31 +19,31 @@ Route::prefix('portal')->group(function() {
 	Route::get('/', function(){return redirect()->route('portal.dashboard');}); 
 
 	// dasboard
-	Route::get('/client', 'DashboardController@index')->name('portal.dashboard');
+	Route::get('/company', 'DashboardController@index')->name('portal.dashboard');
 
 	// main
 	Route::get('/main/{tab}', 'MainController@index')->name('portal.main');
 
 	// import
-	Route::get('/import/{client_validation}', 'ImportController@index')->name('portal.import');
+	Route::get('/import/{company_validation}', 'ImportController@index')->name('portal.import');
 
 	// validation
-	Route::post('/validation/{client_validation}', 'ValidationController@index')->name('portal.validation');
+	Route::post('/validation/{company_validation}', 'ValidationController@index')->name('portal.validation');
 
-	Route::post('/validation/{client_validation}/start', 'ValidationController@start')->name('portal.validation.start');
-	Route::get('/validation/{client_validation}/info', 'ValidationController@info')->name('portal.validation.info');
-	Route::get('/validation/{client_validation}/download', 'ValidationController@download')->name('portal.validation.download');
+	Route::post('/validation/{company_validation}/start', 'ValidationController@start')->name('portal.validation.start');
+	Route::get('/validation/{company_validation}/info', 'ValidationController@info')->name('portal.validation.info');
+	Route::get('/validation/{company_validation}/download', 'ValidationController@download')->name('portal.validation.download');
 
 	//documentation
-	Route::get('/doc/{client_validation}', 'DocController@index')->name('portal.doc');
-	Route::get('/doc/{client_validation}/sample', 'DocController@downloadSample')->name('portal.doc.download.sample');
+	Route::get('/doc/{company_validation}', 'DocController@index')->name('portal.doc');
+	Route::get('/doc/{company_validation}/sample', 'DocController@downloadSample')->name('portal.doc.download.sample');
 	Route::get('/doc/{validation}/download/pdf', 'DocController@downloadPDF')->name('portal.doc.download.pdf');
 
 
 	// company
-	Route::put('/company/{company_info}/{company_address}/update', 'CompanyController@update')->name('portal.company.update');
+	Route::put('/company/{company_info}/{company_address}/update', 'CompanyController@updateCompanyInfoAddress')->name('portal.company.info.address.update');
 	// setting
-	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.client_setting.update');
+	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
 
 
 	//documentations

@@ -23,20 +23,20 @@ class ValidationService {
 
 	public static function start($id)
 	{
-		$client_validation = CompanyValidation::find($id);
+		$company_validation = CompanyValidation::find($id);
 		$path = session('validation.'.$id.'.path');
 
-		$import = self::import($client_validation);
+		$import = self::import($company_validation);
 		$import->import($path, 'local', Excel::XLSX); 
 
 		session(['validation.'.$id.'.result' => (count($import->fails()) == 0)]); 
 		
 		if($import->isValid()){
-			if(Storage::exists('clients/'.$client_validation->client_id.'/'.$client_validation->validation->file)){
-				Storage::delete('clients/'.$client_validation->client_id.'/'.$client_validation->validation->file);
+			if(Storage::exists('companies/'.$company_validation->company_id.'/'.$company_validation->validation->file)){
+				Storage::delete('companies/'.$company_validation->company_id.'/'.$company_validation->validation->file);
 			}
-			Storage::move($path, 'clients/'.$client_validation->client_id.'/'.$client_validation->validation->file);
-			$client_validation->update(['file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
+			Storage::move($path, 'companies/'.$company_validation->company_id.'/'.$company_validation->validation->file);
+			$company_validation->update(['file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
 		} else {
 			$export = self::export($import);
 			$export->store('download/errors/'.$id.'.xlsx', 'local'); 
@@ -46,9 +46,9 @@ class ValidationService {
 	}
 
 
-    private static function import($client_validation){
-    	$class = 'Modules\\'.$client_validation->validation->module_name.'\Validator\\'.str_replace('_', '', ucwords($client_validation->validation->validation, '_')).'Validator';
-    	return new $class($client_validation->id);
+    private static function import($company_validation){
+    	$class = 'Modules\\'.$company_validation->validation->module_name.'\Validator\\'.str_replace('_', '', ucwords($company_validation->validation->validation, '_')).'Validator';
+    	return new $class($company_validation->id);
     }
 
     private static function export($import){
