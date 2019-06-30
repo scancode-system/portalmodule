@@ -3,8 +3,10 @@
 namespace Modules\Portal\Observers;
 
 use Modules\Portal\Entities\Company;
+use Modules\Portal\Entities\CompanyInfo;
+use Modules\Portal\Entities\CompanyAddress;
+use Modules\Portal\Entities\SystemSetting;
 use Modules\Portal\Entities\Validation;
-use Modules\Portal\Entities\ClientSetting;
 use Illuminate\Support\Facades\Hash;
 
 class CompanyObserver {
@@ -21,8 +23,10 @@ class CompanyObserver {
 			$company->validations()->attach($validation);
 		}
 
-		//Company::create(['client_id' => $client->id]);
-		//ClientSetting::create(['client_id' => $client->id, 'event' => '', 'note' => '', 'email_note' => '']);
+		CompanyInfo::create(['company_id' => $company->id]);
+		CompanyAddress::create(['company_id' => $company->id]);
+		
+		SystemSetting::create(['company_id' => $company->id]);
 	}
 
 }

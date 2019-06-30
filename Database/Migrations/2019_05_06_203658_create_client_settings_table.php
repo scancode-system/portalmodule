@@ -19,14 +19,14 @@ class CreateClientSettingsTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->string('event');
+            $table->string('event')->nullable();
             $table->integer('start_id_order')->default(1);
             $table->integer('number_sheets')->default(1);
-            $table->text('note');
+            $table->text('note')->nullable();
 
             $table->string('email_from')->default('Scancode');
             $table->string('email_subject')->default('Fechamento de Pedido');
-            $table->text('email_note');
+            $table->text('email_note')->nullable();
 
             $table->timestamps();
         });

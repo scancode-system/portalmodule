@@ -11,7 +11,7 @@ class Company extends Authenticatable
 {
 
 	use Notifiable;
-    
+
 
 	protected $guard = 'company';
 
@@ -25,7 +25,7 @@ class Company extends Authenticatable
 
 	public function validations()
 	{
-		return $this->belongsToMany(Validation::class)->using(ClientValidation::class)->as('company_validation')->withPivot(['status_id', 'file', 'update']);
+		return $this->belongsToMany(Validation::class)->using(CompanyValidation::class)->as('company_validation')->withPivot(['status_id', 'file', 'update']);
 	}
 
 	public function company_validations()
@@ -33,16 +33,19 @@ class Company extends Authenticatable
 		return $this->hasMany(CompanyValidation::class);
 	}
 
-/*	public function company_infos()
+	public function company_info()
 	{
-		return $this->hasOne('Modules\Portal\Entities\Company');
+		return $this->hasOne('Modules\Portal\Entities\CompanyInfo');
 	}
 
-	public function client_setting()
+	public function company_address()
 	{
-		return $this->hasOne('Modules\Portal\Entities\ClientSetting');
-	}*/
+		return $this->hasOne('Modules\Portal\Entities\CompanyAddress');
+	}
 
-	//protected $fillable = ['id', 'cnpj', 'company_name', 'trade_name', 'state_registration', 'phone', 'address', 'neighborhood', 'city', 'st', 'zip_code', 'client_id'];
+	public function system_setting()
+	{
+		return $this->hasOne('Modules\Portal\Entities\SystemSetting');
+	}
 
 }

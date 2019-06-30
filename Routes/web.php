@@ -41,9 +41,9 @@ Route::prefix('portal')->group(function() {
 
 
 	// company
-	Route::put('/company/{company}/update', 'CompanyController@update')->name('portal.company.update');
+	Route::put('/company/{company_info}/{company_address}/update', 'CompanyController@update')->name('portal.company.update');
 	// setting
-	Route::put('/setting/{client_setting}/update', 'ClientSettingController@update')->name('portal.client_setting.update');
+	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.client_setting.update');
 
 
 	//documentations

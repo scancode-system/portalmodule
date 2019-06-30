@@ -17,24 +17,24 @@
 @endif
 <h3>CONFIGURAÇÃO</h3>
 <hr>
-{{ Form::model($client_setting, ['route' => ['portal.client_setting.update', $client_setting], 'method' => 'PUT']) }}
+{{ Form::Open(['route' => ['portal.client_setting.update', $system_setting->id], 'method' => 'PUT']) }}
 <div class="form-group">
 	{{ Form::label('event', 'Nome do Evento') }}
-	{{ Form::text('event', null, ['class' => 'form-control']) }}
+	{{ Form::text('event', $system_setting->event, ['class' => 'form-control']) }}
 </div>
 <div class="form-row">
 	<div class="form-group col-md-6">
 		{{ Form::label('start_id_order', 'Número inicial dos pedidos') }}
-		{{ Form::number('start_id_order', null, ['class' => 'form-control']) }}
+		{{ Form::number('start_id_order', $system_setting->start_id_order, ['class' => 'form-control']) }}
 	</div>
 	<div class="form-group col-md-6">
 		{{ Form::label('number_sheets', 'Número de vias a ser impresso') }}
-		{{ Form::number('number_sheets', null, ['class' => 'form-control']) }}
+		{{ Form::number('number_sheets', $system_setting->number_sheets, ['class' => 'form-control']) }}
 	</div>
 </div>
 <div class="form-group">
 	{{ Form::label('note', 'Observação') }}
-	{{ Form::textarea('note', null, ['class' => 'form-control', 'placeholder' => '"Nossos pedidos serão entregues de acordo com disponibilidade de estoque"']) }}
+	{{ Form::textarea('note', $system_setting->note, ['class' => 'form-control', 'placeholder' => '"Nossos pedidos serão entregues de acordo com disponibilidade de estoque"']) }}
 	<small class="form-text text-muted">
 		Campo de observação do pedido, é um campo onde você pode colocar
 		um texto padrão que vai aparecer na impressão de todos os pedidos.
@@ -48,16 +48,16 @@
 <div class="form-row">
 	<div class="form-group col-md-6">
 		{{ Form::label('email_from', 'Remetente') }}
-		{{ Form::text('email_from', null, ['class' => 'form-control']) }}
+		{{ Form::text('email_from', $system_setting->email_from, ['class' => 'form-control']) }}
 	</div>
 	<div class="form-group col-md-6">
 		{{ Form::label('email_subject', 'Assunto') }}
-		{{ Form::text('email_subject', null, ['class' => 'form-control']) }}
+		{{ Form::text('email_subject', $system_setting->email_subject, ['class' => 'form-control']) }}
 	</div>
 </div>
 <div class="form-group">
 	{{ Form::label('email_note', 'Mensagem do corpo do email') }}
-	{{ Form::textarea('email_note', null, ['class' => 'form-control']) }}
+	{{ Form::textarea('email_note', $system_setting->email_note, ['class' => 'form-control']) }}
 </div>
 {{ Form::submit('SALVAR', ['class' => 'btn btn-danger btn-lg']) }}
 {{ Form::close() }}
