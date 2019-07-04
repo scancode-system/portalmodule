@@ -13,20 +13,12 @@ class CompanyObserver {
 
 
 	public function creating(Company $company) {
-		$company->token = base64_encode($company->email.':'.$company->password);
 		$company->password = Hash::make($company->password);
 	}
 
 	public function created(Company $company) {
-		$validations = Validation::all();
-		foreach ($validations as $validation) {
-			$company->validations()->attach($validation);
-		}
-
 		CompanyInfo::create(['company_id' => $company->id]);
 		CompanyAddress::create(['company_id' => $company->id]);
-		
-		SystemSetting::create(['company_id' => $company->id]);
 	}
 
 }

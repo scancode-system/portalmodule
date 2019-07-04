@@ -13,9 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/portal', function (Request $request) {
-    Route::get('/client/data', 'Api\ClientController@data');
-	Route::get('/client/download', 'Api\ClientController@download');
-});
-
-
+Route::get('/token/{event}', 'Api\TokenController@event');
+Route::get('/token/{event}/files', 'Api\TokenController@files');

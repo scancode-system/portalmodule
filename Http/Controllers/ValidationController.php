@@ -4,7 +4,7 @@ namespace Modules\Portal\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\Portal\Http\Requests\RequestValidation;
-use Modules\Portal\Entities\CompanyValidation;
+use Modules\Portal\Entities\EventValidation;
 use Modules\Portal\Entities\Validation;
 use Modules\Portal\Services\Validation\ValidationService;
 use Modules\Portal\Services\Validation\ValidationFileSessionService;
@@ -14,26 +14,32 @@ use Modules\Portal\Http\Controllers\BaseController;
 class ValidationController extends BaseController
 {
 
-	public function index(RequestValidation $request, CompanyValidation $company_validation)
+		public function __construct()
 	{
-		ValidationService::beforeStart($company_validation->id, $request->file);
+		parent::__construct();
+		$this->middleware('event.selected');
+	}
+
+	public function index(RequestValidation $request, EventValidation $event_validation)
+	{
+		ValidationService::beforeStart($event_validation->id, $request->file);
 		return view('portal::validation.index');
 	}
 
-	public function start(Request $request, CompanyValidation $company_validation)
+	public function start(Request $request, EventValidation $event_validation)
 	{
-		ValidationService::start($company_validation->id);
+		ValidationService::start($event_validation->id);
 		return view('portal::validation.subviews.loading');
 	}
 
-	public function info(Request $request, CompanyValidation $company_validation)
+	public function info(Request $request, EventValidation $event_validation)
 	{
 		return view('portal::validation.subviews.loading');
 	}	
 
-	public function download(Request $request, CompanyValidation $company_validation)
+	public function download(Request $request, EventValidation $event_validation)
 	{
-		return response()->download(storage_path('app/download/errors/'.$company_validation->id.'.xlsx'), $company_validation->validation->alias.'.xlsx');
+		return response()->download(storage_path('app/download/errors/'.$event_validation->id.'.xlsx'), $event_validation->validation->alias.'.xlsx');
 	}	
 
 }

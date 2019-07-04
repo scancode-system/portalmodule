@@ -44,7 +44,7 @@
                 muito mais.
             </p>
             <ul class="list-group list-group-flush list-group-accent mb-4">
-                @each('portal::dashboard.subviews.item_company_validation', $company_validations, 'company_validation')
+                @each('portal::dashboard.subviews.item_event_validation', $event_validations, 'event_validation')
             </ul>
             <a href="{{ route('portal.main', 0) }}" class="btn btn-danger btn-lg btn-block">INICIAR PASSO A PASSO</a>
         </div>

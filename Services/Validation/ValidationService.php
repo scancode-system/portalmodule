@@ -5,7 +5,7 @@ namespace Modules\Portal\Services\Validation;
 use Modules\Portal\Exports\FailsExport;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Excel;
-use Modules\Portal\Entities\CompanyValidation;
+use Modules\Portal\Entities\EventValidation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +23,7 @@ class ValidationService {
 
 	public static function start($id)
 	{
-		$company_validation = CompanyValidation::find($id);
+		$company_validation = EventValidation::find($id);
 		$path = session('validation.'.$id.'.path');
 
 		$import = self::import($company_validation);
@@ -32,10 +32,12 @@ class ValidationService {
 		session(['validation.'.$id.'.result' => (count($import->fails()) == 0)]); 
 		
 		if($import->isValid()){
-			if(Storage::exists('companies/'.$company_validation->company_id.'/'.$company_validation->validation->file)){
-				Storage::delete('companies/'.$company_validation->company_id.'/'.$company_validation->validation->file);
+			$event = $company_validation->event;
+			$company = $event->company;
+			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
 			}
-			Storage::move($path, 'companies/'.$company_validation->company_id.'/'.$company_validation->validation->file);
+			Storage::move($path, 'companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
 			$company_validation->update(['file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
 		} else {
 			$export = self::export($import);

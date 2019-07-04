@@ -25,23 +25,23 @@ Route::prefix('portal')->group(function() {
 	Route::get('/main/{tab}', 'MainController@index')->name('portal.main');
 
 	// import
-	Route::get('/import/{company_validation}', 'ImportController@index')->name('portal.import');
+	Route::get('/import/{event_validation}', 'ImportController@index')->name('portal.import');
 
 	// validation
-	Route::post('/validation/{company_validation}', 'ValidationController@index')->name('portal.validation');
+	Route::post('/validation/{event_validation}', 'ValidationController@index')->name('portal.validation');
 
-	Route::post('/validation/{company_validation}/start', 'ValidationController@start')->name('portal.validation.start');
-	Route::get('/validation/{company_validation}/info', 'ValidationController@info')->name('portal.validation.info');
-	Route::get('/validation/{company_validation}/download', 'ValidationController@download')->name('portal.validation.download');
+	Route::post('/validation/{event_validation}/start', 'ValidationController@start')->name('portal.validation.start');
+	Route::get('/validation/{event_validation}/info', 'ValidationController@info')->name('portal.validation.info');
+	Route::get('/validation/{event_validation}/download', 'ValidationController@download')->name('portal.validation.download');
 
 	//documentation
-	Route::get('/doc/{company_validation}', 'DocController@index')->name('portal.doc');
-	Route::get('/doc/{company_validation}/sample', 'DocController@downloadSample')->name('portal.doc.download.sample');
+	Route::get('/doc/{event_validation}', 'DocController@index')->name('portal.doc');
+	Route::get('/doc/{event_validation}/sample', 'DocController@downloadSample')->name('portal.doc.download.sample');
 	Route::get('/doc/{validation}/download/pdf', 'DocController@downloadPDF')->name('portal.doc.download.pdf');
 
 
 	// company
-	Route::put('/company/{company_info}/{company_address}/update', 'CompanyController@updateCompanyInfoAddress')->name('portal.company.info.address.update');
+	Route::put('/company/{event_info}/{company_address}/update', 'CompanyController@updateCompanyInfoAddress')->name('portal.company.info.address.update');
 	// setting
 	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
 
@@ -63,6 +63,19 @@ Route::prefix('portal')->group(function() {
 	Route::delete('/images/produtos', 'ImageController@destroy')->name('portal.images.destroy');
 	Route::delete('/images/logo', 'ImageController@destroyLogo')->name('portal.images.destroy.logo');
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// Company
+	Route::get('/companies/{company}/{tab}', 'CompanyController@edit')->name('portal.companies.edit');
+	Route::put('/companies/{company}', 'CompanyController@update')->name('portal.company.update');
+	Route::put('/companies/{company_info}/info', 'CompanyController@updateInfo')->name('portal.company.update.info');
+	Route::put('/companies/{company_address}/address', 'CompanyController@updateAddress')->name('portal.company.update.address');
+	// Event
+	Route::get('/events', 'EventController@index')->name('events.index');
+	Route::post('/events', 'EventController@store')->name('events.store');
+	Route::put('/events/{event}', 'EventController@update')->name('events.update');
+	Route::put('/events/parameterless/update', 'EventController@updateParameterless')->name('events.parameterless.update');
+	Route::delete('/events/{event}', 'EventController@destroy')->name('events.destroy');
 
 });
 

@@ -5,6 +5,7 @@ namespace Modules\Portal\Entities;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\Portal\Entities\CompanyValidation;
 use Modules\Portal\Entities\Validation;
+use Modules\Portal\Entities\Event;
 use Illuminate\Notifications\Notifiable;
 
 class Company extends Authenticatable
@@ -23,16 +24,6 @@ class Company extends Authenticatable
 		'password', 'remember_token',
 	];
 
-	public function validations()
-	{
-		return $this->belongsToMany(Validation::class)->using(CompanyValidation::class)->as('company_validation')->withPivot(['status_id', 'file', 'update']);
-	}
-
-	public function company_validations()
-	{
-		return $this->hasMany(CompanyValidation::class);
-	}
-
 	public function company_info()
 	{
 		return $this->hasOne('Modules\Portal\Entities\CompanyInfo');
@@ -46,6 +37,17 @@ class Company extends Authenticatable
 	public function system_setting()
 	{
 		return $this->hasOne('Modules\Portal\Entities\SystemSetting');
+	}
+
+	public function events()
+	{
+		return $this->hasMany(Event::class);
+	}
+
+	public function getEventAttribute($value)
+	{
+		$event = $this->events()->where('selected', 1)->first();
+		return ($event)?$event:null;
 	}
 
 }

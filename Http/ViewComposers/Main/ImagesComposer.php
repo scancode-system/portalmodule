@@ -22,17 +22,16 @@ class ImagesComposer extends SuperComposer {
 	}
 
 	private function produtos(){
-		$produtos = Storage::disk('local')->files('companies/'.auth()->user()->id.'/images/produtos');
+		$produtos = Storage::disk('local')->files('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/images/produtos');
 		foreach ($produtos as $key => $produto) {
-			$produtos[$key] = str_replace('companies/'.auth()->user()->id.'/images/produtos/', '', $produto);
+			$produtos[$key] = str_replace('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/images/produtos/', '', $produto);
 		}
 
 		$this->produtos = $produtos;
 	}
 
 	private function logo(){
-		$this->logo = Storage::disk('local')->exists('companies/'.auth()->user()->id.'/images/logo/logo.jpg');
+		$this->logo = Storage::disk('local')->exists('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/images/logo/logo.jpg');
 	}
-
 
 }

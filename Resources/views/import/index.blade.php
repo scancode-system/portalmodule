@@ -5,18 +5,18 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header text-uppercase">
-				IMPORTAR {{ $company_validation->validation->alias }}
+				IMPORTAR {{ $event_validation->validation->alias }}
 			</div>
 			<div class="card-body">
 				<p class="lead text-center">
-					Vamos importar e validar seus dados de {{ $company_validation->validation->alias }}!!! Baixe nossa planilha de exemplo no link abaixo, preencha com seus dados
+					Vamos importar e validar seus dados de {{ $event_validation->validation->alias }}!!! Baixe nossa planilha de exemplo no link abaixo, preencha com seus dados
 					e importe. Se atente aos campos obrigatórios.
 				</p>
 				<div class="row mb-5">
 					<div class="col text-center">
 						<div>
-							<a href="{{ route('portal.doc.download.sample', $company_validation) }}" class="block btn my-4">
-								<div class="font-weight-bold h3 mb-3 text-capitalize">Download de {{ $company_validation->validation->alias }}</div>
+							<a href="{{ route('portal.doc.download.sample', $event_validation) }}" class="block btn my-4">
+								<div class="font-weight-bold h3 mb-3 text-capitalize">Download de {{ $event_validation->validation->alias }}</div>
 								<i class="fa fa-file-excel-o fa-5x text-success"></i>
 							</a>
 						</div>
@@ -24,7 +24,7 @@
 					</div>
 					<div class="col text-center">
 						<div>
-							<a href="{{ $company_validation->validation->video }}" class="btn tedxt-white my-4 w-100" target="_blank">
+							<a href="{{ $event_validation->validation->video }}" class="btn tedxt-white my-4 w-100" target="_blank">
 								<div class="font-weight-bold h3 mb-3">Vídeo Explicativo</div>
 								<i class="fa fa-file-movie-o fa-5x text-danger"></i>
 							</a>
@@ -44,10 +44,10 @@
 						</div>
 						@endif
 						<div class="custom-file">
-							{{ Form::open(['route' => ['portal.validation', $company_validation], 'enctype' => 'multipart/form-data']) }}
+							{{ Form::open(['route' => ['portal.validation', $event_validation], 'enctype' => 'multipart/form-data']) }}
 							{{ Form::hidden('extension', 'xlsx') }}
 							{{ Form::file('file', ['class' => 'custom-file-input', 'onchange' => 'this.form.submit();']) }}	
-							{{ Form::label('file', 'Upload do arquivo de '.$company_validation->validation->alias, ['class' => 'custom-file-label']) }}	
+							{{ Form::label('file', 'Upload do arquivo de '.$event_validation->validation->alias, ['class' => 'custom-file-label']) }}	
 							{{ Form::close() }}					
 						</div>
 					</div>
@@ -65,5 +65,5 @@
 <li class="breadcrumb-item">
 	<a href="{{ route('portal.main', 1) }}">Painel Central - Importar e Validar</a>
 </li>
-<li class="breadcrumb-item text-capitalize">Importar {{ $company_validation->validation->alias }}</li>
+<li class="breadcrumb-item text-capitalize">Importar {{ $event_validation->validation->alias }}</li>
 @endsection

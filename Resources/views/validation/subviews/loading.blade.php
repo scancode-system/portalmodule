@@ -15,7 +15,7 @@
 
 		@if($export)
 		<div class="d-flex justify-content-center">
-			<a href="{{ route('portal.validation.download', $company_validation) }}" class="btn btn-danger btn-lg w-50 text-uppercase">BAIXAR TABELA DE {{ $company_validation->validation->alias }}</a>
+			<a href="{{ route('portal.validation.download', $event_validation) }}" class="btn btn-danger btn-lg w-50 text-uppercase">BAIXAR TABELA DE {{ $event_validation->validation->alias }}</a>
 		</div>
 		@else
 		<p class="text-center mb-1">Aguarde um momento...</p>

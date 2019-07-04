@@ -33,17 +33,17 @@ class TableRowComposer extends SuperComposer {
     }
 
     private function date_text(){
-        if(is_null($this->data->company_validation->update)) {
+        if(is_null($this->data->event_validation->update)) {
             $this->date_text = 'Sem atualização';
         } else {
-            $this->date_text = $this->data->company_validation->update->format('d/m/Y H:i:s');
+            $this->date_text = $this->data->event_validation->update->format('d/m/Y H:i:s');
         }
     }
 
     public function data($view){
-        $this->data->company_validation = $view->company_validation;
+        $this->data->event_validation = $view->event_validation;
 
-        switch ($this->data->company_validation->status_id) {
+        switch ($this->data->event_validation->status_id) {
             case 1:
             $this->data->badge_color = 'danger';
             $this->data->badge_text = 'pendente';

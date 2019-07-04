@@ -9,13 +9,13 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
     public function boot() {
         //auth
-        View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\CompanyValidationsComposer');
+        View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\EventValidationsComposer');
 
         //parameters
-        View::composer(['portal::import.index', 'portal::validation.index'], 'Modules\Portal\Http\ViewComposers\Parameters\CompanyValidationComposer');
+        View::composer(['portal::import.index', 'portal::validation.index'], 'Modules\Portal\Http\ViewComposers\Parameters\EventValidationComposer');
 
         //dashboard
-        View::composer('portal::dashboard.subviews.item_company_validation', 'Modules\Portal\Http\ViewComposers\Dashboard\ItemCompanyValidationComposer');
+        View::composer('portal::dashboard.subviews.item_event_validation', 'Modules\Portal\Http\ViewComposers\Dashboard\ItemEventValidationComposer');
         
         // main     
         View::composer('portal::main.index', 'Modules\Portal\Http\ViewComposers\Main\IndexComposer');
@@ -24,6 +24,14 @@ class ViewComposerServiceProvider extends ServiceProvider {
         
         // validation        
         View::composer('portal::validation.subviews.loading', 'Modules\Portal\Http\ViewComposers\Validation\LoadingComposer');
+
+        //////////////////////////////////////////////////////
+        // layouts
+        View::composer('portal::layouts.app', 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');        
+        // companies        
+        View::composer('portal::companies.edit', 'Modules\Portal\Http\ViewComposers\Companies\EditComposer');
+        // events
+        View::composer('portal::events.index', 'Modules\Portal\Http\ViewComposers\Events\IndexComposer');
     }
 
     public function register() {

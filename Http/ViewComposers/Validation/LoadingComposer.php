@@ -6,7 +6,7 @@ use Illuminate\View\View;
 
 class LoadingComposer {
 
-    protected $company_validation;
+    protected $event_validation;
 
 
     protected $porcent;
@@ -34,17 +34,17 @@ class LoadingComposer {
         $view->with('is_success', $this->is_success);
         $view->with('color', $this->color);
         $view->with('export', $this->export);
-        $view->with('company_validation', $this->company_validation);
+        $view->with('event_validation', $this->event_validation);
     }
 
     protected function init(){
-        $this->company_validation = request()->route('company_validation');
-        $this->is_success = session('validation.'.$this->company_validation->id.'.result', false);
-        $this->export = session('validation.'.$this->company_validation->id.'.export', false);
+        $this->event_validation = request()->route('event_validation');
+        $this->is_success = session('validation.'.$this->event_validation->id.'.result', false);
+        $this->export = session('validation.'.$this->event_validation->id.'.export', false);
     }
 
     protected function porcent(){     
-        $this->porcent = session('validation.'.$this->company_validation->id.'.loaded', 0);
+        $this->porcent = session('validation.'.$this->event_validation->id.'.loaded', 0);
     }
 
     protected function complete(){     

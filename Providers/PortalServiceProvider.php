@@ -15,10 +15,10 @@ class PortalServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
     }
 
     /**
@@ -33,23 +33,10 @@ class PortalServiceProvider extends ServiceProvider
         $this->app->register(ValidationServiceProvider::class);
         $this->app->register(ObserviceServiceProvider::class);
         $this->app->register(GuardsServiceProvider::class);
+        $this->app->register(MiddlewareServiceProvider::class);
 
     }
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('portal.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'portal'
-        );
-    }
 
     /**
      * Register views.

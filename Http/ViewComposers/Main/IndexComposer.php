@@ -39,7 +39,7 @@ class IndexComposer extends SuperComposer {
 	}
 
 	private function system_setting(){
-		$this->system_setting = auth()->user()->system_setting;
+		$this->system_setting = auth()->user()->event->system_setting;
 	}
 
 }

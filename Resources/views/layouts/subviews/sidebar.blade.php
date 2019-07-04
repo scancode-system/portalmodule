@@ -7,6 +7,14 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('portal.companies.edit', [auth()->user(), 0]) }}">
+            <i class="nav-icon fa fa-id-card-o"></i> Empresa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('events.index') }}">
+            <i class="nav-icon fa fa-ticket"></i> Eventos</a>
+        </li>        
+        <li class="nav-item">
           <a class="nav-link" href="{{ route('portal.main', 1) }}">
             <i class="nav-icon fa fa-download"></i> Importação</a>
         </li>

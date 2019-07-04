@@ -18,10 +18,6 @@
 <h3>CONFIGURAÇÃO</h3>
 <hr>
 {{ Form::Open(['route' => ['portal.system_setting.update', $system_setting->id], 'method' => 'PUT']) }}
-<div class="form-group">
-	{{ Form::label('event', 'Nome do Evento') }}
-	{{ Form::text('event', $system_setting->event, ['class' => 'form-control']) }}
-</div>
 <div class="form-row">
 	<div class="form-group col-md-6">
 		{{ Form::label('start_id_order', 'Número inicial dos pedidos') }}
