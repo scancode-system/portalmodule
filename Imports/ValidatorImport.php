@@ -24,10 +24,14 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	private $header_not_present;
 
 	protected $cells;
+
 	protected $columns;
+
+	protected $new;
 
 	public function __construct($id){
 		$this->id = $id;
+		$this->new = [];
 	}
 
 
@@ -41,6 +45,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 		if ($validator->fails()) {
 
+			$this->fixFails();
 			//dd($validator->failed());
 
 			$fields = array_keys($validator->failed());
@@ -48,12 +53,18 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 				$coordinate = $this->coordinateCellFailed($row, $row_index, $validator, $field);
 				array_push($this->fails, [$coordinate[0], $coordinate[1]]);
 			}
+		} else {
+			array_push($this->new, $row);
 		}
 
 
 		$this->progress->update();
 	}
 
+
+	private function fixFails(){
+		
+	}
 
 	private function coordinateCellFailed($row, $row_index, $validator, $field){
 		$x = null;

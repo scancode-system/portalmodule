@@ -22,10 +22,8 @@ class TokenController extends Controller
 		return $event->toJson();
 	}
 
-
 	public function files(Request $request, Event $event){
 		$files = Storage::allFiles('companies/'.$event->company_id.'/'.$event->id);
-		//dd($files);
 		if(count($files)){
 			$zip_path = storage_path('app/companies/'.$event->company_id.'/'.$event->id.'.zip'); 
 
@@ -42,7 +40,6 @@ class TokenController extends Controller
 		} else {
 			return response()->json([], 204);
 		}
-
 	}
 
 }
