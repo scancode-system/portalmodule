@@ -13,7 +13,9 @@ class CompanyObserver {
 
 
 	public function creating(Company $company) {
-		$company->password = Hash::make($company->password);
+		$password = $company->password;
+		$company->password = Hash::make($password);
+		$company->password_64 = base64_encode($password);
 	}
 
 	public function created(Company $company) {

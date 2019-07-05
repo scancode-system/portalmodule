@@ -24,8 +24,8 @@ class TokenController extends Controller
 
 
 	public function files(Request $request, Event $event){
-		$files = Storage::files('companies/'.$event->company_id.'/'.$event->id);
-
+		$files = Storage::allFiles('companies/'.$event->company_id.'/'.$event->id);
+		//dd($files);
 		if(count($files)){
 			$zip_path = storage_path('app/companies/'.$event->company_id.'/'.$event->id.'.zip'); 
 

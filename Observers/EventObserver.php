@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 class EventObserver {
 
 	public function creating(Event $event) {
-		// era para ser chamado num repositorio isso
 		$company_events = $event->company->events;
 		foreach ($company_events as $company_event) {
 			if($company_event->selected == 1){
@@ -21,12 +20,13 @@ class EventObserver {
 		}
 		
 		$event->selected = 1;
-
-		$company = Company::find($event->company_id);
-		$event->token = base64_encode($company->email.':'.$company->password.':'.$event->id);
 	}
 
 	public function created(Event $event) {
+		$company = Company::find($event->company_id);
+		$event->token = base64_encode($company->email.':'.base64_decode($company->password_64).':'.$event->id);
+		$event->save();
+
 		$validations = Validation::all();
 		foreach ($validations as $validation) {
 			$event->validations()->attach($validation);
