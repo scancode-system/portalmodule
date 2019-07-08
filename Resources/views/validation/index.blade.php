@@ -8,9 +8,6 @@
 				VALIDAÇÃO DE {{ $event_validation->validation->alias }}
 			</div>
 			<div class="card-body">
-				<p class="lead text-center">
-					Estamos validando sua tabela de {{ $event_validation->validation->alias }}, aguarde isso pode demorar alguns minutos.
-				</p>
 				@include('portal::validation.validation')
 			</div>
 		</div>

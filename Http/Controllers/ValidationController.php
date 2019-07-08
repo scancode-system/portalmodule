@@ -29,17 +29,17 @@ class ValidationController extends BaseController
 	public function start(Request $request, EventValidation $event_validation)
 	{
 		ValidationService::start($event_validation->id);
-		return view('portal::validation.subviews.loading');
+		return view('portal::validation.subviews.loading2');
 	}
 
 	public function info(Request $request, EventValidation $event_validation)
 	{
-		return view('portal::validation.subviews.loading');
+		return view('portal::validation.subviews.loading2');
 	}	
 
 	public function download(Request $request, EventValidation $event_validation)
 	{
-		return response()->download(storage_path('app/download/errors/'.$event_validation->id.'.xlsx'), $event_validation->validation->alias.'.xlsx');
+		return response()->download(storage_path('app/validations/'.$event_validation->id.'.xlsx'), $event_validation->validation->alias.'.xlsx');
 	}	
 
 }

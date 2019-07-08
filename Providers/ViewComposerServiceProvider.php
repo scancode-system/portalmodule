@@ -23,7 +23,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer('portal::main.subview.import.table_row', 'Modules\Portal\Http\ViewComposers\Main\Import\TableRowComposer');
         
         // validation        
-        View::composer('portal::validation.subviews.loading', 'Modules\Portal\Http\ViewComposers\Validation\LoadingComposer');
+        View::composer(['portal::validation.subviews.loading', 'portal::validation.subviews.loading2'], 'Modules\Portal\Http\ViewComposers\Validation\LoadingComposer');
 
         //////////////////////////////////////////////////////
         // layouts

@@ -13,6 +13,9 @@ class LoadingComposer {
     protected $legend;
     protected $text;
 
+    protected $progress_bar_animated;
+    protected $legend_animated;
+
     protected $complete;
     protected $is_success;
     protected $color;
@@ -26,6 +29,8 @@ class LoadingComposer {
         $this->legend();
         $this->text();
         $this->color();
+        $this->progress_bar_animated();
+        $this->legend_animated();
 
         $view->with('porcent', $this->porcent);
         $view->with('legend', $this->legend);
@@ -35,12 +40,16 @@ class LoadingComposer {
         $view->with('color', $this->color);
         $view->with('export', $this->export);
         $view->with('event_validation', $this->event_validation);
+
+        $view->with('progress_bar_animated', $this->progress_bar_animated);
+        $view->with('legend_animated', $this->legend_animated);
     }
 
     protected function init(){
         $this->event_validation = request()->route('event_validation');
         $this->is_success = session('validation.'.$this->event_validation->id.'.result', false);
         $this->export = session('validation.'.$this->event_validation->id.'.export', false);
+
     }
 
     protected function porcent(){     
@@ -57,7 +66,7 @@ class LoadingComposer {
         if($this->porcent > 0 && $this->porcent < 100) {
             $legend = 'arquivo sendo validado';
         } else if ($this->porcent == 100) {
-            $legend = 'validação concluida';
+            $legend = 'validação concluída';
         }
 
         $this->legend = $legend;
@@ -66,7 +75,7 @@ class LoadingComposer {
     protected function text(){
         $text = '';
 
-         if($this->complete && $this->is_success) {
+        if($this->complete && $this->is_success) {
             $text = 'parabéns sua tabela foi validada e importada com sucesso';
         } else if ($this->complete) {
             $text = 'sua tabela contém erros e não pode ser importada, faça download da planilha no botão abaixo. nelalhe mostraremos todos os erros, faça a correção necessárioa e tente validar novamente';
@@ -85,5 +94,23 @@ class LoadingComposer {
         }
 
         $this->color = $color;
+    }
+
+    protected function progress_bar_animated(){
+        $progress_bar_animated = '';
+        if($this->porcent == 100 && !$this->export){
+            $progress_bar_animated = 'progress-bar-animated';
+        }
+
+        $this->progress_bar_animated = $progress_bar_animated;
+    }
+
+    protected function legend_animated(){
+        $legend_animated = 'arquivo sendo gerado';
+        if($this->export){
+            $legend_animated = 'arquivo gerado';
+        }
+
+        $this->legend_animated = $legend_animated;
     }
 }

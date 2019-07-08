@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col" id="container_validation">
-		@include('portal::validation.subviews.loading')		
+		@include('portal::validation.subviews.loading2')		
 	</div>
 </div>
 

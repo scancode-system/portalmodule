@@ -2,7 +2,7 @@
 
 namespace Modules\Portal\Services\Validation;
 
-use Modules\Portal\Exports\FailsExport;
+use Modules\Portal\Exports\ValidationExport;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Excel;
 use Modules\Portal\Entities\EventValidation;
@@ -28,10 +28,29 @@ class ValidationService {
 
 		$import = self::import($company_validation);
 		$import->import($path, 'local', Excel::XLSX); 
-
-		session(['validation.'.$id.'.result' => (count($import->fails()) == 0)]); 
 		
-		if($import->isValid()){
+		//session(['validation.'.$id.'.result' => $import->validated]); 
+		session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
+		
+		$export = self::export($import);
+		$export->store('validations/'.$id.'.xlsx', 'local');
+
+		if($import->validated()){
+			$event = $company_validation->event;
+			$company = $event->company;
+			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
+			}
+			Storage::move($path, 'companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
+			$company_validation->update(['file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
+		}
+
+		session(['validation.'.$id.'.result' => $import->validated()]); 
+		session(['validation.'.$id.'.export' => true]);	
+
+
+
+		/*if($import->isValid()){
 			$event = $company_validation->event;
 			$company = $event->company;
 			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
@@ -44,7 +63,7 @@ class ValidationService {
 			$export->store('download/errors/'.$id.'.xlsx', 'local'); 
 
 			session(['validation.'.$id.'.export' => true]); 
-		}
+		}*/
 	}
 
 
@@ -56,8 +75,9 @@ class ValidationService {
     private static function export($import){
 			$cells = $import->cells();
 			$fails = $import->fails();
+			$changes = $import->changes();
 
-			return new FailsExport($cells, $fails);
+			return new ValidationExport($cells, $changes, $fails);
 		}
 
 

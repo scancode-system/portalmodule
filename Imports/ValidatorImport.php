@@ -21,69 +21,92 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	private $id;
 	protected $progress;
 	protected $fails;
+	protected $changes;
 	private $header_not_present;
 
 	protected $cells;
 
 	protected $columns;
 
-	protected $new;
+	protected $validated;
+
 
 	public function __construct($id){
 		$this->id = $id;
-		$this->new = [];
+		$this->validated = true;
 	}
 
 
-	public function onRow(Row $rowImported)
+	public function onRow(Row $rowExcel)
 	{
-		$row = $rowImported->toArray();
-		$row_index = $rowImported->getRowIndex();
+		$row = $this->filter($rowExcel);
+		$row_index = $rowExcel->getRowIndex();
 
+		$this->validation($row, $row_index, $this->columns);
+		$this->progress->update();
+
+	}
+
+	private function validation($row, $row_index, $dataCustomValues){
 		$validator = Validator::make($row, $this->rule($row));
-		$validator->addCustomValues($this->columns);
+		$validator->addCustomValues($dataCustomValues);
 
 		if ($validator->fails()) {
-
-			$this->fixFails();
-			//dd($validator->failed());
-
+			$this->validated = false;
 			$fields = array_keys($validator->failed());
 			foreach ($fields as $field) {
 				$coordinate = $this->coordinateCellFailed($row, $row_index, $validator, $field);
 				array_push($this->fails, [$coordinate[0], $coordinate[1]]);
 			}
-		} else {
-			array_push($this->new, $row);
 		}
-
-
-		$this->progress->update();
 	}
 
 
-	private function fixFails(){
-		
+	private function filter($rowExcel){
+		$row = $rowExcel->toArray();
+		$header = array_keys($row);
+		$filterRules = $this->filterRules();
+		foreach ($filterRules as $filterRule) {
+			$rule = $filterRule['rule'];
+			$field = key($filterRule['rule']);
+			$filter = $filterRule['filter'];
+
+			$validator = Validator::make($row, $rule);
+			if (!$validator->fails()) {
+				$x = ($rowExcel->getRowIndex()-1);
+				$y = array_search($field, $header);
+				if($y || $y == 0){
+					$value = $this->$filter($row[$field]);
+					$this->cells[$x][$y] = $value;
+					$row[$field] = $value;
+					array_push($this->changes, [($x+1), $y]);
+				}
+			}
+		}
+		return $row;
+	}
+
+	private function dateDMY($value){
+		$value = str_replace('/', '-', $value);
+		return date("Y-m-d", strtotime($value));
+	}
+
+	private function currencyFormat($value){
+		$value = str_replace('R$', '', $value);
+		$value = str_replace(' ', '', $value);
+		$value = str_replace('.', '', $value);
+		$value = str_replace(',', '.', $value);
+		return $value;
+	}
+
+
+	public function filterRules(){
+		return [];
 	}
 
 	private function coordinateCellFailed($row, $row_index, $validator, $field){
-		$x = null;
-		$y = null;
-		$header = array_keys($row);
-
 		$x = $row_index;
-		$y = array_search($field, $header);
-
-		if($y === false){
-			$index_header_not_present = array_search($field, $this->header_not_present);
-			if($index_header_not_present === false){
-				$y = count($header)+count($this->header_not_present);
-				array_push($this->header_not_present, $field);
-			} else {
-				$y = count($header)+$index_header_not_present;
-			}
-		}
-
+		$y = array_search($field, array_keys($row));
 		return [$x, $y];
 	}
 
@@ -96,10 +119,17 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		return $this->fails;
 	}
 
+	public function changes(){
+		return $this->changes;
+	}
+
+	public function validated(){
+		return $this->validated;
+	}
+
 	public function cells(){
-		$cells = $this->cells;
-		$cells[0] = array_merge($cells[0], $this->header_not_present);
-		return $cells;
+		//dd($this->cells);
+		return $this->cells;
 	}
 
 
@@ -115,6 +145,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	public function initImport($rows, $cells){
 		$this->progress = new ValidationProgressService($this->id, $rows);
 		$this->fails = [];
+		$this->changes = [];
 		$this->header_not_present = [];
 		
 		$this->cells = $cells;
