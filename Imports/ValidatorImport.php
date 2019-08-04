@@ -99,6 +99,14 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		return $value;
 	}
 
+	private function nullToOne($value){
+		return 1;
+	}
+
+	private function nullToZero($value){
+		return 0;
+	}
+
 
 	public function filterRules(){
 		return [];

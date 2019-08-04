@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Portal\Rules\UniqueCustomValuesRule;
 use Modules\Portal\Rules\NotPresentCustomValuesRule;
 use Modules\Portal\Rules\BlockedRule;
+use Modules\Portal\Rules\NullRule;
 use Modules\Portal\Rules\PresentWithRule;
 
 class ValidationServiceProvider extends ServiceProvider
@@ -43,6 +44,10 @@ class ValidationServiceProvider extends ServiceProvider
 
         Validator::extend('not_present_custom_values', function ($attribute, $value, $parameters, $validator) {
             return (new NotPresentCustomValuesRule($parameters, $validator))->passes($attribute, $value);
+        });
+
+        Validator::extend('null', function ($attribute, $value, $parameters, $validator) {
+            return (new NullRule($parameters, $validator))->passes($attribute, $value);
         });
     }
 }
