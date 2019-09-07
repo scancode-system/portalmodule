@@ -23,12 +23,11 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	protected $fails;
 	protected $changes;
 	private $header_not_present;
-
 	protected $cells;
-
 	protected $columns;
-
 	protected $validated;
+	private $row;
+	private $row_index;
 
 
 	public function __construct($id){
@@ -39,51 +38,115 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 	public function onRow(Row $rowExcel)
 	{
-		$row = $this->filter($rowExcel);
-		$row_index = $rowExcel->getRowIndex();
+		$this->row = $rowExcel->toArray();
+		$this->row_index = $rowExcel->getRowIndex();
 
-		$this->validation($row, $row_index, $this->columns);
+		$this->preValidation();
+
+		$this->trim();
+		$this->filter();
+
+		$this->validation();
 		$this->progress->update();
-
 	}
 
-	private function validation($row, $row_index, $dataCustomValues){
-		$validator = Validator::make($row, $this->rule($row));
-		$validator->addCustomValues($dataCustomValues);
+	private function preValidation(){
+		$this->filters();
+	}
+
+	protected function filters(){}
+
+	protected function phoneFilter($fields){
+		$header = array_keys($this->row);
+		foreach ($fields as $field) {
+			$x = ($this->row_index-1);
+			$y = array_search($field, $header);
+
+			$old_value = $this->row[$field];
+			$new_value = substr(preg_replace('/[^-()0-9]/', '', $this->row[$field]), 0, 14);
+
+			$this->row[$field] = $new_value;
+			$this->cells[$x][$y] = $new_value;
+
+			if($old_value != $new_value){
+				array_push($this->changes, [($x+1), $y]);
+			}
+		}
+	}
+
+	protected function lengthFilter($fields, $length){
+		$header = array_keys($this->row);
+		foreach ($fields as $field) {
+			$x = ($this->row_index-1);
+			$y = array_search($field, $header);
+
+			$old_value = $this->row[$field];
+			$new_value = substr($this->row[$field], 0, $length);
+
+			$this->row[$field] = $new_value;
+			$this->cells[$x][$y] = $new_value;
+
+			if($old_value != $new_value){
+				array_push($this->changes, [($x+1), $y]);
+			}
+		}
+	}
+
+	private function validation(){
+		$validator = Validator::make($this->row, $this->rule($this->row));
+		$validator->addCustomValues($this->columns);
 
 		if ($validator->fails()) {
+			//dd($validator->failed());
 			$this->validated = false;
 			$fields = array_keys($validator->failed());
 			foreach ($fields as $field) {
-				$coordinate = $this->coordinateCellFailed($row, $row_index, $validator, $field);
+				$coordinate = $this->coordinateCellFailed($this->row, $this->row_index, $validator, $field);
 				array_push($this->fails, [$coordinate[0], $coordinate[1]]);
 			}
 		}
 	}
 
+	private function trim(){
+		$header = array_keys($this->row);
+		foreach ($header as $field) {
+			$x = ($this->row_index-1);
+			$y = array_search($field, $header);
 
-	private function filter($rowExcel){
-		$row = $rowExcel->toArray();
-		$header = array_keys($row);
+			$this->row[$field] = trim($this->row[$field]);
+			$this->cells[$x][$y] = $this->row[$field];
+
+		}
+	}
+
+
+
+	private function filter(){
+		$header = array_keys($this->row);
 		$filterRules = $this->filterRules();
 		foreach ($filterRules as $filterRule) {
 			$rule = $filterRule['rule'];
 			$field = key($filterRule['rule']);
 			$filter = $filterRule['filter'];
 
-			$validator = Validator::make($row, $rule);
-			if (!$validator->fails()) {
-				$x = ($rowExcel->getRowIndex()-1);
-				$y = array_search($field, $header);
-				if($y || $y == 0){
-					$value = $this->$filter($row[$field]);
-					$this->cells[$x][$y] = $value;
-					$row[$field] = $value;
-					array_push($this->changes, [($x+1), $y]);
+			if(isset($this->row[$field])){
+
+				$validator = Validator::make($this->row, $rule);
+				if (!$validator->fails()) {
+					$x = ($this->row_index-1);
+					$y = array_search($field, $header);
+					if($y || $y == 0){
+						$old_value = $this->row[$field];
+						$new_value = $this->$filter($this->row[$field]);
+						$this->cells[$x][$y] = $new_value;
+						$this->row[$field] = $new_value;
+						if($new_value != $old_value){
+							array_push($this->changes, [($x+1), $y]);
+						}
+					}
 				}
 			}
 		}
-		return $row;
 	}
 
 	private function dateDMY($value){
