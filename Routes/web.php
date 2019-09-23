@@ -32,6 +32,10 @@ Route::prefix('portal')->group(function() {
 
 	Route::post('/validation/{event_validation}/start', 'ValidationController@start')->name('portal.validation.start');
 	Route::get('/validation/{event_validation}/info', 'ValidationController@info')->name('portal.validation.info');
+
+		Route::post('/validation/{event_validation}/start2', 'ValidationController@start2')->name('portal.validation.start2');
+	Route::get('/validation/{event_validation}/info2', 'ValidationController@info2')->name('portal.validation.info2');
+
 	Route::get('/validation/{event_validation}/download', 'ValidationController@download')->name('portal.validation.download');
 
 	//documentation

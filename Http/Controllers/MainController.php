@@ -16,6 +16,8 @@ class MainController extends BaseController
 
 	public function index(Request $request, $tab) 
 	{
+		//session(['validation.7.in_progress' => false]);
+		//dd(session('validation.7.in_progress2'));
 		return view('portal::main.index');
 	}
 

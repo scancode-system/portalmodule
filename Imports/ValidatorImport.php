@@ -2,16 +2,19 @@
 
 namespace Modules\Portal\Imports;
 
+use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Events\BeforeImport;
 use Illuminate\Support\Facades\Validator;
 use Modules\Portal\Services\Validation\ValidationProgressService;
 use Modules\Portal\Imports\ValidatorInterface;
+
 
 abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents, ValidatorInterface
 {
@@ -28,6 +31,8 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	protected $validated;
 	private $row;
 	private $row_index;
+
+	protected $required;
 
 
 	public function __construct($id){
@@ -62,14 +67,16 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 			$x = ($this->row_index-1);
 			$y = array_search($field, $header);
 
-			$old_value = $this->row[$field];
-			$new_value = substr(preg_replace('/[^-()0-9]/', '', $this->row[$field]), 0, 14);
+			if(isset($this->row[$field])){
+				$old_value = $this->row[$field];
+				$new_value = substr(preg_replace('/[^-()0-9]/', '', $this->row[$field]), 0, 14);
 
-			$this->row[$field] = $new_value;
-			$this->cells[$x][$y] = $new_value;
+				$this->row[$field] = $new_value;
+				$this->cells[$x][$y] = $new_value;
 
-			if($old_value != $new_value){
-				array_push($this->changes, [($x+1), $y]);
+				if($old_value != $new_value){
+					array_push($this->changes, [($x+1), $y]);
+				}
 			}
 		}
 	}
@@ -80,14 +87,16 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 			$x = ($this->row_index-1);
 			$y = array_search($field, $header);
 
-			$old_value = $this->row[$field];
-			$new_value = substr($this->row[$field], 0, $length);
+			if(isset($this->row[$field])){
+				$old_value = $this->row[$field];
+				$new_value = substr($this->row[$field], 0, $length);
 
-			$this->row[$field] = $new_value;
-			$this->cells[$x][$y] = $new_value;
+				$this->row[$field] = $new_value;
+				$this->cells[$x][$y] = $new_value;
 
-			if($old_value != $new_value){
-				array_push($this->changes, [($x+1), $y]);
+				if($old_value != $new_value){
+					array_push($this->changes, [($x+1), $y]);
+				}
 			}
 		}
 	}
@@ -97,6 +106,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		$validator->addCustomValues($this->columns);
 
 		if ($validator->fails()) {
+			//dd($this->row);
 			//dd($validator->failed());
 			$this->validated = false;
 			$fields = array_keys($validator->failed());
@@ -225,7 +235,12 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 	private function parseColumns($cells){
 		$columns = [];
-		$header = $cells[0];
+
+		$header = [];
+		foreach ($cells[0] as $column_name) {
+			array_push($header, str_slug($column_name, '_'));
+		}
+
 		array_shift($cells);
 
 		foreach ($header as $column) {
@@ -240,6 +255,28 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		}
 
 		return $columns;
+	}
+
+
+	public function checkHeadings($path){
+		$headings = (new HeadingRowImport)->toArray($path, 'local', Excel::XLSX)[0][0];
+		foreach ($this->required as $heading) {
+			if (!in_array($heading, $headings, true)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public function missing_headings($path){
+		$missing_headings = [];
+		$headings = (new HeadingRowImport)->toArray($path, 'local', Excel::XLSX)[0][0];
+		foreach ($this->required as $heading) {
+			if (!in_array($heading, $headings, true)) {
+				array_push($missing_headings, $heading);
+			}
+		}
+		return $missing_headings;
 	}
 
 }

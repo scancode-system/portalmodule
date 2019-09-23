@@ -23,7 +23,7 @@ class ValidationController extends BaseController
 	public function index(RequestValidation $request, EventValidation $event_validation)
 	{
 		ValidationService::beforeStart($event_validation->id, $request->file);
-		return view('portal::validation.index');
+		//return view('portal::validation.index');
 	}
 
 	public function start(Request $request, EventValidation $event_validation)
@@ -35,6 +35,17 @@ class ValidationController extends BaseController
 	public function info(Request $request, EventValidation $event_validation)
 	{
 		return view('portal::validation.subviews.loading2');
+	}	
+
+		public function start2(Request $request, EventValidation $event_validation)
+	{
+		ValidationService::start($event_validation->id);
+		return view('portal::validation.subviews.validation_event', ['event_validation' => $event_validation->id]);
+	}
+
+	public function info2(Request $request, EventValidation $event_validation)
+	{
+		return view('portal::validation.subviews.validation_event', ['event_validation' => $event_validation->id]);
 	}	
 
 	public function download(Request $request, EventValidation $event_validation)

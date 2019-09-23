@@ -3,11 +3,14 @@
 namespace Modules\Portal\Http\ViewComposers\Validation;
 
 use Illuminate\View\View;
+use Modules\Portal\Entities\EventValidation;
 
 class LoadingComposer {
 
     protected $event_validation;
 
+    protected $required;
+    protected $missing_titles;
 
     protected $porcent;
     protected $legend;
@@ -22,8 +25,20 @@ class LoadingComposer {
 
     protected $export;
 
+    protected $layout;
+    protected $in_progress;
+
+    const LAYOUT_EMPTY = 'empty'; 
+    const LAYOUT_COMPLETE = 'complete';
+    const LAYOUT_PROGRESS = 'progress';
+
+
     public function compose(View $view) {
-        $this->init();
+        $this->init($view);
+        
+        $this->required();
+        $this->missing_headings();
+
         $this->porcent();
         $this->complete();
         $this->legend();
@@ -32,6 +47,10 @@ class LoadingComposer {
         $this->progress_bar_animated();
         $this->legend_animated();
 
+        $this->layout();
+
+        $view->with('required', $this->required);
+        $view->with('missing_headings', $this->missing_headings);
         $view->with('porcent', $this->porcent);
         $view->with('legend', $this->legend);
         $view->with('text', $this->text);
@@ -43,17 +62,32 @@ class LoadingComposer {
 
         $view->with('progress_bar_animated', $this->progress_bar_animated);
         $view->with('legend_animated', $this->legend_animated);
+
+
+        $view->with('in_progress', $this->in_progress);
+        $view->with('layout', $this->layout);
     }
 
-    protected function init(){
-        $this->event_validation = request()->route('event_validation');
+    protected function init($view){
+        $this->event_validation = EventValidation::find($view->event_validation);
         $this->is_success = session('validation.'.$this->event_validation->id.'.result', false);
         $this->export = session('validation.'.$this->event_validation->id.'.export', false);
+        //session(['validation.'.$this->event_validation->id.'.in_progress' => false]);
+        //dd(session('validation.'.$this->event_validation->id.'.in_progress'));
+        $this->in_progress = session('validation.'.$this->event_validation->id.'.in_progress2');
 
+    }
+
+    protected function required(){     
+        $this->required =   session('validation.'.$this->event_validation->id.'.headings');                           
+    }
+
+    protected function missing_headings(){     
+        $this->missing_headings = session('validation.'.$this->event_validation->id.'.missing_headings');                           
     }
 
     protected function porcent(){     
-        $this->porcent = session('validation.'.$this->event_validation->id.'.loaded', 0);
+        $this->porcent = session('validation.'.$this->event_validation->id.'.loaded', 0);                         
     }
 
     protected function complete(){     
@@ -112,5 +146,15 @@ class LoadingComposer {
         }
 
         $this->legend_animated = $legend_animated;
+    }
+
+
+     protected function layout(){
+        $layout = self::LAYOUT_EMPTY;
+        if($this->in_progress){
+                    $layout = self::LAYOUT_PROGRESS;
+        }
+
+        $this->layout = $layout;
     }
 }

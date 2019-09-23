@@ -1,3 +1,5 @@
+
+@if($required)
 <div class="row my-5">
 	<div class="col">
 		<h3 class="mt-5 text-capitalize">{{ $legend }}</h3>
@@ -26,4 +28,10 @@
 		@endif
 	</div>
 </div>
-
+@else
+<div class="row my-5">
+	<div class="col">
+		<p class="lead my-5 text-center">Arquivo não possui todos os campos obrigatórios</p>
+	</div>
+</div>
+@endif
