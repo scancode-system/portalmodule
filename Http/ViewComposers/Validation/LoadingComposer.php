@@ -28,6 +28,11 @@ class LoadingComposer {
     protected $layout;
     protected $in_progress;
 
+    protected $validated;
+    protected $modified;
+    protected $duplicates;
+    protected $failures;
+
     const LAYOUT_EMPTY = 'empty'; 
     const LAYOUT_COMPLETE = 'complete';
     const LAYOUT_PROGRESS = 'progress';
@@ -66,15 +71,25 @@ class LoadingComposer {
 
         $view->with('in_progress', $this->in_progress);
         $view->with('layout', $this->layout);
+
+        $view->with('validated', $this->validated);
+        $view->with('modified', $this->modified);
+        $view->with('duplicates', $this->duplicates);
+        $view->with('failures', $this->failures);
     }
 
     protected function init($view){
         $this->event_validation = EventValidation::find($view->event_validation);
         $this->is_success = session('validation.'.$this->event_validation->id.'.result', false);
         $this->export = session('validation.'.$this->event_validation->id.'.export', false);
-        //session(['validation.'.$this->event_validation->id.'.in_progress' => false]);
+        //session(['validation.'.$this->event_validation->id.'.in_progress2' => false]);
         //dd(session('validation.'.$this->event_validation->id.'.in_progress'));
         $this->in_progress = session('validation.'.$this->event_validation->id.'.in_progress2');
+
+        $this->validated = session('validation.'.$this->event_validation->id.'.validated');
+        $this->modified = session('validation.'.$this->event_validation->id.'.modified');
+        $this->duplicates = session('validation.'.$this->event_validation->id.'.duplicates');
+        $this->failures = session('validation.'.$this->event_validation->id.'.failures');
 
     }
 

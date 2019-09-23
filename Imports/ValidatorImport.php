@@ -114,6 +114,12 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 				$coordinate = $this->coordinateCellFailed($this->row, $this->row_index, $validator, $field);
 				array_push($this->fails, [$coordinate[0], $coordinate[1]]);
 			}
+			//session(['validation.'.$this->id.'.failures' => $validated]);
+			session(['validation.'.$this->id.'.failures' => (1+session('validation.'.$this->id.'.failures')) ]);
+		} else {
+			//$validated = ++session('validation.'.$this->id.'.validated');
+			//$validated++;
+			session(['validation.'.$this->id.'.validated' => (1+session('validation.'.$this->id.'.validated')) ]);
 		}
 	}
 

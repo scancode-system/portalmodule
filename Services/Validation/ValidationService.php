@@ -22,6 +22,11 @@ class ValidationService {
 		session(['validation.'.$id.'.headings' => true]);
 		session(['validation.'.$id.'.missing_headings' => []]);
 		session(['validation.'.$id.'.in_progress2' => true]);
+
+		session(['validation.'.$id.'.validated' => 0]);
+		session(['validation.'.$id.'.modified' => 0]);
+		session(['validation.'.$id.'.duplicates' => 0]);
+		session(['validation.'.$id.'.failures' => 0]);
 	}
 
 	public static function start($id)
