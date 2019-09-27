@@ -333,7 +333,12 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 
 	protected function chunkColumn($column, $start, $end){
-		return array_slice($this->columns[$column], $start, $end);
+		if(isset($this->columns[$column])){
+			return array_slice($this->columns[$column], $start, $end);
+		} else {
+			return [];
+		}
+
 	}
 
 	protected function getIndexHeader($alias){
