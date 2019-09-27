@@ -27,7 +27,7 @@ class CreateEventValidationTable extends Migration
             $table->string('original_file')->nullable();
             $table->string('debug_file')->nullable();
             $table->string('clean_file')->nullable();
-            $table->text('report')->nullable();
+            $table->longText('report')->nullable();
 
 
 
