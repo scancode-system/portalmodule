@@ -33,8 +33,15 @@ Route::prefix('portal')->group(function() {
 	Route::post('/validation/{event_validation}/start', 'ValidationController@start')->name('portal.validation.start');
 	Route::get('/validation/{event_validation}/info', 'ValidationController@info')->name('portal.validation.info');
 
-		Route::post('/validation/{event_validation}/start2', 'ValidationController@start2')->name('portal.validation.start2');
+	Route::post('/validation/{event_validation}/2', 'ValidationController@index2')->name('portal.validation2');
+	Route::post('/validation/{event_validation}/start2', 'ValidationController@start2')->name('portal.validation.start2');
 	Route::get('/validation/{event_validation}/info2', 'ValidationController@info2')->name('portal.validation.info2');
+	Route::put('/validation/{event_validation}/clean', 'ValidationController@eventValidationClean')->name('portal.validation.clean');
+	Route::get('/validation/{event_validation}/download/original', 'ValidationController@downloadOriginal')->name('portal.validation.download.original');
+	Route::get('/validation/{event_validation}/download/debug', 'ValidationController@downloadDebug')->name('portal.validation.download.debug');
+	Route::get('/validation/{event_validation}/download/clean', 'ValidationController@downloadClean')->name('portal.validation.download.clean');
+	Route::post('/validation/{event_validation}/errors', 'ValidationController@errors')->name('portal.validation.errors');
+	
 
 	Route::get('/validation/{event_validation}/download', 'ValidationController@download')->name('portal.validation.download');
 

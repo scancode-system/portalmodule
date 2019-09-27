@@ -25,14 +25,16 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	protected $progress;
 	protected $fails;
 	protected $changes;
-	private $header_not_present;
+	protected $header_not_present;
 	protected $cells;
 	protected $columns;
 	protected $validated;
-	private $row;
-	private $row_index;
+	protected $row;
+	protected $row_index;
 
 	protected $required;
+
+	protected $validated_rows;
 
 
 	public function __construct($id){
@@ -43,8 +45,13 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 	public function onRow(Row $rowExcel)
 	{
+
 		$this->row = $rowExcel->toArray();
 		$this->row_index = $rowExcel->getRowIndex();
+
+		//dd($this->row_index);
+		//if($this->row_index == 32)
+		//dd($this->chunkColumn('cpf_cnpj', 0, $this->row_index));
 
 		$this->preValidation();
 
@@ -76,6 +83,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 				if($old_value != $new_value){
 					array_push($this->changes, [($x+1), $y]);
+					session(['validation.'.$this->id.'.modified' => (1+session('validation.'.$this->id.'.modified')) ]);
 				}
 			}
 		}
@@ -96,31 +104,60 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 				if($old_value != $new_value){
 					array_push($this->changes, [($x+1), $y]);
+					session(['validation.'.$this->id.'.modified' => (1+session('validation.'.$this->id.'.modified')) ]);
 				}
 			}
 		}
 	}
 
 	private function validation(){
-		$validator = Validator::make($this->row, $this->rule($this->row));
+		$validator = Validator::make($this->row, $this->rule($this->row), $this->messages());
 		$validator->addCustomValues($this->columns);
 
 		if ($validator->fails()) {
-			//dd($this->row);
 			//dd($validator->failed());
+			//dd($this->row_index);
+			//if($this->row_index == 69)
+			//dd($validator->messages()->all());
+			//dd($validator->failed());
+
 			$this->validated = false;
 			$fields = array_keys($validator->failed());
 			foreach ($fields as $field) {
+				//if($this->row_index == 69)
+				//dd($validator->messages()->get($field));
+				//dd($validator->failed());
+				//dd($validator->messages()->all());
+
 				$coordinate = $this->coordinateCellFailed($this->row, $this->row_index, $validator, $field);
-				array_push($this->fails, [$coordinate[0], $coordinate[1]]);
+				array_push($this->fails, [$coordinate[0], $coordinate[1], $validator->messages()->get($field)[0] ]);
 			}
 			//session(['validation.'.$this->id.'.failures' => $validated]);
 			session(['validation.'.$this->id.'.failures' => (1+session('validation.'.$this->id.'.failures')) ]);
+			$this->checkDuplicates($validator);
 		} else {
 			//$validated = ++session('validation.'.$this->id.'.validated');
 			//$validated++;
 			session(['validation.'.$this->id.'.validated' => (1+session('validation.'.$this->id.'.validated')) ]);
+			array_push($this->validated_rows, $this->row);
 		}
+	}
+
+
+	private function checkDuplicates($validator){
+		$messages = $validator->messages()->all();
+		foreach ($messages as $message) {
+			if($message == 'Duplicado'){
+				session(['validation.'.$this->id.'.duplicates' => (1+session('validation.'.$this->id.'.duplicates')) ]);
+			}
+		}
+		//if($this->row_index == 69)
+		//	dd($validator->failed());
+		/*foreach ($validator->failed() as $rules_failed) {
+			if(array_key_exists('UniqueCustomValues', $rules_failed)){
+				session(['validation.'.$this->id.'.duplicates' => (1+session('validation.'.$this->id.'.duplicates')) ]);
+			}
+		}*/
 	}
 
 	private function trim(){
@@ -158,6 +195,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 						$this->row[$field] = $new_value;
 						if($new_value != $old_value){
 							array_push($this->changes, [($x+1), $y]);
+							session(['validation.'.$this->id.'.modified' => (1+session('validation.'.$this->id.'.modified')) ]);
 						}
 					}
 				}
@@ -234,9 +272,13 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		$this->fails = [];
 		$this->changes = [];
 		$this->header_not_present = [];
+		$this->validated_rows = [];
 		
+
+
 		$this->cells = $cells;
 		$this->columns = $this->parseColumns($this->cells);
+
 	}
 
 	private function parseColumns($cells){
@@ -284,5 +326,29 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		}
 		return $missing_headings;
 	}
+
+	public function getHeadings($path){
+		return  (new HeadingRowImport)->toArray($path, 'local', Excel::XLSX)[0][0];
+	}
+
+
+	protected function chunkColumn($column, $start, $end){
+		return array_slice($this->columns[$column], $start, $end);
+	}
+
+	protected function getIndexHeader($alias){
+
+	}
+
+	protected function getAliasHeader($index){
+
+	}
+
+	public function validatedRows(){
+		array_unshift($this->validated_rows, $this->cells[0]);
+		return $this->validated_rows;
+	}
+
+
 
 }

@@ -24,6 +24,19 @@ class CreateEventValidationTable extends Migration
 
             $table->unique(['event_id', 'validation_id']);
 
+            $table->string('original_file')->nullable();
+            $table->string('debug_file')->nullable();
+            $table->string('clean_file')->nullable();
+            $table->text('report')->nullable();
+
+
+
+            $table->integer('validated')->default(0);
+            $table->integer('modified')->default(0);
+            $table->integer('duplicates')->default(0);
+            $table->integer('failures')->default(0);
+
+
             $table->string('file')->nullable();
             $table->dateTime('update')->nullable();
 

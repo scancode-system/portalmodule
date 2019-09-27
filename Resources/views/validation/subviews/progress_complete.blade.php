@@ -1,5 +1,5 @@
 <div class="brand-card">
-    <div class="brand-card-header bg-secondary">
+    <div class="brand-card-header bg-primary">
         <h1 class="text-white text-capitalize">{{ $event_validation->validation->alias }}</h1>
     </div>
     <div class="brand-card-body">

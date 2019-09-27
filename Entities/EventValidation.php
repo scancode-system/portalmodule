@@ -9,7 +9,7 @@ use Modules\Portal\Entities\Status;
 
 class EventValidation extends Pivot
 {
-	protected $fillable = ['id', 'file', 'status_id', 'update'];
+	protected $fillable = ['id', 'original_file', 'debug_file', 'clean_file', 'report', 'validated', 'modified', 'duplicates', 'failures', 'file', 'status_id', 'update'];
 
 	protected $dates = ['update'];
 

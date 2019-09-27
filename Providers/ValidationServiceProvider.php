@@ -31,7 +31,7 @@ class ValidationServiceProvider extends ServiceProvider
     {
         Validator::extend('unique_custom_values', function ($attribute, $value, $parameters, $validator) {
             return (new UniqueCustomValuesRule($parameters, $validator))->passes($attribute, $value);
-        });
+        }, 'Campo Duplicado');
 
         Validator::extend('blocked', function ($attribute, $value, $parameters, $validator) {
             return (new BlockedRule($parameters, $validator))->passes($attribute, $value);

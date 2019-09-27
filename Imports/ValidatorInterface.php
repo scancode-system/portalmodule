@@ -6,4 +6,6 @@ interface ValidatorInterface {
 
 	public function rule($data);
 
+	public function messages();
+
 }

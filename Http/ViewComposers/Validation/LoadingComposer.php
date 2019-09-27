@@ -36,6 +36,7 @@ class LoadingComposer {
     const LAYOUT_EMPTY = 'empty'; 
     const LAYOUT_COMPLETE = 'complete';
     const LAYOUT_PROGRESS = 'progress';
+    const LAYOUT_PROGRESS_COMPLETE = 'progress_complete';
 
 
     public function compose(View $view) {
@@ -80,17 +81,24 @@ class LoadingComposer {
 
     protected function init($view){
         $this->event_validation = EventValidation::find($view->event_validation);
+
         $this->is_success = session('validation.'.$this->event_validation->id.'.result', false);
         $this->export = session('validation.'.$this->event_validation->id.'.export', false);
         //session(['validation.'.$this->event_validation->id.'.in_progress2' => false]);
         //dd(session('validation.'.$this->event_validation->id.'.in_progress'));
         $this->in_progress = session('validation.'.$this->event_validation->id.'.in_progress2');
 
-        $this->validated = session('validation.'.$this->event_validation->id.'.validated');
-        $this->modified = session('validation.'.$this->event_validation->id.'.modified');
-        $this->duplicates = session('validation.'.$this->event_validation->id.'.duplicates');
-        $this->failures = session('validation.'.$this->event_validation->id.'.failures');
-
+        if($this->in_progress){
+            $this->validated = session('validation.'.$this->event_validation->id.'.validated');
+            $this->modified = session('validation.'.$this->event_validation->id.'.modified');
+            $this->duplicates = session('validation.'.$this->event_validation->id.'.duplicates');
+            $this->failures = session('validation.'.$this->event_validation->id.'.failures');  
+        }else {
+            $this->validated =  $this->event_validation->validated;
+            $this->modified = $this->event_validation->modified;
+            $this->duplicates = $this->event_validation->duplicates;
+            $this->failures = $this->event_validation->failures;
+        }
     }
 
     protected function required(){     
@@ -155,7 +163,7 @@ class LoadingComposer {
     }
 
     protected function legend_animated(){
-        $legend_animated = 'arquivo sendo gerado';
+        $legend_animated = 'Novos arquivos sendo gerados';
         if($this->export){
             $legend_animated = 'arquivo gerado';
         }
@@ -164,10 +172,17 @@ class LoadingComposer {
     }
 
 
-     protected function layout(){
-        $layout = self::LAYOUT_EMPTY;
+    protected function layout(){
         if($this->in_progress){
-                    $layout = self::LAYOUT_PROGRESS;
+            $layout = self::LAYOUT_PROGRESS;
+            if(!is_null($this->event_validation->original_file)){
+                $layout = self::LAYOUT_PROGRESS_COMPLETE;
+            }
+        } else {
+            $layout = self::LAYOUT_EMPTY;
+            if(!is_null($this->event_validation->original_file)){
+                $layout = self::LAYOUT_COMPLETE;
+            }
         }
 
         $this->layout = $layout;

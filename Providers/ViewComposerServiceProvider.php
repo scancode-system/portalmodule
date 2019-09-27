@@ -9,7 +9,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
     public function boot() {
         //auth
-        View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\EventValidationsComposer');
+        View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::main.subview.import2', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\EventValidationsComposer');
 
         //parameters
         View::composer(['portal::import.index', 'portal::validation.index'], 'Modules\Portal\Http\ViewComposers\Parameters\EventValidationComposer');
