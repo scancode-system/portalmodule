@@ -47,17 +47,20 @@
         </div>
     </div>
     <p class="mb-2 text-muted text-center"><small>Última importação em: {{ $event_validation->update->format('Y/m/d H:i:s') }}</small></p>
-    <div class="card-footer d-flex">
-        <div id="dropzone-import-{{ $event_validation->id }}" class="dropzone flex-fill pr-2" onload="alert('fd');">
-            <div class="dz-message m-0">
-                {{ Form::button('<i class="fa fa-upload fa-lg fa-2x "></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-primary']) }}
+    <div class="card-footer">
+        <div class="d-flex">
+            <div id="dropzone-import-{{ $event_validation->id }}" class="dropzone flex-fill pr-2" onload="alert('fd');">
+                <div class="dz-message m-0">
+                    {{ Form::button('<i class="fa fa-upload fa-lg fa-2x "></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-primary']) }}
+                </div>
+            </div>
+            <div class="flex-fill text-center pl-2" id="btn-clean_{{ $event_validation->id }}">
+                {{ Form::open(['route' => ['portal.validation.clean', $event_validation->id], 'method' => 'put']) }}
+                {{ Form::button('<i class="fa fa-trash fa-lg fa-2x"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-danger']) }}
+                {{ Form::close() }}
             </div>
         </div>
-        <div class="flex-fill text-center pl-2" id="btn-clean_{{ $event_validation->id }}">
-            {{ Form::open(['route' => ['portal.validation.clean', $event_validation->id], 'method' => 'put']) }}
-            {{ Form::button('<i class="fa fa-trash fa-lg fa-2x"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-danger']) }}
-            {{ Form::close() }}
-        </div>
+        <div class="errors_{{ $event_validation->id }}"></div>
     </div>
 </div>
 
@@ -111,7 +114,7 @@
 
     var layout = document.getElementById('layout').innerHTML;
     console.log(layout);
-    var dropzone_import = new Dropzone('#dropzone-import-{{ $event_validation->id }}', {
+    var dropzone_import_{{ $event_validation->id }} = new Dropzone('#dropzone-import-{{ $event_validation->id }}', {
         url: '{{ route("portal.validation2", $event_validation->id) }}',
         params: {
          extension: "xlsx"
@@ -135,6 +138,13 @@
         $.post('{{ route('portal.validation.start2', $event_validation->id) }}').always(function(data) {
             clearInterval(interval);
             $("#container_{{ $event_validation->id }}").html(data);
+        });
+    },
+    error: function(file, response, xhr){
+        console.log(response.errors);
+        $('#btn-clean_{{ $event_validation->id }}').show();
+        $(".errors_{{ $event_validation->id }}").load('{{ route('portal.validation.errors', $event_validation->id) }}', response.errors, function(){
+            dropzone_import_{{ $event_validation->id }}.removeAllFiles();
         });
     }
 });
