@@ -7,7 +7,7 @@
 			<div class="card-header">
 				<nav>
 					<div class="nav nav-tabs" role="tablist">
-						<a class="nav-item nav-link {{ ($tab==1)?'active':'' }}" href="{{ route('portal.main', 0) }}">Importar</a>
+						<a class="nav-item nav-link {{ ($tab==1)?'active':'' }}" href="{{ route('portal.main', 1) }}">Importar</a>
 						<!--<a class="nav-item nav-link {{ ($tab==1)?'active':'' }}" href="{{ route('portal.main', 1) }}">Importar e Validar (Dados)</a>-->
 						<a class="nav-item nav-link {{ ($tab==2)?'active':'' }}" href="{{ route('portal.main', 2) }}">Configurar Sistema</a>
 						<!--<a class="nav-item nav-link {{ ($tab==3)?'active':'' }}" href="{{ route('portal.main', 3) }}">Prévia Online</a>-->
