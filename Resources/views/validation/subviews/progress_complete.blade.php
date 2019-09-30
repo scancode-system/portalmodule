@@ -37,7 +37,7 @@
         @else
         <div class="progress-group mb-0">
             <div class="progress-group-header">
-                <div class="text-capitalize">{{ $legend_animated }}</div>
+                <div class="text-capitalize">{{ $legend }}</div>
             </div>
             <div class="progress-group-bars">
                 <div class="progress progress-xs bg-secondary">

@@ -41,7 +41,7 @@ class ValidationController extends BaseController
 			}
 			return  response()->json(['errors' => $headings2], 422);
 		}
-		sleep(5);
+
 	}
 
 	public function start(Request $request, EventValidation $event_validation)
