@@ -23,11 +23,11 @@
     <div class="card-footer">
         <div id="dropzone-import-{{ $event_validation->id }}" class="dropzone" onload="alert('fd');">
             <div class="dz-message m-0">
-               {{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-secondary']) }}
-           </div>
-       </div>
-       <div class="errors_{{ $event_validation->id }}"></div>
-   </div>
+             {{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-secondary']) }}
+         </div>
+     </div>
+     <div class="errors_{{ $event_validation->id }}"></div>
+ </div>
 </div>
 
 <div id="layout" class="d-none">
@@ -39,7 +39,7 @@
         </div>
         <div class="progress-group-bars">
             <div class="progress progress-xs bg-secondary">
-                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+                <div class="progress-bar bg-primary" id="progressbar-file-{{ $event_validation->id }}" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
             </div>
         </div>
     </div>
@@ -70,6 +70,9 @@
                 var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
                 progressElement.style.width = progress + "%";
                 file.previewElement.querySelector(".progress-text").textContent = progress + "%";
+                if(progress == 100){
+                    $("#progressbar-file-{{ $event_validation->id }}").addClass("progress-bar-striped progress-bar-animated");
+                }
             }
         },
         success: function(file, response, xhr){

@@ -73,7 +73,7 @@
         </div>
         <div class="progress-group-bars">
             <div class="progress progress-xs bg-secondary">
-                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
+                <div class="progress-bar bg-primary" id="progressbar-file-{{ $event_validation->id }}" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
             </div>
         </div>
     </div>
@@ -121,16 +121,18 @@
      },
      headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
      previewTemplate: layout,
-     uploadprogress: function(file, progress, bytesSent) {
+     uploadprogress: function(file, progress, bytesSent) { 
         if (file.previewElement) {
             var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
             progressElement.style.width = progress + "%";
             file.previewElement.querySelector(".progress-text").textContent = progress + "%";
             $('#btn-clean_{{ $event_validation->id }}').hide();
+            if(progress == 100){
+                $("#progressbar-file-{{ $event_validation->id }}").addClass("progress-bar-striped progress-bar-animated");
+            }
         }
     },
     success: function(){
-
         var interval = setInterval(function(){
             $("#container_{{ $event_validation->id }}").load('{{ route('portal.validation.info2', $event_validation->id) }}');
         }, 1000);
