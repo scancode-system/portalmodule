@@ -36,8 +36,7 @@ class CreateEventValidationTable extends Migration
             $table->integer('duplicates')->default(0);
             $table->integer('failures')->default(0);
 
-
-            $table->string('file')->nullable();
+            $table->timestamp('start');
             $table->dateTime('update')->nullable();
 
             $table->unsignedBigInteger('status_id')->default(1);

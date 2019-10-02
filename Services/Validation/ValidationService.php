@@ -25,7 +25,6 @@ class ValidationService {
 		session(['validation.'.$id.'.loaded' => 0]);
 		session(['validation.'.$id.'.headings' => true]);
 		session(['validation.'.$id.'.missing_headings' => []]);
-		//session(['validation.'.$id.'.in_progress2' => true]);
 
 		session(['validation.'.$id.'.validated' => 0]);
 		session(['validation.'.$id.'.modified' => 0]);
@@ -34,13 +33,14 @@ class ValidationService {
 
 		session(['validation.'.$id.'.in_progress2' => true]);
 
-		//dd(session('validation.'.$id.'.in_progress2'));
 	}
 
 	public static function start($id)
 	{
-
+		$start = Carbon::createFromFormat('Y-m-d H:i', Carbon::now()->format('Y-m-d H:i'));
 		$company_validation = EventValidation::find($id);
+		$company_validation->update(['start' => $start]);
+
 		$path = session('validation.'.$id.'.path');
 		$import = self::import($company_validation);
 
@@ -52,6 +52,7 @@ class ValidationService {
 			$path_debug_file = 'validations/'.$id.'.xlsx';
 			$path_clean_file = 'validations/clean/'.$id.'.xlsx';			
 
+		
 			$import->import($path, 'local', Excel::XLSX); 
 			session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
 			
@@ -63,20 +64,25 @@ class ValidationService {
 
 			$report = self::report($import, $path);
 
-
-			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
-				Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
-			}
-			Storage::move($path, $path_original_file);
+			$company_validation = EventValidation::find($id);
+			if($company_validation->start->eq($start)){
 
 
-			$validated = session('validation.'.$id.'.validated');
-			$modified = session('validation.'.$id.'.modified');
-			$duplicates = session('validation.'.$id.'.duplicates');
-			$failures = session('validation.'.$id.'.failures');
+				if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
+					Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
+				}
+				Storage::move($path, $path_original_file);
+
+
+				$validated = session('validation.'.$id.'.validated');
+				$modified = session('validation.'.$id.'.modified');
+				$duplicates = session('validation.'.$id.'.duplicates');
+				$failures = session('validation.'.$id.'.failures');
 
 			//dd('antes');
-			$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
+				$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
+
+			}
 			//dd('depois');
 		} else {
 			session(['validation.'.$id.'.missing_headings' => $import->missing_headings($path)]);

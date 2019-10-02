@@ -9,6 +9,7 @@ use Modules\Portal\Entities\Validation;
 use Modules\Portal\Services\Validation\ValidationService;
 use Modules\Portal\Services\Validation\ValidationFileSessionService;
 use Modules\Portal\Http\Controllers\BaseController;
+use \Exception;
 
 
 class ValidationController extends BaseController
@@ -28,8 +29,14 @@ class ValidationController extends BaseController
 
 	public function index2(RequestValidation $request, EventValidation $event_validation)
 	{
-		$path = $request->file->store('uploads');		
-		$headings = ValidationService::missHeadings($event_validation->id, $path);
+		$path = $request->file->store('uploads');
+
+		try {
+			$headings = ValidationService::missHeadings($event_validation->id, $path);
+		} catch (Exception $e) {
+			return  response()->json(['errors' => ['file' => 'Este arquivo não pode ser lido. Tente salvar o arquivo em formato EXCEL 2007 - 2019']], 422);
+		}		
+
 
 		if(count($headings) == 0){
 			ValidationService::beforeStart($event_validation->id, $path);
