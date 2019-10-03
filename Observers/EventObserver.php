@@ -7,6 +7,8 @@ use Modules\Portal\Entities\SystemSetting;
 use Modules\Portal\Entities\Event;
 use Modules\Portal\Entities\Validation;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Modules\PortalAdmin\Emails\CreateEventEmail;
 
 class EventObserver {
 
@@ -33,6 +35,8 @@ class EventObserver {
 		}
 
 		SystemSetting::create(['event_id' => $event->id]);
+
+		Mail::to($company->email)->send(new CreateEventEmail());
 	}
 
 	public function updating(Event $event) {

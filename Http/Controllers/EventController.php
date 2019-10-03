@@ -43,3 +43,4 @@ class EventController extends BaseController
         return back()->with('success_events', 'Sucesso: seus dados foram atualizados.');
     }
 }
+ 

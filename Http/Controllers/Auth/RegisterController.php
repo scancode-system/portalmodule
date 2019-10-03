@@ -39,9 +39,10 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
-        $this->middleware('guest:admin');
-        $this->middleware('guest:company');
+        $this->middleware('auth:admin');
+        //$this->middleware('guest');
+        //$this->middleware('guest:admin');
+        //$this->middleware('guest:company');
     }
 
     /**

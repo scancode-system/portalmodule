@@ -13,6 +13,8 @@ class Company extends Authenticatable
 
 	use Notifiable;
 
+	protected $dateFormat = 'Y-m-d H:i:s';
+
 
 	protected $guard = 'company';
 

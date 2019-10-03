@@ -7,8 +7,13 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
+                    <!--
                     <h1>Login</h1>
                     <p class="text-muted">Entre com a sua conta</p>
+                    -->
+                    <div class="d-flex justify-content-center mb-5">
+                        <img class="mx-autod" src="{{ url('modules/portal/img/brand/logo.svg') }}"  height="75" alt="Scancode Logo">
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -49,17 +54,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-        <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-            <div class="card-body text-center">
-                <div>
-                    <h2>Registra-se</h2>
-                    <p>
-                        Registre sua empresa no portal da Scancode, é um ambiente amigável, para prepara-lo antecipadamente para as feiras.
-                    </p>
-                    <a href="{{ route('register') }}" class="btn btn-primary active mt-3">Registrar Agora!</a>
-                </div>
             </div>
         </div>
     </div>

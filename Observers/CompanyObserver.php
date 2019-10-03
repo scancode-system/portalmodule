@@ -8,6 +8,8 @@ use Modules\Portal\Entities\CompanyAddress;
 use Modules\Portal\Entities\SystemSetting;
 use Modules\Portal\Entities\Validation;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Modules\PortalAdmin\Emails\CreateCompanyEmail;
 
 class CompanyObserver {
 
@@ -21,6 +23,8 @@ class CompanyObserver {
 	public function created(Company $company) {
 		CompanyInfo::create(['company_id' => $company->id]);
 		CompanyAddress::create(['company_id' => $company->id]);
+
+		Mail::to($company->email)->send(new CreateCompanyEmail());
 	}
 
 }
