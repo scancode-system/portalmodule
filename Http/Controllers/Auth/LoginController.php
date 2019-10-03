@@ -63,4 +63,14 @@ class LoginController extends Controller
     }
 
 
+    protected function authenticated(Request $request, $user)
+    {
+        if($request->guard == 'admin'){
+            return redirect()->route('admin.companies');
+        } elseif($request->guard == 'company') {
+            return redirect()->route('portal.dashboard');
+        }
+    }
+
+
 }

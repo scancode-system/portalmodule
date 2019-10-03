@@ -36,7 +36,7 @@ class EventObserver {
 
 		SystemSetting::create(['event_id' => $event->id]);
 
-		Mail::to($company->email)->send(new CreateEventEmail());
+		Mail::to($company->email)->queue(new CreateEventEmail());
 	}
 
 	public function updating(Event $event) {
