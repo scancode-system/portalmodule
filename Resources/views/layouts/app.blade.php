@@ -30,7 +30,7 @@
             <ol class="breadcrumb">
                 @yield('breadcrumb')
                 <li class="breadcrumb-menu d-md-down-none">
-                    <div class="btn-group" role="group" aria-label="Button group">
+                    <div class="btn-group mr-3" role="group" aria-label="Button group">
                         {{ Form::Open(['route' => ['events.parameterless.update'], 'method' => 'put']) }}
                         {{ Form::hidden('selected', 1) }}
                         {{ Form::select('id_event', $events, $id_event, ['class' => 'form-control form-control-sm', 'id' => 'select_event_change']) }}

@@ -42,11 +42,3 @@
 </li>
 <li class="breadcrumb-item">Painel Central</li>
 @endsection
-
-
-@section('breadcrumb')
-<li class="breadcrumb-item">
-	<a href="{{ route('portal.dashboard') }}">Dashboard</a>
-</li>
-<li class="breadcrumb-item">Painel Central</li>
-@endsection

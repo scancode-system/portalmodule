@@ -1,39 +1,39 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
         <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon icon-speedometer"></i> Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="{{ route('portal.companies.edit', [auth()->user(), 0]) }}">
                     <i class="nav-icon fa fa-id-card-o"></i> Empresa
                 </a>
             </li>
-            <li class="nav-item">
+            0<li class="nav-item">
                 <a class="nav-link" href="{{ route('events.index') }}">
                     <i class="nav-icon fa fa-ticket"></i> Eventos
                 </a>
-            </li>        
+            </li>-->        
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('portal.main', 1) }}">
                     <i class="nav-icon fa fa-download"></i> Importação
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.integrations') }}">
-                    <i class="nav-icon fa fa-handshake-o"></i> Integre ao seu ERP
+                        <li class="nav-item">
+                <a class="nav-link" href="{{ route('portal.dashboard') }}">
+                    <i class="nav-icon icon-graph"></i> Vendas
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('portal.videos') }}">
-                    <i class="nav-icon fa fa-play-circle"></i> Videos tutorial
+                    <i class="nav-icon icon-list"></i> Pedidos
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.documentations') }}">
-                    <i class="nav-icon fa fa-file-pdf-o"></i> Documentação
+                <a class="nav-link" href="{{ route('portal.videos') }}">
+                    <i class="nav-icon icon-docs"></i> Relatorios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('portal.integrations') }}">
+                    <i class="nav-icon fa fa-handshake-o"></i> Integração
                 </a>
             </li>
         </ul>
