@@ -18,7 +18,8 @@ class EventValidationsComposer {
     }
 
     private function event_validations(){
-        $this->event_validations = auth()->user()->event->event_validations()->with('validation')->get();
+       //dd(auth('company')->user()->event);
+        $this->event_validations = auth('company')->user()->event->event_validations()->with('validation')->get();
     }
 
 }

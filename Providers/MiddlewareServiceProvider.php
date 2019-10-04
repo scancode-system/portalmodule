@@ -4,7 +4,7 @@ namespace Modules\Portal\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
-use Modules\Portal\Http\Middleware\EventSelectedMiddleware;
+use Modules\Portal\Http\Middleware\HasEventMiddleware;
 use Modules\Portal\Http\Middleware\AuthenticateOnceWithBasicAuth;
 
 class MiddlewareServiceProvider extends ServiceProvider {
@@ -17,7 +17,7 @@ class MiddlewareServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Router $router) {
-        $router->aliasMiddleware('event.selected', EventSelectedMiddleware::class);
+        $router->aliasMiddleware('has.event', HasEventMiddleware::class);
         $router->aliasMiddleware('auth.basic.once', AuthenticateOnceWithBasicAuth::class);
     }
 

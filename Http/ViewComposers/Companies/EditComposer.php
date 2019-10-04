@@ -28,11 +28,11 @@ class EditComposer extends SuperComposer {
     }
 
     public function company_info(){
-        $this->company_info = auth()->user()->company_info;
+        $this->company_info = auth('company')->user()->company_info;
     }
 
     public function company_address(){
-        $this->company_address = auth()->user()->company_address;
+        $this->company_address = auth('company')->user()->company_address;
     }
 
 }

@@ -30,11 +30,11 @@ class AppComposer extends SuperComposer {
     }
 
     public function company(){
-        $this->events_select = auth()->user();
+        $this->events_select = auth('company')->user();
     }
 
     public function event(){
-        $this->event = auth()->user()->event;
+        $this->event = auth('company')->user()->event;
     }
 
     public function event_validations(){
@@ -44,11 +44,11 @@ class AppComposer extends SuperComposer {
     }
 
     public function events(){
-        $this->events = ['Evento não selecionado'] + auth()->user()->events()->pluck('name', 'id')->toArray();
+        $this->events = ['Evento não selecionado'] + auth('company')->user()->events()->pluck('name', 'id')->toArray();
     }
 
     public function id_event(){
-        $event = auth()->user()->events()->where('selected', true)->first();
+        $event = auth('company')->user()->events()->where('selected', true)->first();
         $this->id_event = ($event)?$event->id:null;
     }
 

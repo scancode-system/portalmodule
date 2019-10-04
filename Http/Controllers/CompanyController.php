@@ -14,6 +14,12 @@ use Modules\Portal\Http\Controllers\BaseController;
 class CompanyController extends BaseController
 {
 
+	public function __construct()
+	{
+		//parent::__construct();
+		$this->middleware('has.event', ['except' => ['edit']]);
+	}
+
 	public function edit(Request $request, Company $company, $tab){
 		return view('portal::companies.edit');
 	}

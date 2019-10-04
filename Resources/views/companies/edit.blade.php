@@ -7,9 +7,9 @@
 			<div class="card-header">
 				<nav>
 					<div class="nav nav-tabs" role="tablist">
-						<a class="nav-item nav-link {{ ($tab==0)?'active':'' }}" href="{{ route('portal.companies.edit', [auth()->user(), 0]) }}" >Informações da Empresa</a>
-						<a class="nav-item nav-link {{ ($tab==1)?'active':'' }}" href="{{ route('portal.companies.edit', [auth()->user(), 1]) }}">Endereço</a>
-						<a class="nav-item nav-link {{ ($tab==2)?'active':'' }}" href="{{ route('portal.companies.edit', [auth()->user(), 2]) }}">Dados de Login</a>
+						<a class="nav-item nav-link {{ ($tab==0)?'active':'' }}" href="{{ route('portal.companies.edit', [auth('company')->user(), 0]) }}" >Informações da Empresa</a>
+						<a class="nav-item nav-link {{ ($tab==1)?'active':'' }}" href="{{ route('portal.companies.edit', [auth('company')->user(), 1]) }}">Endereço</a>
+						<a class="nav-item nav-link {{ ($tab==2)?'active':'' }}" href="{{ route('portal.companies.edit', [auth('company')->user(), 2]) }}">Dados de Login</a>
 					</div>
 				</nav>
 			</div>

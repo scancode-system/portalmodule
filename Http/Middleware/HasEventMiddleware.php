@@ -5,7 +5,7 @@ namespace Modules\Portal\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class EventSelectedMiddleware
+class HasEventMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,12 @@ class EventSelectedMiddleware
      */
     public function handle($request, Closure $next)
     {
-       
-        if(auth()->user()->event){
+        $company = auth('company')->user();
+        if($company->event){
             return $next($request);
         } else {
-            return redirect()->route('events.index')->with('info', 'Informação: para importar dados é necessário criar ou selecionar um evento.');
+            return redirect()->route('portal.companies.edit', [$company->id, 0]);
         }
     }
+
 }

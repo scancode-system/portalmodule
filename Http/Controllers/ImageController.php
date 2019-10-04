@@ -12,7 +12,6 @@ class ImageController extends BaseController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->middleware('event.selected');
 	}	
     
 	public function produtos(Request $request){

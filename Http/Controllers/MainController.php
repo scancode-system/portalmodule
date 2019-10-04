@@ -12,7 +12,6 @@ class MainController extends BaseController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->middleware('event.selected');
 	}
 
 	public function index(Request $request, $tab) 
