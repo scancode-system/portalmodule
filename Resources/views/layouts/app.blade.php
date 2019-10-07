@@ -20,6 +20,8 @@
     {{ Html::style('modules/portal/coreui/vendors/pace-progress/css/pace.min.css') }}
 
     @stack('styles')
+
+    {{ Html::script('modules/portal/coreui/node_modules/jquery/dist/jquery.min.js') }}
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     @include('portal::layouts.subviews.header')
@@ -47,7 +49,6 @@
     </div>
     @include('portal::layouts.subviews.footer')
     <!-- CoreUI and necessary plugins-->
-    {{ Html::script('modules/portal/coreui/node_modules/jquery/dist/jquery.min.js') }}
     {{ Html::script('modules/portal/coreui/node_modules/popper.js/dist/umd/popper.min.js') }}
     {{ Html::script('modules/portal/coreui/node_modules/bootstrap/dist/js/bootstrap.min.js') }}
     {{ Html::script('modules/portal/coreui/node_modules/pace-progress/pace.min.js') }}
@@ -61,7 +62,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    </script>
-    @stack('scripts')
+        
+  </script>
+  @stack('scripts')
 </body>
 </html>

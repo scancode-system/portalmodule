@@ -20,31 +20,47 @@
             <div class="text-uppercase text-muted small">Falhas</div>
         </div>
     </div>
+    <div class="brand-card-body">
+        <div class="text-primary">
+            <a href="#" class="text-decoration-none text-secondary" data-toggle="modal" data-target="#no-file-validation-{{ $event_validation->id }}">
+                <i class="fa fa-file-excel-o fa-lg  fa-2x mb-2"></i><br>
+                Original
+            </a>
+        </div>
+        <div class="">
+            <a href="#" class="text-secondary text-decoration-none" data-toggle="modal" data-target="#no-file-validation-{{ $event_validation->id }}">
+                <i class="fa fa-file-excel-o fa-lg  fa-2x mb-2"></i><br>
+                Debug
+            </a>
+        </div>
+        <div class="">
+            <a href="#" class="text-secondary text-decoration-none" data-toggle="modal" data-target="#no-file-validation-{{ $event_validation->id }}">
+                <i class="fa fa-file-text-o fa-lg  fa-2x mb-2"></i><br>
+                Relatório
+            </a>
+        </div>
+        <div class="">
+            <a href="#" class="text-decoration-none text-secondary" data-toggle="modal" data-target="#help-validation-{{ $event_validation->id }}">
+                <i class="fa fa-question-circle fa-lg  fa-2x mb-2"></i><br>
+                Ajuda
+            </a>
+        </div>
+    </div>
+    <p class="mb-2 text-muted text-center"><small>Nenhuma Importação ainda realizada</small></p>
     <div class="card-footer">
         <div id="dropzone-import-{{ $event_validation->id }}" class="dropzone" onload="alert('fd');">
             <div class="dz-message m-0">
-             {{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-secondary']) }}
-         </div>
-     </div>
-     <div class="errors_{{ $event_validation->id }}"></div>
- </div>
+               {{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-secondary']) }}
+           </div>
+       </div>
+       <div class="errors_{{ $event_validation->id }}"></div>
+   </div>
 </div>
 
-<div id="layout" class="d-none">
-    <div class="progress-group mb-0">
-        <div class="progress-group-header align-items-end">
-            <div>Transferindo arquivo (<span data-dz-name></span>)</div>
-            <div class="ml-auto font-weight-bold mr-2 progress-text"><!--<span data-dz-size></span>--></div>
-            <!--<div class="text-muted small">(<span class="progress-text"></span>)</div>-->
-        </div>
-        <div class="progress-group-bars">
-            <div class="progress progress-xs bg-secondary">
-                <div class="progress-bar bg-primary" id="progressbar-file-{{ $event_validation->id }}" role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress></div>
-            </div>
-        </div>
-    </div>
-</div>
 
+@include('portal::validation.subviews.modal.empty')
+@include('portal::validation.subviews.dropzone_layout')
+@include('portal::validation.subviews.modal.help')
 
 
 {{ Html::style('modules/portal/dropzone/dropzone.css') }}
@@ -55,6 +71,7 @@
 </style>
 {{ Html::script('modules/portal/dropzone/dropzone.js') }}
 <script>
+
 
     var layout = document.getElementById('layout').innerHTML;
 
@@ -94,3 +111,11 @@
         }
     });
 </script>
+
+@push('script')
+<script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+@endpush

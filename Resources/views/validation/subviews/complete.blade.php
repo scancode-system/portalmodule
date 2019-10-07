@@ -34,15 +34,15 @@
             </a>
         </div>
         <div class="">
-            <a href="{{ route('portal.validation.download.clean', $event_validation->id) }}" class="text-decoration-none text-success">
-                <i class="fa fa-file-excel-o fa-lg  fa-2x mb-2"></i><br>
-                Filtrado
+            <a href="#" class="text-muted text-decoration-none" data-toggle="modal" data-target="#exampleModal_{{ $event_validation->id }}">
+                <i class="fa fa-file-text-o fa-lg  fa-2x mb-2"></i><br>
+                Relatório
             </a>
         </div>
         <div class="">
-            <a href="#" class="text-secondary text-decoration-none" data-toggle="modal" data-target="#exampleModal_{{ $event_validation->id }}">
-                <i class="fa fa-file-text-o fa-lg  fa-2x mb-2"></i><br>
-                Relatório
+            <a href="{{ route('portal.validation.download.clean', $event_validation->id) }}" class="text-decoration-none text-secondary">
+                <i class="fa fa-question-circle fa-lg  fa-2x mb-2"></i><br>
+                Ajuda
             </a>
         </div>
     </div>
@@ -117,11 +117,11 @@
     var dropzone_import_{{ $event_validation->id }} = new Dropzone('#dropzone-import-{{ $event_validation->id }}', {
         url: '{{ route("portal.validation2", $event_validation->id) }}',
         params: {
-         extension: "xlsx"
-     },
-     headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
-     previewTemplate: layout,
-     uploadprogress: function(file, progress, bytesSent) { 
+           extension: "xlsx"
+       },
+       headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
+       previewTemplate: layout,
+       uploadprogress: function(file, progress, bytesSent) { 
         if (file.previewElement) {
             var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
             progressElement.style.width = progress + "%";

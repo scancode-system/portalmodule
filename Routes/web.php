@@ -3,6 +3,8 @@
 Route::get('/home', function(){return redirect()->route('portal.dashboard');});
 Route::get('/', function(){return redirect()->route('portal.dashboard');});
 
+Route::get('/company', function(){return redirect()->route('portal.dashboard');});
+
 Route::prefix('portal')->group(function() {
 
 	// Auth
@@ -81,12 +83,24 @@ Route::prefix('portal')->group(function() {
 	Route::put('/companies/{company}', 'CompanyController@update')->name('portal.company.update');
 	Route::put('/companies/{company_info}/info', 'CompanyController@updateInfo')->name('portal.company.update.info');
 	Route::put('/companies/{company_address}/address', 'CompanyController@updateAddress')->name('portal.company.update.address');
+
 	// Event
-	Route::get('/events', 'EventController@index')->name('events.index');
-	Route::post('/events', 'EventController@store')->name('events.store');
-	Route::put('/events/{event}', 'EventController@update')->name('events.update');
 	Route::put('/events/parameterless/update', 'EventController@updateParameterless')->name('events.parameterless.update');
-	Route::delete('/events/{event}', 'EventController@destroy')->name('events.destroy');
+
+	// Imports
+	Route::get('/imports', 'ImportsController@index')->name('portal.imports');
+
+	
+	Route::get('/imports/widget/{event_validation}/info', 'ImportsController@info')->name('imports.widget.info');
+
+	Route::post('/imports/widget/{event_validation}/upload', 'ImportsController@upload')->name('imports.widget.upload');
+	Route::post('/imports/widget/{event_validation}/errors', 'ImportsController@errors')->name('imports.widget.errors');
+	Route::post('/imports/widget/{event_validation}/start', 'ImportsController@start')->name('imports.widget.start');
+
+	Route::put('/imports/widget/{event_validation}/clean', 'ImportsController@clean')->name('imports.widget.clean');
+
+	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
+	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
 
 });
 
