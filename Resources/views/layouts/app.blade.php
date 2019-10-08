@@ -32,12 +32,78 @@
             <ol class="breadcrumb">
                 @yield('breadcrumb')
                 <li class="breadcrumb-menu d-md-down-none">
-                    <div class="btn-group mr-3" role="group" aria-label="Button group">
-                        {{ Form::Open(['route' => ['events.parameterless.update'], 'method' => 'put']) }}
-                        {{ Form::hidden('selected', 1) }}
-                        {{ Form::select('id_event', $events, $id_event, ['class' => 'form-control form-control-sm', 'id' => 'select_event_change']) }}
-                        {{ Form::Close() }}
-                    </div>
+                    
+
+
+                    @yield('events')
+                    <li class="nav-item dropdown d-md-down-none">
+                        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-list"></i>
+                            <span class="badge badge-pill badge-danger" style="    position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            margin-top: -16px;
+                            margin-left: 0;">3</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+                            <div class="dropdown-header text-center">
+                                <strong>2 Tarefas Pendentes</strong>
+                            </div>
+                            <a class="dropdown-item" href="#">
+                                <div class="small mb-1">Importação Cliente
+                                    <span class="float-right">
+                                        <strong>100%</strong>
+                                    </span>
+                                </div>
+                                <span class="progress progress-xs">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <div class="small mb-1">Importação Pagamento
+                                    <span class="float-right">
+                                        <strong>0%</strong>
+                                    </span>
+                                </div>
+                                <span class="progress progress-xs">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <div class="small mb-1">Importação Produtos
+                                    <span class="float-right">
+                                        <strong>50%</strong>
+                                    </span>
+                                </div>
+                                <span class="progress progress-xs">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <div class="small mb-1">Importação Representante
+                                    <span class="float-right">
+                                        <strong>100%</strong>
+                                    </span>
+                                </div>
+                                <span class="progress progress-xs">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <div class="small mb-1">Importação Transportadora
+                                    <span class="float-right">
+                                        <strong>0%</strong>
+                                    </span>
+                                </div>
+                                <span class="progress progress-xs">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </span>
+                            </a>
+                            <a class="dropdown-item text-center" href="#">
+                                <strong>Importações</strong>
+                            </a>
+                        </div>
+                    </li>
                 </li>
             </ol>
             <div class="container-fluid">
@@ -63,7 +129,7 @@
             }
         });
         
-  </script>
-  @stack('scripts')
+    </script>
+    @stack('scripts')
 </body>
 </html>

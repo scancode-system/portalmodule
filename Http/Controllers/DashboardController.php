@@ -15,6 +15,8 @@ class DashboardController extends BaseController
 
 	public function index() 
 	{
+		return redirect()->route('portal.companies.edit',[ auth('company')->user() ,0]);
+		//CompanyController@edit
 		return view('portal::dashboard.index');
 	}
 

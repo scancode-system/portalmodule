@@ -27,7 +27,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
         //////////////////////////////////////////////////////
         // layouts
-        View::composer('portal::layouts.app', 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');        
+        View::composer(['portal::layouts.app', 'portal::layouts.subviews.events'], 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');        
 
         // companies        
         View::composer('portal::companies.edit', 'Modules\Portal\Http\ViewComposers\Companies\EditComposer');

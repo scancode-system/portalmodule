@@ -19,3 +19,7 @@
 </li>
 <li class="breadcrumb-item">Importações</li>
 @endsection
+
+@section('events')
+@include('portal::layouts.subviews.events')
+@endsection

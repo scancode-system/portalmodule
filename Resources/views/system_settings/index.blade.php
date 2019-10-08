@@ -84,3 +84,8 @@
       });
 </script>
 @endpush
+
+
+@section('events')
+@include('portal::layouts.subviews.events')
+@endsection
