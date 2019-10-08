@@ -4,9 +4,4 @@
 @include('portal::imports.widget.subviews.actions.empty')
 @endif
 @include('portal::imports.widget.modals.help')
-<script>
-     $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-      })
-</script>
 

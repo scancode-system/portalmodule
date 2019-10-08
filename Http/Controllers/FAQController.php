@@ -9,6 +9,11 @@ use Modules\Portal\Entities\FaqTopic;
 class FAQController extends BaseController
 {
 
+	public function __construct()
+	{
+		$this->middleware('auth:company');
+	}
+
 	public function index(Request $request)
 	{
 		return view('portal::faq.index');

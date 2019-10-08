@@ -55,8 +55,6 @@ Route::prefix('portal')->group(function() {
 
 	// company
 	Route::put('/company/{event_info}/{company_address}/update', 'CompanyController@updateCompanyInfoAddress')->name('portal.company.info.address.update');
-	// setting
-	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
 
 
 	//documentations
@@ -68,13 +66,7 @@ Route::prefix('portal')->group(function() {
 	//integrations
 	Route::get('/integrations', 'IntegrationController@index')->name('portal.integrations');
 
-	//images
-	Route::post('/images/produtos', 'ImageController@produtos')->name('portal.images.produtos');
-	Route::post('/images/logo', 'ImageController@logo')->name('portal.images.logo');
-	Route::get('/images/show/{image_name}', 'ImageController@show')->name('portal.images.show');
-	Route::get('/images/logo', 'ImageController@showLogo')->name('portal.images.logo');
-	Route::delete('/images/produtos', 'ImageController@destroy')->name('portal.images.destroy');
-	Route::delete('/images/logo', 'ImageController@destroyLogo')->name('portal.images.destroy.logo');
+	
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -106,5 +98,18 @@ Route::prefix('portal')->group(function() {
 	Route::get('/faq', 'FAQController@index')->name('company.faq');
 	Route::get('/faq/{faq_topic}', 'FAQController@items')->name('company.faq.items');
 
+
+	//images
+	Route::get('/images', 'ImageController@index')->name('portal.images.index');
+	Route::post('/images/produtos', 'ImageController@produtos')->name('portal.images.produtos');
+	Route::post('/images/logo', 'ImageController@logo')->name('portal.images.logo');
+	Route::get('/images/show/{image_name}', 'ImageController@show')->name('portal.images.show');
+	Route::get('/images/logo', 'ImageController@showLogo')->name('portal.images.logo');
+	Route::delete('/images/produtos', 'ImageController@destroy')->name('portal.images.destroy');
+	Route::delete('/images/logo', 'ImageController@destroyLogo')->name('portal.images.destroy.logo');
+
+	// setting
+	Route::get('/setting', 'SystemSettingController@index')->name('portal.system_setting.index');
+	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
 });
 

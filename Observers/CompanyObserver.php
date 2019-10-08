@@ -24,7 +24,7 @@ class CompanyObserver {
 		CompanyInfo::create(['company_id' => $company->id]);
 		CompanyAddress::create(['company_id' => $company->id]);
 
-		Mail::to($company->email)->queue(new CreateCompanyEmail());
+		//Mail::to($company->email)->queue(new CreateCompanyEmail());
 	}
 
 }

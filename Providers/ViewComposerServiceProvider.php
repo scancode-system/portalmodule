@@ -19,7 +19,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         
         // main     
         View::composer('portal::main.index', 'Modules\Portal\Http\ViewComposers\Main\IndexComposer');
-        View::composer('portal::main.subview.images', 'Modules\Portal\Http\ViewComposers\Main\ImagesComposer');
+        View::composer(['portal::main.subview.images', 'portal::images.index'], 'Modules\Portal\Http\ViewComposers\Main\ImagesComposer');
         View::composer('portal::main.subview.import.table_row', 'Modules\Portal\Http\ViewComposers\Main\Import\TableRowComposer');
         
         // validation        
@@ -38,9 +38,12 @@ class ViewComposerServiceProvider extends ServiceProvider {
         // imports
         View::composer('portal::imports.widget.import', 'Modules\Portal\Http\ViewComposers\Imports\Widget\ImportComposer');
 
-        // faq
+        // faqq
         View::composer('portal::faq.index', 'Modules\Portal\Http\ViewComposers\FAQ\IndexComposer');
-        View::composer('portal::faq.items', 'Modules\Portal\Http\ViewComposers\FAQ\ItemComposer');        
+        View::composer('portal::faq.items', 'Modules\Portal\Http\ViewComposers\FAQ\ItemComposer');  
+
+         // system settings
+        View::composer('portal::system_settings.index', 'Modules\Portal\Http\ViewComposers\SystemSetting\IndexComposer');
     }
 
     public function register() {

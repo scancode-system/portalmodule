@@ -9,10 +9,9 @@ use Modules\Portal\Http\Controllers\BaseController;
 class ImageController extends BaseController
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-	}	
+	public function index(Request $request){
+		return view('portal::images.index');
+	}
     
 	public function produtos(Request $request){
         Storage::disk('local')->putFileAs('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/images/produtos', $request->file, $request->file->getClientOriginalName());

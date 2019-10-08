@@ -82,10 +82,8 @@
             open_video_{{ $event_validation->id }} = false;
         }
     });
-
-    
-    $(document).ready(function() {
-
-    });    
-
+   
+     $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+      })
 </script>
