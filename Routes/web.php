@@ -102,5 +102,9 @@ Route::prefix('portal')->group(function() {
 	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
 	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
 
+	// FAQ
+	Route::get('/faq', 'FAQController@index')->name('company.faq');
+	Route::get('/faq/{faq_topic}', 'FAQController@items')->name('company.faq.items');
+
 });
 

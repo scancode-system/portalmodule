@@ -8,6 +8,16 @@
     </a>
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none mr-3">Logado como <strong>{{ auth('company')->user()->name }}</strong>!</li>
+        <li class="nav-item d-md-down-none">
+            <a href="{{ route('portal.companies.edit', [auth('company')->user(), 0]) }}" class="text-primary">
+                <i class="fa fa-vcard-o"></i>
+            </a>
+        </li>
+        <li class="nav-item d-md-down-none">
+            <a href="{{ route('company.faq', [auth('company')->user(), 0]) }}" class="text-info">
+                <i class="icon-question icons"></i>
+            </a>
+        </li>
         @if(Auth::guard('admin')->check())
         <li class="nav-item d-md-down-none">
             <a href="{{ route('admin.companies') }}" class="text-danger"> <!-- Aqui deveria ser um componente basico entre company e admin, ou seja haver um load de modulos, talvez o header pode ser unico -->
@@ -15,16 +25,6 @@
             </a>
         </li>
         @endif
-        <li class="nav-item d-md-down-none">
-            <a href="{{ route('portal.companies.edit', [auth('company')->user(), 0]) }}" class="text-primary">
-                <i class="icon-settings icons"></i>
-            </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-            <a href="{{ route('portal.companies.edit', [auth('company')->user(), 0]) }}" class="text-info">
-                <i class="icon-question icons"></i>
-            </a>
-        </li>
         <li class="nav-item d-md-down-none mr-3" style="min-width-: 0px; ">
             {{ Form::open(['route' => 'logout']) }}
             @csrf

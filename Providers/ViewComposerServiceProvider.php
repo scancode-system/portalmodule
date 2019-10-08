@@ -28,14 +28,19 @@ class ViewComposerServiceProvider extends ServiceProvider {
         //////////////////////////////////////////////////////
         // layouts
         View::composer('portal::layouts.app', 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');        
+
         // companies        
         View::composer('portal::companies.edit', 'Modules\Portal\Http\ViewComposers\Companies\EditComposer');
+
         // events
         View::composer('portal::events.index', 'Modules\Portal\Http\ViewComposers\Events\IndexComposer');
 
-
         // imports
-        View::composer('portal::imports.widget.import', 'Modules\Portal\Http\ViewComposers\Imports\Widget\ImportComposer');        
+        View::composer('portal::imports.widget.import', 'Modules\Portal\Http\ViewComposers\Imports\Widget\ImportComposer');
+
+        // faq
+        View::composer('portal::faq.index', 'Modules\Portal\Http\ViewComposers\FAQ\IndexComposer');
+        View::composer('portal::faq.items', 'Modules\Portal\Http\ViewComposers\FAQ\ItemComposer');        
     }
 
     public function register() {
