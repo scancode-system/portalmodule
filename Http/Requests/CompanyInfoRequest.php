@@ -30,7 +30,7 @@ class CompanyInfoRequest extends FormRequest
             'company_name' => 'string|max:191',
             'trade_name' => 'string|max:191',
             'state_registration' => 'string|max:191',
-            'phone' => 'string|max:10',
+            'phone' => 'string|max:8',
         ];
     }
 
@@ -42,7 +42,7 @@ class CompanyInfoRequest extends FormRequest
             'company_name' => 'Razão social',
             'trade_name' => 'Nome Fantasia',
             'state_registration' => 'Inscrição Estadual',
-            'phone' => 'TelefoneJ',
+            'phone' => 'Telefone',
         ];
     }
 

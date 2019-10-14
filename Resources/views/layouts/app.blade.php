@@ -35,7 +35,7 @@
                     
 
 
-                    @yield('events')
+                    @include('portal::layouts.subviews.events')
                     <li class="nav-item dropdown d-md-down-none">
                         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-list"></i>

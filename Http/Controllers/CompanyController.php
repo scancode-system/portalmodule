@@ -16,8 +16,7 @@ class CompanyController extends BaseController
 
 	public function __construct()
 	{
-		//parent::__construct();
-		$this->middleware('has.event', ['except' => ['edit']]);
+		$this->middleware('auth:company');
 	}
 
 	public function edit(Request $request, Company $company, $tab){
@@ -25,6 +24,7 @@ class CompanyController extends BaseController
 	}
 
 	public function update(CompanyRequest $request, Company $company){
+		dd('fd');
 		$company->update($request->all());
 		return back()->with('success_login', 'Sucesso: seus dados foram atualizados.');		
 	}

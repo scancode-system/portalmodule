@@ -52,7 +52,8 @@
 
 	var dropzone_produtos = new Dropzone('#dropzone-produtos', {
 		url: '{{ route("portal.images.produtos") }}',
-		headers: {'X-CSRF-Token': "{{ csrf_token() }}"}
+		headers: {'X-CSRF-Token': "{{ csrf_token() }}",
+		dictDefaultMessage: 'opa'}
 	});
 
 	
