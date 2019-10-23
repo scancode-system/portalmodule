@@ -21,6 +21,7 @@ class ImportsController extends BaseController
 
 	public function index(Request $request)
 	{
+		ValidationService::clear();
 		return view('portal::imports.index');
 	}
 

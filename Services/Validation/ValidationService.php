@@ -32,7 +32,6 @@ class ValidationService {
 		session(['validation.'.$id.'.failures' => 0]);
 
 		session(['validation.'.$id.'.in_progress2' => true]);
-
 	}
 
 	public static function start($id)
@@ -48,30 +47,27 @@ class ValidationService {
 			$event = $company_validation->event;
 			$company = $event->company;
 
-			$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file;
-			$path_debug_file = 'validations/'.$id.'.xlsx';
-			$path_clean_file = 'validations/clean/'.$id.'.xlsx';			
-
-		
+			$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file;
+			$path_debug_file = 'companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file;
+			$path_clean_file = 'companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file;
+			
 			$import->import($path, 'local', Excel::XLSX); 
 			session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
-			
 			$export = self::export($import);
-			$export->store($path_debug_file, 'local');
-
 			$exportClean = self::exportClean($import);
-			$exportClean->store($path_clean_file, 'local');
-
-			$report = self::report($import, $path);
 
 			$company_validation = EventValidation::find($id);
 			if($company_validation->start->eq($start)){
+				$report = self::report($import, $path);
 
-
-				if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
-					Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
+				if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file)){
+					Storage::delete('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file);
+					Storage::delete('companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file);
+					Storage::delete('companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file);
 				}
 				Storage::move($path, $path_original_file);
+				$export->store($path_debug_file, 'local');
+				$exportClean->store($path_clean_file, 'local');
 
 
 				$validated = session('validation.'.$id.'.validated');
@@ -79,33 +75,14 @@ class ValidationService {
 				$duplicates = session('validation.'.$id.'.duplicates');
 				$failures = session('validation.'.$id.'.failures');
 
-			//dd('antes');
 				$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
-
 			}
-			//dd('depois');
 		} else {
 			session(['validation.'.$id.'.missing_headings' => $import->missing_headings($path)]);
 			session(['validation.'.$id.'.headings' => false]);
 		}
 
 		session(['validation.'.$id.'.in_progress2' => false]);
-
-		/*if($ipmort->isValid()){
-			$event = $company_validation->event;
-			$company = $event->company;
-			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file)){
-				Storage::delete('companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
-			}
-			Storage::move($path, 'companies/'.$company->id.'/'.$event->id.'/'.$company_validation->validation->file);
-			$company_validation->update(['file' => $path, 'status_id' => 2, 'update' => Carbon::now()]);
-		} else {
-			$export = self::export($import);
-			$export->store('download/errors/'.$id.'.xlsx', 'local'); 
-
-			session(['validation.'.$id.'.export' => true]); 
-		}*/
-		//session(['validation.'.$id.'.in_progress2' => false]);
 	}
 
 

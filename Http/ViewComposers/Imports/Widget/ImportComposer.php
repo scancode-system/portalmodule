@@ -46,7 +46,6 @@ class ImportComposer {
         $view->with('progress_bar_animated', $this->progress_bar_animated);
         $view->with('legend_animated', $this->legend_animated);
 
-
         $view->with('in_progress', $this->in_progress);
         $view->with('layout', $this->layout);
 
@@ -63,6 +62,7 @@ class ImportComposer {
         //dd(session('validation.'.$this->event_validation->id.'.in_progress'));
         //dd(session('validation.'.$this->event_validation->id.'.in_progress2'));
         $this->in_progress = session('validation.'.$this->event_validation->id.'.in_progress2');
+        //dd(session('validation.'.$this->event_validation->id.'.in_progress2'));
 
         if($this->in_progress){
             $this->validated = session('validation.'.$this->event_validation->id.'.validated');

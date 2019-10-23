@@ -23,16 +23,16 @@ class TokenController extends Controller
 	}
 
 	public function files(Request $request, Event $event){
-		$files = Storage::allFiles('companies/'.$event->company_id.'/'.$event->id);
+		$files = Storage::allFiles('companies/'.$event->company_id.'/'.$event->id.'/clean');
 		if(count($files)){
-			$zip_path = storage_path('app/companies/'.$event->company_id.'/'.$event->id.'.zip'); 
+			$zip_path = storage_path('app/companies/'.$event->company_id.'/'.$event->id.'/clean'.'.zip'); 
 
 			$zip = new ZipArchive;
 			$zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 			foreach ($files as $file) {
-				$file = str_replace('companies/'.$event->company_id.'/'.$event->id.'/', '', $file);
-				$zip->addFile(storage_path('/app/companies/'.$event->company_id.'/'.$event->id.'/'.$file), $file);
+				$file = str_replace('companies/'.$event->company_id.'/'.$event->id.'/clean'.'/', '', $file);
+				$zip->addFile(storage_path('/app/companies/'.$event->company_id.'/'.$event->id.'/clean'.'/'.$file), $file);
 			}
 
 			$zip->close();
@@ -40,6 +40,10 @@ class TokenController extends Controller
 		} else {
 			return response()->json([], 204);
 		}
+	}
+
+	public function welcome(Request $request){
+		return 'sucesso';
 	}
 
 }
