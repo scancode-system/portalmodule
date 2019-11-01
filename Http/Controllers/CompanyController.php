@@ -34,7 +34,7 @@ class CompanyController extends BaseController
 		return back()->with('success_info', 'Sucesso: seus dados foram atualizados.');		
 	}
 
-	public function updateAddress(CompanyAddressRequest $request, Company $company_address){
+	public function updateAddress(CompanyAddressRequest $request, CompanyAddress $company_address){
 		$company_address->update($request->all());
 		return back()->with('success_address', 'Sucesso: seus dados foram atualizados.');		
 	}
