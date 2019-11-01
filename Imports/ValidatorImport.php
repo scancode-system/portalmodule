@@ -319,7 +319,6 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	public function missing_headings($path){
 		$missing_headings = [];
 		$headings = (new HeadingRowImport)->toArray($path, 'local', Excel::XLSX)[0][0];
-		dd($headings);
 		foreach ($this->required as $heading) {
 			if (!in_array($heading, $headings, true)) {
 				array_push($missing_headings, $heading);
