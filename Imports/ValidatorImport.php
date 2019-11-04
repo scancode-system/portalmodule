@@ -203,6 +203,10 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		}
 	}
 
+	private function setToOne($value){
+		return 1;
+	}
+
 	private function dateDMY($value){
 		$value = str_replace('/', '-', $value);
 		return date("Y-m-d", strtotime($value));
@@ -334,7 +338,11 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 	protected function chunkColumn($column, $start, $end){
 		if(isset($this->columns[$column])){
-			return array_slice($this->columns[$column], $start, $end);
+			$chunk_column = array_slice($this->columns[$column], $start, $end);
+			foreach ($chunk_column as $i => $value) {
+				$chunk_column[$i] = trim($value);
+			}
+			return $chunk_column;
 		} else {
 			return [];
 		}
