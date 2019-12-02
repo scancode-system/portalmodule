@@ -36,7 +36,7 @@
 
 
                     @include('portal::layouts.subviews.events')
-                    <li class="nav-item dropdown d-md-down-none">
+                    <!--<li class="nav-item dropdown d-md-down-none">
                         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-list"></i>
                             <span class="badge badge-pill badge-danger" style="    position: absolute;
@@ -103,7 +103,7 @@
                                 <strong>Importações</strong>
                             </a>
                         </div>
-                    </li>
+                    </li>-->
                 </li>
             </ol>
             <div class="container-fluid">
