@@ -52,8 +52,8 @@
 
 	var dropzone_produtos = new Dropzone('#dropzone-produtos', {
 		url: '{{ route("portal.images.produtos") }}',
-		headers: {'X-CSRF-Token': "{{ csrf_token() }}",
-		dictDefaultMessage: 'opa'}
+		headers: {'X-CSRF-Token': "{{ csrf_token() }}" },
+		dictDefaultMessage: '<h3>Clique aqui para selecionar as imagens dos produtos.</h3>'
 	});
 
 	
@@ -76,7 +76,8 @@
 
 	var dropzoneInst = new Dropzone('#dropzone-logo', {
 		url: '{{ route("portal.images.logo") }}',
-		headers: {'X-CSRF-Token': "{{ csrf_token() }}"}
+		headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
+		dictDefaultMessage: '<h3>Clique aqui para selecionar a sua Logo.</h3>'
 	});
 
 	@if($logo)
