@@ -24,7 +24,6 @@ class CompanyController extends BaseController
 	}
 
 	public function update(CompanyRequest $request, Company $company){
-		dd('fd');
 		$company->update($request->all());
 		return back()->with('success_login', 'Sucesso: seus dados foram atualizados.');		
 	}
