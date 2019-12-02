@@ -35,8 +35,10 @@
         headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
         previewTemplate: layout,
         uploadprogress: function(file, progress, bytesSent) {
+            console.log(file.previewElement);
             if (file.previewElement) {
                  $('#btn-clean_{{ $event_validation->id }}').hide();
+                 $('#btn-play_{{ $event_validation->id }}').hide();
                 var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
                 progressElement.style.width = progress + "%";
                 file.previewElement.querySelector(".progress-text").textContent = progress + "%";

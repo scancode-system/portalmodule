@@ -44,17 +44,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="video-{{ $event_validation->id }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body overflow-auto">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ $event_validation->validation->video }}" allowfullscreen></iframe>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+
 
 
 <script>
