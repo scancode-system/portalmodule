@@ -44,6 +44,9 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
          // system settings
         View::composer('portal::system_settings.index', 'Modules\Portal\Http\ViewComposers\SystemSetting\IndexComposer');
+
+                 // system settings
+        View::composer('portal::settings.index', 'Modules\Portal\Http\ViewComposers\Settings\IndexComposer');
     }
 
     public function register() {

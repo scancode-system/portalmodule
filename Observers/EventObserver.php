@@ -5,10 +5,14 @@ namespace Modules\Portal\Observers;
 use Modules\Portal\Entities\Company;
 use Modules\Portal\Entities\SystemSetting;
 use Modules\Portal\Entities\Event;
+use Modules\Portal\Entities\EventSetting;
 use Modules\Portal\Entities\Validation;
+use Modules\Portal\Entities\Setting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\PortalAdmin\Emails\CreateEventEmail;
+
+use Modules\SettingEmailGmail\Entities\SettingEmailGmail;
 
 class EventObserver {
 
@@ -34,6 +38,11 @@ class EventObserver {
 			$event->validations()->attach($validation);
 		}
 
+		$settings = Setting::all();
+		foreach ($settings as $setting) {
+			$event->settings()->attach($setting);
+		}		
+
 		SystemSetting::create(['event_id' => $event->id]);
 
 		Mail::to($company->email)->queue(new CreateEventEmail($company, $event));
@@ -52,7 +61,13 @@ class EventObserver {
 		}
 	}
 
+	public function deleting(Event $event){
+		$event_settings = $event->event_settings;
+		foreach ($event_settings as $event_setting) {
+			$event_setting->delete();
+		}
+	}
+
 }
 
 
-		

@@ -34,6 +34,7 @@ class PortalServiceProvider extends ServiceProvider
         $this->app->register(ObserviceServiceProvider::class);
         $this->app->register(GuardsServiceProvider::class);
         $this->app->register(MiddlewareServiceProvider::class);
+        $this->app->register(BladeServiceProvider::class);
 
     }
 

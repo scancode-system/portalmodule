@@ -111,5 +111,8 @@ Route::prefix('portal')->group(function() {
 	// setting
 	Route::get('/setting', 'SystemSettingController@index')->name('portal.system_setting.index');
 	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
+
+		// settings
+	Route::get('/settings/{tab?}', 'SettingController@index')->name('portal.settings.index');
 });
 
