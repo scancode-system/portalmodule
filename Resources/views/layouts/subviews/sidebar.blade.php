@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.settings.index') }}">
+                <a class="nav-link" href="{{ route('portal.settings.index', 'home') }}">
                     <i class="nav-icon icon-settings"></i> Configurações
                 </a>
             </li>
