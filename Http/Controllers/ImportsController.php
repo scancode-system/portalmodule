@@ -3,19 +3,13 @@
 namespace Modules\Portal\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Modules\Portal\Http\Requests\RequestValidation;
 use Modules\Portal\Entities\EventValidation;
 use Modules\Portal\Services\Validation\ValidationService;
-/*use Modules\Portal\Entities\EventValidation;
-use Modules\Portal\Entities\Validation;
-use Modules\Portal\Services\Validation\ValidationService;
-use Modules\Portal\Services\Validation\ValidationFileSessionService;
-use Modules\Portal\Http\Controllers\BaseController;
-use \Exception;*/
+use Modules\Portal\Services\Sample\SampleService;
 
 
-class ImportsController extends BaseController
+class ImportsController extends BaseController 
 {
 
 
@@ -31,7 +25,7 @@ class ImportsController extends BaseController
 		$path = $request->file->store('uploads');
 
 		try {
-			$headings = ValidationService::missHeadings($event_validation->id, $path);
+			$headings = ValidationService::missHeadings($event_validation, $path);
 		} catch (Exception $e) {
 			return  response()->json(['errors' => ['file' => 'Este arquivo não pode ser lido. Tente salvar o arquivo em formato EXCEL 2007 - 2019']], 422);
 		}		
@@ -70,6 +64,12 @@ class ImportsController extends BaseController
 	public function clean(Request $request, EventValidation $event_validation){
 		$event_validation->update(['failures' => 0, 'duplicates' => 0, 'modified' => 0, 'validated' => 0, 'original_file' => null, 'debug_file' => null, 'clean_file' => null, 'report' => null]);
 		return back();
+	}
+
+	public function downloadDemo(Request $request, EventValidation $event_validation)
+	{
+		$sample_service = new SampleService($event_validation);
+		return $sample_service->download();
 	}
 
 

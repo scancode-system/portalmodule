@@ -43,44 +43,41 @@ class ValidationService {
 		$path = session('validation.'.$id.'.path');
 		$import = self::import($company_validation);
 
-		if($import->checkHeadings($path)){
-			$event = $company_validation->event;
-			$company = $event->company;
+		
+		$event = $company_validation->event;
+		$company = $event->company;
 
-			$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file;
-			$path_debug_file = 'companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file;
-			$path_clean_file = 'companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file;
-			
-			$import->import($path, 'local', Excel::XLSX); 
-			session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
-			$export = self::export($import);
-			$exportClean = self::exportClean($import);
+		$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file;
+		$path_debug_file = 'companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file;
+		$path_clean_file = 'companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file;
+		
+		$import->import($path, 'local', Excel::XLSX); 
+		session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
+		$export = self::export($import);
+		$exportClean = self::exportClean($import);
 
-			$company_validation = EventValidation::find($id);
-			if($company_validation->start->eq($start)){
-				$report = self::report($import, $path);
+		$company_validation = EventValidation::find($id);
+		if($company_validation->start->eq($start)){
+			$report = self::report($import, $path);
 
-				if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file)){
-					Storage::delete('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file);
-					Storage::delete('companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file);
-					Storage::delete('companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file);
-				}
-				Storage::move($path, $path_original_file);
-				$export->store($path_debug_file, 'local');
-				$exportClean->store($path_clean_file, 'local');
-
-
-				$validated = session('validation.'.$id.'.validated');
-				$modified = session('validation.'.$id.'.modified');
-				$duplicates = session('validation.'.$id.'.duplicates');
-				$failures = session('validation.'.$id.'.failures');
-
-				$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
+			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file)){
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file);
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file);
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file);
 			}
-		} else {
-			session(['validation.'.$id.'.missing_headings' => $import->missing_headings($path)]);
-			session(['validation.'.$id.'.headings' => false]);
+			Storage::move($path, $path_original_file);
+			$export->store($path_debug_file, 'local');
+			$exportClean->store($path_clean_file, 'local');
+
+
+			$validated = session('validation.'.$id.'.validated');
+			$modified = session('validation.'.$id.'.modified');
+			$duplicates = session('validation.'.$id.'.duplicates');
+			$failures = session('validation.'.$id.'.failures');
+
+			$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
 		}
+		
 
 		session(['validation.'.$id.'.in_progress2' => false]);
 	}
@@ -128,12 +125,33 @@ class ValidationService {
 		return $report;
 	}
 
-	public static function missHeadings($id, $path){
-		$company_validation = EventValidation::find($id);
-		$import = self::import($company_validation);
-		return $import->missing_headings($path);
-	}
+	public static function missHeadings(EventValidation $event_validation, $path){
+		$service_module = self::serviceModule($event_validation->validation->module_name);
+		$fields = collect($service_module->fields());
 
+		$event_validation_appends = $event_validation->event_validaton_appends;
+		foreach ($event_validation_appends as $event_validaton_append) {
+			$append = $event_validaton_append->appendModel;
+			$append_service = self::serviceModule($append->module);
+			$fields = $fields->merge($append_service->fields());
+
+		}
+
+		$file_headings = (self::import($event_validation))->getHeadings($path);
+		$missing_headings = collect([]);
+		foreach ($fields as $field) {
+			if (!in_array($field, $file_headings, true)) {
+				$missing_headings->push($field);
+			}
+		}
+
+		return $missing_headings;
+	} 
+
+	public static function serviceModule($module){
+		$class = 'Modules\\'.$module.'\Services\\'.$module.'Service';
+		return new $class();
+	}
 
 
 }

@@ -8,6 +8,7 @@ use Modules\Portal\Entities\Event;
 use Modules\Portal\Entities\EventSetting;
 use Modules\Portal\Entities\Validation;
 use Modules\Portal\Entities\Setting;
+use Modules\Portal\Entities\Append;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\PortalAdmin\Emails\CreateEventEmail;
@@ -41,9 +42,12 @@ class EventObserver {
 		$settings = Setting::all();
 		foreach ($settings as $setting) {
 			$event->settings()->attach($setting);
-		}		
+		}	
 
-		SystemSetting::create(['event_id' => $event->id]);
+		/*$appends = Append::all();
+		foreach ($appends as $append) {
+			$event->appends()->attach($append);
+		}*/	
 
 		Mail::to($company->email)->queue(new CreateEventEmail($company, $event));
 	}

@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Events\BeforeImport;
 use Illuminate\Support\Facades\Validator;
 use Modules\Portal\Services\Validation\ValidationProgressService;
 use Modules\Portal\Imports\ValidatorInterface;
+use Modules\Portal\Entities\EventValidation;
 
 
 abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents, ValidatorInterface
@@ -35,11 +36,13 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	protected $required;
 
 	protected $validated_rows;
+	private $event_validation;
 
 
 	public function __construct($id){
 		$this->id = $id;
 		$this->validated = true;
+		$this->event_validation = EventValidation::find($id);
 	}
 
 
@@ -143,6 +146,40 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		}
 	}
 
+	/********* Call Appends Data *********/
+	public function rule($data){
+		$rules =  collect([]);
+		foreach ($this->appendValidationsAll() as $append_validation) {
+			$rules = $rules->merge($append_validation->rule($data));
+		}
+		return $rules->toArray();
+	}
+
+	public function filterRules(){
+		$filter_rules =  collect([]);
+		foreach ($this->appendValidationsAll() as $append_validation) {
+			$filter_rules = $filter_rules->merge($append_validation->filterRules());
+		}
+		return $filter_rules->toArray();
+	}
+
+	private function appendValidationsAll(){
+		$append_validations = collect([]);
+		foreach ($this->event_validation->event_validaton_appends as $event_validaton_append) {
+			$append_validations->push($this->appendValidationClass($event_validaton_append->appendModel->module));
+		}
+		return $append_validations;
+	}
+
+	private function appendValidationClass($module){
+		$class = 'Modules\\'.$module.'\Validator\\'.$module.'Validator';
+		return new $class();
+	}
+
+	/******* End Appends Data ***********/
+
+
+
 
 	private function checkDuplicates($validator){
 		$messages = $validator->messages()->all();
@@ -228,10 +265,6 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		return 0;
 	}
 
-
-	public function filterRules(){
-		return [];
-	}
 
 	private function coordinateCellFailed($row, $row_index, $validator, $field){
 		$x = $row_index;
@@ -328,6 +361,9 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 				array_push($missing_headings, $heading);
 			}
 		}
+		// check appends required
+		
+
 		return $missing_headings;
 	}
 
@@ -361,7 +397,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		array_unshift($this->validated_rows, $this->cells[0]);
 		return $this->validated_rows;
 	}
-
+ 
 
 
 }

@@ -17,9 +17,10 @@
 				<div class="tab-content">
 					@foreach($event_settings as $event_setting)
 					<div class="tab-pane {{ ($tab==$event_setting->setting->module)?'show active':'' }}" >
-															@alert_errors()
-					@alert_success()
+						@alert_errors()
+						@alert_success()
 						@includeIf($event_setting->setting->module_alias.'::settings.body', ['event_setting' => $event_setting])
+						@loader(['loader_path' => $event_setting->setting->module_alias])
 					</div>
 					@endforeach
 				</div>

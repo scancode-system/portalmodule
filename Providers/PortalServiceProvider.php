@@ -5,6 +5,7 @@ namespace Modules\Portal\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
+
 class PortalServiceProvider extends ServiceProvider
 {
     /**
@@ -14,11 +15,9 @@ class PortalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
+        $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-
     }
 
     /**
@@ -40,6 +39,21 @@ class PortalServiceProvider extends ServiceProvider
 
 
     /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            __DIR__.'/../Config/config.php' => config_path('portal.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__.'/../Config/config.php', 'portal'
+        );
+    }
+
+    /**
      * Register views.
      *
      * @return void
@@ -59,33 +73,7 @@ class PortalServiceProvider extends ServiceProvider
         }, \Config::get('view.paths')), [$sourcePath]), 'portal');
     }
 
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/portal');
 
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'portal');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'portal');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production')) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
-    }
 
     /**
      * Get the services provided by the provider.

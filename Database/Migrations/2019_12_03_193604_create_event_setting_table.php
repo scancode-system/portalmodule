@@ -22,6 +22,8 @@ class CreateEventSettingTable extends Migration
             $table->unsignedBigInteger('setting_id');
             $table->foreign('setting_id')->references('id')->on('settings')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->unique(['event_id', 'setting_id']);
+
             $table->morphs('configurable');
 
             $table->timestamps();

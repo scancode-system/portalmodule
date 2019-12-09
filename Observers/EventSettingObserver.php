@@ -17,7 +17,7 @@ class EventSettingObserver {
 	}
 
 
-	public function deleted(EventSetting $event_setting){
+	public function deleting(EventSetting $event_setting){
 		$event_setting->configurable->delete();
 	}
 

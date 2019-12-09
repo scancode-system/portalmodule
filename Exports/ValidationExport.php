@@ -28,7 +28,7 @@ class ValidationExport extends DefaultValueBinder implements FromArray, WithEven
 		$this->cells = $cells;
 		$this->changes = $changes;
 		$this->fails = $fails;
-	}
+	} 
 
 
 	public function array(): array

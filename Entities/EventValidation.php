@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 use Modules\Portal\Entities\Event;
 use Modules\Portal\Entities\Validation;
 use Modules\Portal\Entities\Status;
+use Modules\Portal\Entities\EventValidationAppend;
+
 
 class EventValidation extends Pivot
 {
@@ -27,4 +29,9 @@ class EventValidation extends Pivot
 	{
 		return $this->belongsTo(Status::class);
 	}
+
+	public function event_validaton_appends()
+    {
+        return $this->hasMany(EventValidationAppend::class, 'event_validation_id');
+    }
 }

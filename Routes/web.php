@@ -81,18 +81,17 @@ Route::prefix('portal')->group(function() {
 
 	// Imports
 	Route::get('/imports', 'ImportsController@index')->name('portal.imports');
-
-	
 	Route::get('/imports/widget/{event_validation}/info', 'ImportsController@info')->name('imports.widget.info');
+
+	Route::get('/imports/widget/{event_validation}/download/demo', 'ImportsController@downloadDemo')->name('imports.widget.download.demo');
+	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
+	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
 
 	Route::post('/imports/widget/{event_validation}/upload', 'ImportsController@upload')->name('imports.widget.upload');
 	Route::post('/imports/widget/{event_validation}/errors', 'ImportsController@errors')->name('imports.widget.errors');
 	Route::post('/imports/widget/{event_validation}/start', 'ImportsController@start')->name('imports.widget.start');
 
 	Route::put('/imports/widget/{event_validation}/clean', 'ImportsController@clean')->name('imports.widget.clean');
-
-	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
-	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
 
 	// FAQ
 	Route::get('/faq', 'FAQController@index')->name('company.faq');
@@ -112,7 +111,9 @@ Route::prefix('portal')->group(function() {
 	Route::get('/setting', 'SystemSettingController@index')->name('portal.system_setting.index');
 	Route::put('/setting/{system_setting}/update', 'SystemSettingController@update')->name('portal.system_setting.update');
 
-		// settings
+	// settings
 	Route::get('/settings/{tab?}', 'SettingController@index')->name('portal.settings.index');
+
+	
 });
 
