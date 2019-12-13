@@ -18,6 +18,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer('portal::dashboard.subviews.item_event_validation', 'Modules\Portal\Http\ViewComposers\Dashboard\ItemEventValidationComposer');
         
         
+        
         // validation        
         View::composer(['portal::validation.subviews.loading', 'portal::validation.subviews.loading2', 'portal::validation.subviews.validation_event'], 'Modules\Portal\Http\ViewComposers\Validation\LoadingComposer');
 
@@ -44,6 +45,9 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
         // system settings
         View::composer('portal::settings.index', 'Modules\Portal\Http\ViewComposers\Settings\IndexComposer');
+
+        //imagens
+        View::composer('portal::images.index', 'Modules\Portal\Http\ViewComposers\Main\ImagesComposer');
     }
 
     public function register() {
