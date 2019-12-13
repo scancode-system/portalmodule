@@ -25,6 +25,7 @@ class CreateEventSettingTable extends Migration
             $table->unique(['event_id', 'setting_id']);
 
             $table->morphs('configurable');
+            $table->boolean('alert')->default(1);
 
             $table->timestamps();
         });

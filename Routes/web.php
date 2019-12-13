@@ -114,6 +114,8 @@ Route::prefix('portal')->group(function() {
 	// settings
 	Route::get('/settings/{tab?}', 'SettingController@index')->name('portal.settings.index');
 
+	Route::put('/event_settings/{event_setting}', 'EventSettingController@update')->name('portal.event_settings.update');
+
 	
 });
 

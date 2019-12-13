@@ -8,7 +8,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>CoreUI Free Bootstrap Admin Template</title>
+    <title>Scancode - Portal cliente</title>
     <!-- Icons-->
     {{ Html::style('modules/portal/coreui/node_modules/@coreui/icons/css/coreui-icons.min.css') }} 
     {{ Html::style('modules/portal/coreui/node_modules/flag-icon-css/css/flag-icon.min.css') }} 

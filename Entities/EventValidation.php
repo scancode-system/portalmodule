@@ -31,7 +31,25 @@ class EventValidation extends Pivot
 	}
 
 	public function event_validaton_appends()
-    {
-        return $this->hasMany(EventValidationAppend::class, 'event_validation_id');
-    }
+	{
+		return $this->hasMany(EventValidationAppend::class, 'event_validation_id');
+	}
+
+	public function getTotalValidationsAttribute($value)
+	{
+		return $this->validated+$this->failures;
+	}
+
+
+	public function getPorcentageCompletedAttribute($value)
+	{
+		if($this->total_validations == 0)
+		{
+			return 0;
+		} else 
+		{
+			return ($this->validated/$this->total_validations)*100;
+		}
+	}
+
 }

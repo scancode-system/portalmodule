@@ -9,7 +9,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
     public function boot() {
         //auth
-        View::composer(['portal::dashboard.index', 'portal::main.subview.import', 'portal::imports.index', 'portal::main.subview.import2', 'portal::documentations.index', 'portal::videos.index'], 'Modules\Portal\Http\ViewComposers\Auth\EventValidationsComposer');
+        View::composer(['portal::dashboard.index', 'portal::imports.index'], 'Modules\Portal\Http\ViewComposers\Auth\EventValidationsComposer');
 
         //parameters
         View::composer(['portal::import.index', 'portal::validation.index'], 'Modules\Portal\Http\ViewComposers\Parameters\EventValidationComposer');
@@ -27,7 +27,8 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
         //////////////////////////////////////////////////////
         // layouts
-        View::composer(['portal::layouts.app', 'portal::layouts.subviews.events'], 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');        
+        View::composer(['portal::layouts.app', 'portal::layouts.subviews.events'], 'Modules\Portal\Http\ViewComposers\Layouts\AppComposer');
+        View::composer('portal::layouts.subviews.alerts', 'Modules\Portal\Http\ViewComposers\Layouts\Subviews\AlertsComposer');        
 
         // companies        
         View::composer('portal::companies.edit', 'Modules\Portal\Http\ViewComposers\Companies\EditComposer');
@@ -45,7 +46,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
          // system settings
         View::composer('portal::system_settings.index', 'Modules\Portal\Http\ViewComposers\SystemSetting\IndexComposer');
 
-                 // system settings
+        // system settings
         View::composer('portal::settings.index', 'Modules\Portal\Http\ViewComposers\Settings\IndexComposer');
     }
 

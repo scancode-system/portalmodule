@@ -41,6 +41,7 @@ class CreateCompaniesAddresInfoTable extends Migration
             $table->string('state_registration')->nullable();
             $table->string('ddd', 2)->nullable();
             $table->string('phone', 8)->nullable();
+            $table->text('observation')->nullable();
 
             $table->timestamps();
         });        

@@ -8,7 +8,7 @@ use Modules\Portal\Entities\Setting;
 
 class EventSetting extends Pivot
 {
-    protected $fillable = [];
+    protected $fillable = ['alert'];
 
     public function configurable()
     {

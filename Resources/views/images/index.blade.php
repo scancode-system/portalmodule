@@ -18,13 +18,13 @@
 				{{ Form::open(['route' => 'portal.images.destroy.logo', 'method' => 'delete']) }}
 				{{ Form::submit('Excluir Logo', ['class' => 'btn btn-danger mb-3']) }}
 				{{ Form::close() }}
-				<div id="dropzone-logo" class="dropzone"></div>
+				<div id="dropzone-logo" class="dropzone text-muted"></div>
 				<hr>
 				<h2>Produtos</h2>
 				{{ Form::open(['route' => 'portal.images.destroy', 'method' => 'delete']) }}
 				{{ Form::submit('Excluir Imagens', ['class' => 'btn btn-danger mb-3']) }}
 				{{ Form::close() }}
-				<div id="dropzone-produtos" class="dropzone"></div>
+				<div id="dropzone-produtos" class="dropzone text-muted"></div>
 			</div>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 	var dropzone_produtos = new Dropzone('#dropzone-produtos', {
 		url: '{{ route("portal.images.produtos") }}',
 		headers: {'X-CSRF-Token': "{{ csrf_token() }}" },
-		dictDefaultMessage: '<h4>ARRASTE AS IMAGENS DOS PRODUTOS PARA O BOX</h4><h4>OU CLOQUE AQUI</h4><p>AS IMAGENS DEVE ESTAR NOMEADAS DE ACORDO COM A FERÊNCIA DOS PRODUTOS E DEVE TER NO MÁXIMO 300x300 PIXELS EM ".jpg"</p>'
+		dictDefaultMessage: '<h4>ARRASTE AS IMAGENS DOS PRODUTOS PARA O BOX</h4><h4>OU CLOQUE AQUI</h4><p>AS IMAGENS DEVE ESTAR NOMEADAS DE ACORDO COM A RFERÊNCIA DOS PRODUTOS E DEVE TER NO MÁXIMO 300x300 PIXELS EM ".jpg"</p>'
 	});
 
 	
@@ -77,7 +77,7 @@
 	var dropzoneInst = new Dropzone('#dropzone-logo', {
 		url: '{{ route("portal.images.logo") }}',
 		headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
-		dictDefaultMessage: '<h4>ARRASTE SEI LOGO PARA O BOX</h4><h4>OU CLOQUE AQUI</h4><p>A LOGO DEVE TER 300x300 PIXELS EM ".jpg"</p>'
+		dictDefaultMessage: '<h4>ARRASTE A LOGO PARA O BOX</h4><h4>OU CLIQUE AQUI</h4><p>A LOGO DEVE TER 300x300 PIXELS EM ".jpg"</p>'
 	});
 
 	@if($logo)
