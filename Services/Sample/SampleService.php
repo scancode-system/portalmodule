@@ -21,13 +21,15 @@ class SampleService {
 		return (new SampleExport($this->data(), $this->filledCells()))->download($this->fileName());
 	}
 
-	private function data(){
+	private function data()
+	{
 		$fields = $this->getSamples();
 		$cells = [];
 
 		foreach ($fields as $i => $field) {
 			$cells[0][$i] = $field['name'];
-			$cells[1][$i] = $field['observation']; 
+			$cells[1][$i] = $field['observation'];
+			$cells[2][$i] = $field['sample_1']; 
 		}
 
 		return 	collect($cells);

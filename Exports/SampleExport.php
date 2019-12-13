@@ -33,21 +33,52 @@ class SampleExport implements FromCollection, WithEvents
 		return $this->filled_Cells;
 	}
 
+	public function getData()
+	{
+		return $this->data;
+	}
+
 	public static function afterSheet(AfterSheet $event)
 	{
+		$sample_export = $event->getConcernable(); 
+		$filled_cells = $sample_export->filled_cells; 
 		$sheet = $event->sheet;
-		$filled_cells = $event->getConcernable()->filled_cells;
+
+		///dd($sample_export->getData()[0]);
+
 		foreach ($filled_cells as $filled_cell) 
 		{
 			$row = $filled_cell[0]+1;
 			$column = $filled_cell[1]+1;
 
 			$cell= $sheet->getCellByColumnAndRow($column , $row);
-			$cell->getStyle()->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('00f86c6b');
+			self::background($cell, 'f86c6b');
+			self::color($cell, 'ffffff');
+
+			/*$cell->getStyle()->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('00f86c6b');
 			$cell->getStyle()->getFont()->getColor()->setARGB('ffffffff');
 			$cell->getStyle()->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-			$cell->getStyle()->getBorders()->getOutline()->getColor()->setARGB('00808080');
+			$cell->getStyle()->getBorders()->getOutline()->getColor()->setARGB('00808080');*/
 		}
+
+		for($i=1; $i<=count($sample_export->getData()[0]);$i++)
+		{
+			$cell= $sheet->getCellByColumnAndRow($i , 2);
+			self::background($cell, 'ffc107');
+
+			$cell= $sheet->getCellByColumnAndRow($i , 3);
+			self::background($cell, '63c2de');
+		}
+	}
+
+	private static function background($cell, $color){
+		$cell->getStyle()->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('00'.$color);
+		$cell->getStyle()->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+		$cell->getStyle()->getBorders()->getOutline()->getColor()->setARGB('00808080');
+	}
+
+	private static function color($cell, $color){
+		$cell->getStyle()->getFont()->getColor()->setARGB('ffffffff');
 	}
 
 }
