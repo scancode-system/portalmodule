@@ -17,10 +17,6 @@ class ViewComposerServiceProvider extends ServiceProvider {
         //dashboard
         View::composer('portal::dashboard.subviews.item_event_validation', 'Modules\Portal\Http\ViewComposers\Dashboard\ItemEventValidationComposer');
         
-        // main     
-        View::composer('portal::main.index', 'Modules\Portal\Http\ViewComposers\Main\IndexComposer');
-        View::composer(['portal::main.subview.images', 'portal::images.index'], 'Modules\Portal\Http\ViewComposers\Main\ImagesComposer');
-        View::composer('portal::main.subview.import.table_row', 'Modules\Portal\Http\ViewComposers\Main\Import\TableRowComposer');
         
         // validation        
         View::composer(['portal::validation.subviews.loading', 'portal::validation.subviews.loading2', 'portal::validation.subviews.validation_event'], 'Modules\Portal\Http\ViewComposers\Validation\LoadingComposer');

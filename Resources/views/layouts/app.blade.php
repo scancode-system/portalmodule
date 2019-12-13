@@ -31,7 +31,7 @@
             <!-- Breadcrumb-->
             <ol class="breadcrumb">
                 @yield('breadcrumb')
-                @include('portal::layouts.subviews.alerts')
+                @includeWhen(!is_null($event_validations), 'portal::layouts.subviews.alerts')
             </ol>
             <div class="container-fluid">
                 <div class="animated fadeIn">
