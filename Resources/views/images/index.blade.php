@@ -53,7 +53,7 @@
 	var dropzone_produtos = new Dropzone('#dropzone-produtos', {
 		url: '{{ route("portal.images.produtos") }}',
 		headers: {'X-CSRF-Token': "{{ csrf_token() }}" },
-		dictDefaultMessage: '<h4>ARRASTE AS IMAGENS DOS PRODUTOS PARA O BOX</h4><h4>OU CLOQUE AQUI</h4><p>AS IMAGENS DEVE ESTAR NOMEADAS DE ACORDO COM A RFERÊNCIA DOS PRODUTOS E DEVE TER NO MÁXIMO 300x300 PIXELS EM ".jpg"</p>'
+		dictDefaultMessage: '<h4>ARRASTE AS IMAGENS DOS PRODUTOS PARA O BOX</h4><h4>OU CLOQUE AQUI</h4><p>AS IMAGENS DEVE ESTAR NOMEADAS DE ACORDO COM A REFERÊNCIA DOS PRODUTOS E DEVE TER NO MÁXIMO 300x300 PIXELS EM ".jpg"</p>'
 	});
 
 	

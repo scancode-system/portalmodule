@@ -23,9 +23,9 @@ class ImportsController extends BaseController
 	public function upload(RequestValidation $request, EventValidation $event_validation)
 	{
 		$path = $request->file->store('uploads');
-
 		try {
 			$headings = ValidationService::missHeadings($event_validation, $path);
+
 		} catch (Exception $e) {
 			return  response()->json(['errors' => ['file' => 'Este arquivo não pode ser lido. Tente salvar o arquivo em formato EXCEL 2007 - 2019']], 422);
 		}		
