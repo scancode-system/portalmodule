@@ -52,12 +52,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		$this->row = $rowExcel->toArray();
 		$this->row_index = $rowExcel->getRowIndex();
 
-		//dd($this->row_index);
-		//if($this->row_index == 32)
-		//dd($this->chunkColumn('cpf_cnpj', 0, $this->row_index));
-
 		$this->preValidation();
-
 		$this->trim();
 		$this->filter();
 
@@ -158,7 +153,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 	public function filterRules(){
 		$filter_rules =  collect([]);
 		foreach ($this->appendValidationsAll() as $append_validation) {
-			$filter_rules = $filter_rules->merge($append_validation->filterRules());
+			$filter_rules = $filter_rules->merge($append_validation->filterRules($this->row));
 		}
 		return $filter_rules->toArray();
 	}

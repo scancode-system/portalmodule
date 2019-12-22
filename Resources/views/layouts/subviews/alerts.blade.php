@@ -11,7 +11,7 @@
 		<a class="dropdown-item" href="{{ route('portal.imports') }}">
 			<div class="small mb-1 text-capitalize">{{ $event_validation->validation->alias }} ({{ $event_validation->total_validations }}/{{ $event_validation->validated }})
 				<span class="float-right">
-					<strong>{{ $event_validation->porcentage_completed }}%</strong>
+					<strong>{{ round($event_validation->porcentage_completed) }}%</strong>
 				</span>
 			</div>
 			<span class="progress progress-xs">

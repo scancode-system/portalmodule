@@ -33,7 +33,7 @@ class AlertsComposer extends SuperComposer
         foreach ($event_validations as $event_validation) {
             switch ($event_validation->porcentage_completed) {
                 case 0:
-                $event_validation->alert_color = self::SECONDARY;
+                $event_validation->alert_color = self::DANGER;
                 $number_alert_pending++;
                 break;
                 case 100:

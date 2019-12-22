@@ -20,6 +20,7 @@ class CreateCompaniesTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('password_64');
+            $table->text('observation')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

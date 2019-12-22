@@ -19,7 +19,7 @@ class Company extends Authenticatable
 	protected $guard = 'company';
 
 	protected $fillable = [
-		'name', 'email', 'password',
+		'name', 'email', 'password', 'observation'
 	];
 
 	protected $hidden = [
