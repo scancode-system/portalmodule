@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->bigIncrements('id');
             $table->string('module')->unique();
             $table->string('alias');
+            $table->string('import');
             $table->timestamps();
         });
     }

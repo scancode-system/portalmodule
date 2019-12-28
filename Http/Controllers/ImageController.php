@@ -18,7 +18,7 @@ class ImageController extends BaseController
 	}
 
 	public function logo(Request $request){
-        Storage::disk('local')->putFileAs('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo', $request->file, 'logo.jpg');		
+        Storage::disk('local')->putFileAs('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo', $request->file, 'logo.png');		
 	}
 
 	public function show(Request $request, $image_name){

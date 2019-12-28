@@ -21,6 +21,7 @@ class CreateValidationsTable extends Migration
             $table->string('video');
             $table->string('file');
             $table->string('validation');
+            $table->string('import');
             $table->timestamps();
         });
     }

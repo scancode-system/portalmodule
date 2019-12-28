@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $fillable = ['module', 'alias'];
+    protected $fillable = ['module', 'alias', 'import'];
 
 
     public function getModuleAliasAttribute()

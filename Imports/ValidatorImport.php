@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Portal\Services\Validation\ValidationProgressService;
 use Modules\Portal\Imports\ValidatorInterface;
 use Modules\Portal\Entities\EventValidation;
+use Illuminate\Support\Str;
 
 
 abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents, ValidatorInterface
@@ -318,7 +319,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 
 		$header = [];
 		foreach ($cells[0] as $column_name) {
-			array_push($header, str_slug($column_name, '_'));
+			array_push($header, Str::slug($column_name, '_'));
 		}
 
 		array_shift($cells);
