@@ -34,12 +34,12 @@ class ImageController extends BaseController
 		foreach ($produtos as $produto) {
 			Storage::disk('local')->delete($produto);
 		}
-		return redirect()->route('portal.main', ['tab' => 4])->with('message_images', 'Seucesso: Imagens foram removidas.');			
+		return back()->with('message_images', 'Seucesso: Logo removido com sucesso.');
 	}
 
 	public function destroyLogo(){
 		Storage::disk('local')->delete('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.jpg');
-		return redirect()->route('portal.main', ['tab' => 4])->with('message_images', 'Seucesso: Logo removido com sucesso.');			
+		return back()->with('message_images', 'Seucesso: Logo removido com sucesso.');			
 	}
 
 }
