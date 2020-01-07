@@ -240,6 +240,10 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 		return 1;
 	}
 
+		private function setToHundred($value){
+		return 100;
+	}
+
 	private function dateDMY($value){
 		$value = str_replace('/', '-', $value);
 		return date("Y-m-d", strtotime($value));

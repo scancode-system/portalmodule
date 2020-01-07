@@ -29,7 +29,7 @@ class SampleExport implements FromCollection, WithEvents
 	{
 		$cells = collect([]);
 		$cells->push($this->data[0]);
-		$cells->push($this->data[1]);
+		//$cells->push($this->data[1]);
 		$cells->push($this->data[2]);
 		return $cells;
 	}
@@ -69,16 +69,16 @@ class SampleExport implements FromCollection, WithEvents
 
 		for($i=1; $i<=count($sample_export->getData()[0]);$i++)
 		{
-			$cell= $sheet->getCellByColumnAndRow($i , 2);
-			self::background($cell, 'ffc107');
+			/*$cell= $sheet->getCellByColumnAndRow($i , 2);
+			self::background($cell, 'ffc107');*/
 
-			$cell= $sheet->getCellByColumnAndRow($i ,3);
+			$cell= $sheet->getCellByColumnAndRow($i ,2);
 			self::background($cell, '63c2de');
 
-			/*$comment = $event->sheet->getDelegate()->getComment(self::COLUMNS[$i-1].'1');
+			$comment = $event->sheet->getDelegate()->getComment(self::COLUMNS[$i-1].'1');
 			$comment->setMarginTop('100pt');
 			$comment->setVisible(false);
-			$comment->getText()->createTextRun($data[1][($i-1)]);*/
+			$comment->getText()->createTextRun($data[1][($i-1)]);
 			
 		}
 
