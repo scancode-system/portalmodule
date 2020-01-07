@@ -84,5 +84,9 @@ class ImportsController extends BaseController
 		return response()->download(storage_path('app/'.$event_validation->debug_file), $event_validation->validation->alias.'_debug.xlsx');
 	}
 
+	public function downloadClean(Request $request, EventValidation $event_validation)
+	{
+		return response()->download(storage_path('app/'.$event_validation->clean_file), $event_validation->validation->alias.'_clean.xlsx');
+	}
 
 }

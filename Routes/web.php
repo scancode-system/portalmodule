@@ -86,6 +86,7 @@ Route::prefix('portal')->group(function() {
 	Route::get('/imports/widget/{event_validation}/download/demo', 'ImportsController@downloadDemo')->name('imports.widget.download.demo');
 	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
 	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
+		Route::get('/imports/widget/{event_validation}/download/clean', 'ImportsController@downloadClean')->name('imports.widget.download.clean');
 
 	Route::post('/imports/widget/{event_validation}/upload', 'ImportsController@upload')->name('imports.widget.upload');
 	Route::post('/imports/widget/{event_validation}/errors', 'ImportsController@errors')->name('imports.widget.errors');
