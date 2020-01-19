@@ -13,7 +13,7 @@
 		<div class="card">
 			<h5 class="card-header">Pré Feira</h5>
 			<div class="card-body text-center">
-				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/DK-MR41gLBw?rel=0" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 		<div class="card">
 			<h5 class="card-header">Pós Feira</h5>
 			<div class="card-body text-center">
-				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kNMq4mN7VtY?rel=0" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>

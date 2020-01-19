@@ -18,8 +18,7 @@
 				<div class="tab-content">
 					<div class="tab-pane {{ ($tab=='home')?'show active':'' }}" >
 						<div class="embed-responsive embed-responsive-16by9">
-							<iframe class="embed-responsive-item" src="	
-https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+							<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/xge6D2aCqcY?rel=0" allowfullscreen></iframe>
 						</div>
 					</div>
 					@foreach($event_settings as $event_setting)
