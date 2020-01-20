@@ -16,6 +16,7 @@
     </div>
 @endif
 {{ Form::Model(auth()->user(), ['route' => ['portal.company.update', auth()->user()], 'method' => 'PUT']) }}
+{{ Form::hidden('id', null, ['class' => 'form-control']) }}
 <div class="row">
 	<div class="col">
 		<div class="form-group">

@@ -26,8 +26,8 @@ class CompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:companies,name,'.$this->name,
-            'email' => 'required|string|email|max:255|unique:companies,email,'.$this->email
+            'name' => 'required|string|max:255|unique:companies,name'.(isset($this->id)?','.$this->id.',id':''),
+            'email' => 'required|string|email|max:255|unique:companies,email'.(isset($this->id)?','.$this->id.',id':'')
         ];
     }
 
@@ -41,3 +41,6 @@ class CompanyRequest extends FormRequest
     }
 
 }
+
+
+ //(isset($this->id)?','.$this->id.',id':'')
