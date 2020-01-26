@@ -22,6 +22,7 @@ class CreateValidationsTable extends Migration
             $table->string('file');
             $table->string('validation');
             $table->string('import');
+            $table->integer('preference order');
             $table->timestamps();
         });
     }

@@ -77,12 +77,12 @@
 	var dropzoneInst = new Dropzone('#dropzone-logo', {
 		url: '{{ route("portal.images.logo") }}',
 		headers: {'X-CSRF-Token': "{{ csrf_token() }}"},
-		dictDefaultMessage: '<h4>ARRASTE A LOGO PARA O BOX</h4><h4>OU CLIQUE AQUI</h4><p>A LOGO DEVE TER 300x300 PIXELS EM ".jpg"</p>'
+		dictDefaultMessage: '<h4>ARRASTE A LOGO PARA O BOX</h4><h4>OU CLIQUE AQUI</h4><p>A EXTENSÃO DA LOGO PRECISA SER ".png"</p>'
 	});
 
 	@if($logo)
 
-	let mockFile = { name: "Arquivo Salvo", dataURL: "{{ route('portal.images.logo') }}" };
+	let mockFile = { name: "Arquivo Salvo", dataURL: "{{ route('portal.images.show.logo') }}" };
 	dropzoneInst.files.push(mockFile);
 	dropzoneInst.emit("addedfile", mockFile);
 	dropzoneInst.createThumbnailFromUrl(mockFile,

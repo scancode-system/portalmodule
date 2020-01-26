@@ -26,7 +26,7 @@ class ImageController extends BaseController
 	}
 
 	public function showLogo(Request $request){
-		return response()->file(storage_path('app/companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.jpg'));
+		return response()->file(storage_path('app/companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.png'));
 	}
 
 	public function destroy(){
@@ -38,7 +38,7 @@ class ImageController extends BaseController
 	}
 
 	public function destroyLogo(){
-		Storage::disk('local')->delete('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.jpg');
+		Storage::disk('local')->delete('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.png');
 		return back()->with('message_images', 'Seucesso: Logo removido com sucesso.');			
 	}
 

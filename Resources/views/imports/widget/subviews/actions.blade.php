@@ -3,5 +3,4 @@
 @else
 @include('portal::imports.widget.subviews.actions.empty')
 @endif
-@include('portal::imports.widget.modals.help')
 

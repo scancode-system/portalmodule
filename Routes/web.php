@@ -104,7 +104,7 @@ Route::prefix('portal')->group(function() {
 	Route::post('/images/produtos', 'ImageController@produtos')->name('portal.images.produtos');
 	Route::post('/images/logo', 'ImageController@logo')->name('portal.images.logo');
 	Route::get('/images/show/{image_name}', 'ImageController@show')->name('portal.images.show');
-	Route::get('/images/logo', 'ImageController@showLogo')->name('portal.images.logo');
+	Route::get('/images/logo', 'ImageController@showLogo')->name('portal.images.show.logo');
 	Route::delete('/images/produtos', 'ImageController@destroy')->name('portal.images.destroy');
 	Route::delete('/images/logo', 'ImageController@destroyLogo')->name('portal.images.destroy.logo');
 

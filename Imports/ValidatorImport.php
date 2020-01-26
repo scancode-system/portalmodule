@@ -226,7 +226,7 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 						$new_value = $this->$filter($this->row[$field]);
 						$this->cells[$x][$y] = $new_value;
 						$this->row[$field] = $new_value;
-						if($new_value != $old_value){
+						if($new_value !== $old_value){
 							array_push($this->changes, [($x+1), $y]);
 							session(['validation.'.$this->id.'.modified' => (1+session('validation.'.$this->id.'.modified')) ]);
 						}
@@ -234,6 +234,10 @@ abstract class ValidatorImport implements OnEachRow, WithHeadingRow, WithEvents,
 				}
 			}
 		}
+	}
+
+	private function setToZero($value){
+		return 0;
 	}
 
 	private function setToOne($value){

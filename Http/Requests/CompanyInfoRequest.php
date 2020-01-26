@@ -30,7 +30,7 @@ class CompanyInfoRequest extends FormRequest
             'company_name' => 'string|max:191',
             'trade_name' => 'string|max:191',
             'state_registration' => 'string|max:191',
-            'phone' => 'string|max:8',
+            'phone' => 'string|max:255',
         ];
     }
 

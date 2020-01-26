@@ -31,7 +31,7 @@ class ImagesComposer extends SuperComposer {
 	}
 
 	private function logo(){
-		$this->logo = Storage::disk('local')->exists('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.jpg');
+		$this->logo = Storage::disk('local')->exists('companies/'.auth()->user()->id.'/'.auth()->user()->event->id.'/clean/images/logo/logo.png');
 	}
 
 }

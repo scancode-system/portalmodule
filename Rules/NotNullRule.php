@@ -5,7 +5,7 @@ namespace Modules\Portal\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Validator;
 
-class NullRule implements Rule
+class NotNullRule implements Rule
 {
 
     /**
@@ -17,7 +17,8 @@ class NullRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return is_null($value);
+        //return false;
+        return (!is_null($value));
     }
 
     /**
