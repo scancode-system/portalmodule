@@ -24,9 +24,9 @@
     },
     "type": "laravel-module",
     "require": {
-        "nwidart/laravel-modules":"^5.0",
+        "nwidart/laravel-modules":"^7.1",
         "joshbrw/laravel-module-installer": "v0.1.4",
-        "laravelcollective/html": "^5.8",
+        "laravelcollective/html": "^6.1",
         "maatwebsite/excel": "^3.1"
     }
 }

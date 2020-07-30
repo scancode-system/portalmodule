@@ -1,4 +1,4 @@
-<div class="card-footer d-flex">
+<div class="card-footer">
 	@if($in_progress)
 	@if($porcent != 100)
 	<div class="progress-group mb-0 flex-fill">
@@ -25,21 +25,22 @@
 	</div>
 	@endif
 	@else
-	<div id="dropzone-import-{{ $event_validation->id }}" class="dropzone flex-fill">
-		<div class="dz-message m-0">
-			{{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn btn-success w-100']) }}
+	<div class="d-flex">
+		<div id="dropzone-import-{{ $event_validation->id }}" class="dropzone flex-fill">
+			<div class="dz-message m-0">
+				{{ Form::button('<i class="fa fa-upload fa-lg fa-2x text-white"></i>', ['type' => 'submit', 'class' => 'btn btn-success w-100']) }}
+			</div>
 		</div>
-	</div>
-	<a href="#" id="btn-play_{{ $event_validation->id }}" class="flex-fill btn btn-primary mx-2" data-toggle="modal" data-target="#video-{{ $event_validation->id }}"><i class="fa fa-play-circle fa-lg fa-2x"></i></a>
+		<a href="#" id="btn-play_{{ $event_validation->id }}" class="flex-fill btn btn-primary mx-2" data-toggle="modal" data-target="#video-{{ $event_validation->id }}"><i class="fa fa-play-circle fa-lg fa-2x"></i></a>
 
-	<div class="flex-fill text-center" id="btn-clean_{{ $event_validation->id }}">
-		{{ Form::open(['route' => ['imports.widget.clean', $event_validation->id], 'method' => 'put']) }}
-		{{ Form::button('<i class="fa fa-trash fa-lg fa-2x"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-danger']) }}
-		{{ Form::close() }}
+		<div class="flex-fill text-center" id="btn-clean_{{ $event_validation->id }}">
+			{{ Form::open(['route' => ['imports.widget.clean', $event_validation->id], 'method' => 'put']) }}
+			{{ Form::button('<i class="fa fa-trash fa-lg fa-2x"></i>', ['type' => 'submit', 'class' => 'btn  w-100 btn-danger']) }}
+			{{ Form::close() }}
+		</div>
+		@include('portal::imports.widget.subviews.dropzone.dropzone')
 	</div>
-
 	<div class="errors_{{ $event_validation->id }}"></div>
-	@include('portal::imports.widget.subviews.dropzone.dropzone')
 	@endif
 </div>
 
@@ -69,4 +70,4 @@
 
 
 @if($event_validation->original_file)
-	@endif
+@endif

@@ -62,6 +62,8 @@
 
             $(".errors_{{ $event_validation->id }}").load('{{ route('imports.widget.errors', $event_validation->id) }}', response.errors, function(){
                 dropzone_import_{{ $event_validation->id }}.removeAllFiles();
+                $('#btn-clean_{{ $event_validation->id }}').show();
+                 $('#btn-play_{{ $event_validation->id }}').show();
             });
         }
     });

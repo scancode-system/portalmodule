@@ -25,35 +25,27 @@
             </li>
             <li class="nav-title">Pós feira</li>
             <li class="nav-item">
-                <a class="nav-link nav-link-info" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon fa fa-qrcode"></i> Painel Online
+                <a class="nav-link" href="{{ route('portal.pos.pdf') }}">
+                    <i class="nav-icon fa fa-file-pdf-o"></i> Pedidos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('portal.pos.xlsx') }}">
+                    <i class="nav-icon fa fa-file-excel-o"></i> Relatórios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('portal.pos.txt') }}">
+                    <i class="nav-icon fa fa-file-text-o"></i> Importação
                 </a>
             </li>
             <!--<li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.main', 1) }}">
-                    <i class="nav-icon fa fa-download"></i> Importação
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon icon-graph"></i> Vendas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon icon-list"></i> Pedidos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon icon-docs"></i> Relatorios
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('portal.dashboard') }}">
-                    <i class="nav-icon fa fa-handshake-o"></i> Integração
+                <a class="nav-link nav-link-info" href="{{ route('portal.dashboard') }}">
+                    <i class="nav-icon fa fa-qrcode"></i> Painel Online
                 </a>
             </li>-->
+
+
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>

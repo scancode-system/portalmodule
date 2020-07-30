@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+/*
 Route::get('/token', 'Api\TokenController@welcome');
 Route::get('/token/{event}', 'Api\TokenController@event');
 Route::get('/token/{event}/files', 'Api\TokenController@files');
+
+Route::post('/dashboard/update', function(){
+
+	return 'oi';
+});
+*/

@@ -82,19 +82,16 @@ Route::prefix('portal')->group(function() {
 	// Imports
 	Route::get('/imports', 'ImportsController@index')->name('portal.imports');
 	Route::get('/imports/widget/{event_validation}/info', 'ImportsController@info')->name('imports.widget.info');
-
 	Route::get('/imports/widget/{event_validation}/download/demo', 'ImportsController@downloadDemo')->name('imports.widget.download.demo');
 	Route::get('/imports/widget/{event_validation}/download/original', 'ImportsController@downloadOriginal')->name('imports.widget.download.original');
 	Route::get('/imports/widget/{event_validation}/download/debug', 'ImportsController@downloadDebug')->name('imports.widget.download.debug');
-		Route::get('/imports/widget/{event_validation}/download/clean', 'ImportsController@downloadClean')->name('imports.widget.download.clean');
-
+	Route::get('/imports/widget/{event_validation}/download/clean', 'ImportsController@downloadClean')->name('imports.widget.download.clean');
 	Route::post('/imports/widget/{event_validation}/upload', 'ImportsController@upload')->name('imports.widget.upload');
 	Route::post('/imports/widget/{event_validation}/errors', 'ImportsController@errors')->name('imports.widget.errors');
 	Route::post('/imports/widget/{event_validation}/start', 'ImportsController@start')->name('imports.widget.start');
-
 	Route::put('/imports/widget/{event_validation}/clean', 'ImportsController@clean')->name('imports.widget.clean');
 
-	// FAQ
+	// faq
 	Route::get('/faq', 'FAQController@index')->name('company.faq');
 	Route::get('/faq/{faq_topic}', 'FAQController@items')->name('company.faq.items');
 
@@ -114,9 +111,12 @@ Route::prefix('portal')->group(function() {
 
 	// settings
 	Route::get('/settings/{tab?}', 'SettingController@index')->name('portal.settings.index');
-
 	Route::put('/event_settings/{event_setting}', 'EventSettingController@update')->name('portal.event_settings.update');
 
+	// pos
+	Route::get('pos/pdf', 'PosController@pdf')->name('portal.pos.pdf');
+	Route::get('pos/xlsx', 'PosController@xlsx')->name('portal.pos.xlsx');
+	Route::get('pos/txt', 'PosController@txt')->name('portal.pos.txt');
 	
 });
 

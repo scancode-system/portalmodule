@@ -9,6 +9,10 @@ use Modules\Portal\Entities\EventValidation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
+use Modules\Portal\Imports\ValidatorImport;
+use Modules\Portal\Services\Validation\Data\InfoValidationsService;
+
+
 
 class ValidationService {
 	
@@ -23,8 +27,8 @@ class ValidationService {
 	{
 		session(['validation.'.$id.'.path' => $path]);
 		session(['validation.'.$id.'.loaded' => 0]);
-		session(['validation.'.$id.'.headings' => true]);
-		session(['validation.'.$id.'.missing_headings' => []]);
+		session(['validation.'.$id.'.headings' => true]);		// talvez testar
+		session(['validation.'.$id.'.missing_headings' => []]);	// testar pode testar sem
 
 		session(['validation.'.$id.'.validated' => 0]);
 		session(['validation.'.$id.'.modified' => 0]);
@@ -37,33 +41,34 @@ class ValidationService {
 	public static function start($id)
 	{
 		$start = Carbon::createFromFormat('Y-m-d H:i', Carbon::now()->format('Y-m-d H:i'));
-		$company_validation = EventValidation::find($id);
-		$company_validation->update(['start' => $start]);
+		$event_validation = EventValidation::find($id);
+		$event_validation->update(['start' => $start]);
 
 		$path = session('validation.'.$id.'.path');
-		$import = self::import($company_validation);
-
 		
-		$event = $company_validation->event;
+		$event = $event_validation->event;
 		$company = $event->company;
 
-		$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file;
-		$path_debug_file = 'companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file;
-		$path_clean_file = 'companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file;
+		$path_original_file = 'companies/'.$company->id.'/'.$event->id.'/original/'.$event_validation->validation->file;
+		$path_debug_file = 'companies/'.$company->id.'/'.$event->id.'/debug/'.$event_validation->validation->file;
+		$path_clean_file = 'companies/'.$company->id.'/'.$event->id.'/clean/'.$event_validation->validation->file;
 		
+		$info_validations = new InfoValidationsService($event_validation);
+		$import = new ValidatorImport($event_validation, $info_validations);
 		$import->import($path, 'local', Excel::XLSX); 
-		session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
-		$export = self::export($import);
-		$exportClean = self::exportClean($import);
 
-		$company_validation = EventValidation::find($id);
-		if($company_validation->start->eq($start)){
+		session(['validation.'.$id.'.legend' => 'Novo arquivo sendo gerado']); 
+		$export = self::export($import, $event_validation, $info_validations);
+		$exportClean = self::exportClean($import, $event_validation, $info_validations);
+
+		$event_validation = EventValidation::find($id);
+		if($event_validation->start->eq($start)){
 			$report = self::report($import, $path);
 
-			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file)){
-				Storage::delete('companies/'.$company->id.'/'.$event->id.'/original/'.$company_validation->validation->file);
-				Storage::delete('companies/'.$company->id.'/'.$event->id.'/debug/'.$company_validation->validation->file);
-				Storage::delete('companies/'.$company->id.'/'.$event->id.'/clean/'.$company_validation->validation->file);
+			if(Storage::exists('companies/'.$company->id.'/'.$event->id.'/original/'.$event_validation->validation->file)){
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/original/'.$event_validation->validation->file);
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/debug/'.$event_validation->validation->file);
+				Storage::delete('companies/'.$company->id.'/'.$event->id.'/clean/'.$event_validation->validation->file);
 			}
 			Storage::move($path, $path_original_file);
 			$export->store($path_debug_file, 'local');
@@ -75,7 +80,7 @@ class ValidationService {
 			$duplicates = session('validation.'.$id.'.duplicates');
 			$failures = session('validation.'.$id.'.failures');
 
-			$company_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
+			$event_validation->update(['failures' => $failures, 'duplicates' => $duplicates, 'modified' => $modified, 'validated' => $validated, 'original_file' => $path_original_file, 'debug_file' => $path_debug_file, 'clean_file' => $path_clean_file, 'report' => $report, 'status_id' => 2, 'update' => Carbon::now()]);
 		}
 		
 
@@ -83,22 +88,29 @@ class ValidationService {
 	}
 
 
-	private static function import($company_validation){
-		$class = 'Modules\\'.$company_validation->validation->module_name.'\Validator\\'.str_replace('_', '', ucwords($company_validation->validation->validation, '_')).'Validator';
-		return new $class($company_validation->id);
-	}
+	/*private static function import($event_validation){
+		$class = 'Modules\\'.$event_validation->validation->module_name.'\Validator\\'.str_replace('_', '', ucwords($event_validation->validation->validation, '_')).'Validator';
+		return new $class($event_validation->id);
+	}*/
 
-	private static function export($import){
+	private static function export($import, $event_validation, $info_validations){
 		$cells = $import->cells();
 		$fails = $import->fails();
 		$changes = $import->changes();
 
-		return new ValidationExport($cells, $changes, $fails);
+		return new ValidationExport($cells, $changes, $fails, $info_validations); //self::instanceValidationExportClass($cells, $changes, $fails, $event_validation);
+		//return new ValidationExport($cells, $changes, $fails);
 	}
 
-	private static function exportClean($import){
+	private static function exportClean($import, $event_validation, $info_validations){
 		$rows = $import->validatedRows();
-		return new ValidationExport($rows, [], []);
+		return new ValidationExport($rows, [], [], $info_validations); //self::instanceValidationExportClass($rows, [], [], $event_validation);
+		//return new ValidationExport($rows, [], []);
+	}
+
+	private static function instanceValidationExportClass($cells, $changes, $fails, $event_validation){
+		$class = 'Modules\\'.$event_validation->validation->module_name.'\Exports\ValidationExport'.str_replace('_', '', ucwords($event_validation->validation->validation, '_'));
+		return new $class($cells, $changes, $fails);
 	}
 
 	private static function report($import, $path){
@@ -137,7 +149,7 @@ class ValidationService {
 
 		}
 
-		$file_headings = (self::import($event_validation))->getHeadings($path);
+		$file_headings = (new ValidatorImport($event_validation))->getHeadings($path);
 		$missing_headings = collect([]);
 		foreach ($fields as $field) {
 			if (!in_array($field, $file_headings, true)) {

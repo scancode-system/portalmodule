@@ -5,6 +5,8 @@ namespace Modules\Portal\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;  
 use Modules\Portal\Entities\Event;
 use \ZipArchive;
 
@@ -23,6 +25,9 @@ class TokenController extends Controller
 	}
 
 	public function files(Request $request, Event $event){
+		dd('fd');
+		$this->moveImageFiles($event);
+
 		$files = Storage::allFiles('companies/'.$event->company_id.'/'.$event->id.'/clean');
 		if(count($files)){
 			$zip_path = storage_path('app/companies/'.$event->company_id.'/'.$event->id.'/clean'.'.zip'); 
@@ -40,6 +45,11 @@ class TokenController extends Controller
 		} else {
 			return response()->json([], 204);
 		}
+	}
+
+	private function moveImageFiles(Event $event)
+	{
+		File::copyDirectory(storage_path('app/companies/'.$event->company->id.'/images'), storage_path('app/companies/'.$event->company->id.'/'.$event->id.'/clean/images'));
 	}
 
 	public function welcome(Request $request){
