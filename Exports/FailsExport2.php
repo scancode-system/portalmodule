@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 Use \Maatwebsite\Excel\Sheet;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class FailsExport implements FromArray, WithEvents, WithStrictNullComparison
+class FailsExport2 implements FromArray, WithEvents, WithStrictNullComparison
 {
 
 	use Exportable;
