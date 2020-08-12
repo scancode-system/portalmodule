@@ -143,6 +143,10 @@ class ValidatorRowService
 	private function nullToZero($value){
 		return 0;
 	}
+
+	private function removeAlphaCharacter($value){
+		return preg_replace('/[^0-9]/', '', $value);
+	}
 	/* END - before */
 
 	private function validation()
