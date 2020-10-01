@@ -40,7 +40,9 @@
                 </a>
             </li>
             <span class="small ml-3">Ultima Atualização:</span>
-            <span class="small ml-3">{{ $event->sync? $event->sync->format('Y/m/d H:i'):''  }}</span>
+            @if($event)
+            <span class="small ml-3">{{ $event->sync? $event->sync->format('Y/m/d H:i'):''   }}</span>
+            @endif
             
             <!--<li class="nav-item">
                 <a class="nav-link nav-link-info" href="{{ route('portal.dashboard') }}">
