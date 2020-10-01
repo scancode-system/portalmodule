@@ -15,6 +15,8 @@ class Event extends Model
 {
 	protected $fillable = ['id', 'company_id', 'name', 'selected'];
 
+	protected $dates = ['sync'];
+
 	public function company()
 	{
 		return $this->belongsTo(Company::class);

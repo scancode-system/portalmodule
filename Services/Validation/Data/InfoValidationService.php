@@ -6,7 +6,7 @@ abstract class InfoValidationService {
 
 	abstract public function rule($data, $index, $columns);
 	abstract public function modifiers();
-	abstract public function columnsFormat();
+	abstract public function columnsFormat($header);
 
 
 	public static function chunkColumn($columns, $column, $start, $end)

@@ -74,7 +74,7 @@ class ValidationExport implements FromArray, WithEvents, WithStrictNullCompariso
 	public function columnFormats(): array
 	{	
 		//dd($this->info_validations->columnsFormatExcel());
-		$format_columns = $this->info_validations->columnsFormatExcel()->mapWithKeys(function ($item, $key) {
+		$format_columns = $this->info_validations->columnsFormatExcel($this->header)->mapWithKeys(function ($item, $key) {
 			return [self::getColumnExcel($key, $this->header) => $item];
 		});
 		return $format_columns->toArray();

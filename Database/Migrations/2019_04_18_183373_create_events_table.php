@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->boolean('selected');
             $table->string('token')->nullable();
+            $table->datetime('sync')->nullable();
 
             $table->timestamps();
         });

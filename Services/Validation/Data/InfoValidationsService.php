@@ -43,16 +43,16 @@ class InfoValidationsService {
 		}, collect([]));
 	}
 
-	public function columnsFormat($format)
+	public function columnsFormat($format, $header)
 	{
-		return $this->mergeColumnsFormat()->filter(function ($value, $key) use($format) {
+		return $this->mergeColumnsFormat($header)->filter(function ($value, $key) use($format) {
 			return $format == $value;
 		})->keys()->toArray();
 	}
 
-	public function columnsFormatExcel()
+	public function columnsFormatExcel($header)
 	{
-		return $this->mergeColumnsFormat()->map(function ($item, $key) {
+		return $this->mergeColumnsFormat($header)->map(function ($item, $key) {
 			switch ($item) {
 				case self::DATE_FORMAT : return NumberFormat::FORMAT_DATE_DDMMYYYY;
 				break;
@@ -65,10 +65,10 @@ class InfoValidationsService {
 		});
 	} 
 
-	private function mergeColumnsFormat()
+	private function mergeColumnsFormat($header)
 	{
-		return $this->items->reduce(function ($carry, $item) {
-			return $carry->merge($item->columnsFormat());
+		return $this->items->reduce(function ($carry, $item) use($header) {
+			return $carry->merge($item->columnsFormat($header));
 		}, collect([]));
 	} 
 

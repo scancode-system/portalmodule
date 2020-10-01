@@ -7,9 +7,10 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
-class SampleExport implements FromCollection, WithEvents
+class SampleExport implements FromCollection, WithEvents, ShouldAutoSize
 {
 
 	use Exportable, RegistersEventListeners;

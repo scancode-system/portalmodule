@@ -39,6 +39,9 @@
                     <i class="nav-icon fa fa-file-text-o"></i> Importação
                 </a>
             </li>
+            <span class="small ml-3">Ultima Atualização:</span>
+            <span class="small ml-3">{{ $event->sync? $event->sync->format('Y/m/d H:i'):''  }}</span>
+            
             <!--<li class="nav-item">
                 <a class="nav-link nav-link-info" href="{{ route('portal.dashboard') }}">
                     <i class="nav-icon fa fa-qrcode"></i> Painel Online

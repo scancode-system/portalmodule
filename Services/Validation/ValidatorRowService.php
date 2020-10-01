@@ -58,8 +58,9 @@ class ValidatorRowService
 	}
 
 	private function castDate($field, $value){
+		//dd($this->header);
 		//$this->appendDateColumns();
-		if(in_array($field, $this->info_validations->columnsFormat(InfoValidationsService::DATE_FORMAT), true)){
+		if(in_array($field, $this->info_validations->columnsFormat(InfoValidationsService::DATE_FORMAT, $this->header), true)){
 			try {
 				$this->row[$field] = Date::excelToDateTimeObject($value);
 			} catch (Exception $e) {
@@ -71,7 +72,7 @@ class ValidatorRowService
 	private function castString($field, $value)
 	{
 		//$this->appendStringColumns();
-		if(in_array($field, $this->info_validations->columnsFormat(InfoValidationsService::STRING_FORMAT), true)){
+		if(in_array($field, $this->info_validations->columnsFormat(InfoValidationsService::STRING_FORMAT, $this->header), true)){
 			try {
 				$this->row[$field] = strval($value);
 			} catch (Exception $e) {
