@@ -88,7 +88,7 @@ class ValidatorRowService
 	{
 		//$header = array_keys($this->row);
 		//$filterRules = $this->filterRules();
-		foreach ($this->info_validations->modifiers() as $filterRule) {
+		foreach ($this->info_validations->modifiers($this->row) as $filterRule) {
 			$rule = $filterRule['rule'];
 			$field = key($filterRule['rule']);
 			$modifyMethod = $filterRule['filter'];

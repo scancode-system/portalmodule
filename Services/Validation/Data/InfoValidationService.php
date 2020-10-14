@@ -5,7 +5,7 @@ namespace Modules\Portal\Services\Validation\Data;
 abstract class InfoValidationService {
 
 	abstract public function rule($data, $index, $columns);
-	abstract public function modifiers();
+	abstract public function modifiers($data);
 	abstract public function columnsFormat($header);
 
 

@@ -36,10 +36,10 @@ class InfoValidationsService {
 		}, collect([]))->toArray();
 	}
 
-	public function modifiers()
+	public function modifiers($row)
 	{
-		return $this->items->reduce(function ($carry, $item) {
-			return $carry->merge($item->modifiers());
+		return $this->items->reduce(function ($carry, $item) use($row) {
+			return $carry->merge($item->modifiers($row));
 		}, collect([]));
 	}
 
