@@ -20,8 +20,9 @@ class NotInCustomRule implements Rule
 
     public function passes($attribute, $value)
     {
-        foreach ($this->values as $item_value) {
-            if($item_value == $value){
+        foreach ($this->values as $index => $item_value) {
+            // se necessario modificar nao muda o operator ===, mas coloque funções entre variaveis, igual struppercase() exemplo
+            if($item_value === $value){
                 return false;
             }
         }
